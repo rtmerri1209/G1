@@ -276,6 +276,28 @@ function changeStat(s, d) {
     }
     update();
 }
+function finalizeAndContinue() {
+    // Optional: Prevent proceeding if they still have points left
+    if (points > 0) {
+        const confirmSpend = confirm(`You still have ${points} points left! Are you sure you want to proceed?`);
+        if (!confirmSpend) return;
+    }
+
+    // Save the final calculated stats (including race mods) so stats2.html can use them
+    const race = localStorage.getItem('race') || "human";
+    const mods = RACE_MODS[race];
+    
+    let finalStats = {};
+    for (let s in baseStats) {
+        finalStats[s] = baseStats[s] + mods[s];
+    }
+
+    // Store the object as a string in localStorage
+    localStorage.setItem('finalCalculatedStats', JSON.stringify(finalStats));
+
+    // Move to the next page
+    window.location.href = "stats2.html";
+}
 
 // 4. DISPLAY ENGINE (CALCULATES RACE AFTER BUY)
 function update() {
