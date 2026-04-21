@@ -2,133 +2,175 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Character Registration - Project Alpha</title>
+    <title>Achilles Mark 1 - Character Selection</title>
     <style>
-        body {
-            background: #000;
-            color: #FFCC66; /* Your Pale Amber */
-            font-family: 'Courier New', Courier, monospace;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        :root {
+            --brand-color: #FFC666; 
+            --bg-overlay: rgba(26, 26, 26, 0.9);
+            --panel-bg: rgba(37, 37, 37, 0.95);
         }
 
-        .terminal-box {
-            border: 1px solid #FFCC66;
-            background: rgba(40, 30, 20, 0.4);
-            padding: 30px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 500px;
+        body { 
+            background-image: url('background.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #1a1a1a;
+            color: #e0e0e0; 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-overlay);
+            z-index: -1;
+        }
+
+        .selection-container { 
+            width: 500px; 
+            background: var(--panel-bg); 
+            padding: 40px; 
+            border: 2px solid var(--brand-color); 
+            border-radius: 8px; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            text-align: center;
+        }
+
+        h2 { 
+            color: var(--brand-color); 
+            text-transform: uppercase; 
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--brand-color);
+            padding-bottom: 10px;
         }
 
         .input-group {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
+            margin-bottom: 25px;
+            text-align: left;
         }
 
         label {
-            margin-bottom: 5px;
+            display: block;
+            color: var(--brand-color);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
             font-weight: bold;
-            letter-spacing: 2px;
         }
 
-        input, select {
-            background: #111;
-            border: 1px solid #FFCC66;
-            color: #FFCC66;
-            padding: 10px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1rem;
-            border-radius: 5px;
-        }
-
-        input:disabled {
-            color: #888;
-            border-color: #444;
-        }
-
-        .btn {
+        input[type="text"], select {
             width: 100%;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            color: #FFCC66;
-            border: 1px solid #FFCC66;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
+            padding: 12px;
+            background: #111;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
         }
 
-        .btn:hover {
-            background: rgba(255, 204, 102, 0.2);
+        input[type="text"]:focus, select:focus {
+            border-color: var(--brand-color);
+            outline: none;
+        }
+
+        .btn-row {
+            margin-top: 40px;
+        }
+
+        .start-btn {
+            background: transparent;
+            color: var(--brand-color);
+            border: 2px solid var(--brand-color);
+            padding: 15px 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background: var(--brand-color);
+            color: #1a1a1a;
+            box-shadow: 0 0 20px rgba(255, 198, 102, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <h1 style="letter-spacing: 5px;">New Character</h1>
-
-    <div class="terminal-box">
-        <div class="input-group">
-            <label>NAME:</label>
-            <input type="text" id="char-name" placeholder="Character Name">
-        </div>
-
-        <div class="input-group">
-            <label>RACE:</label>
-            <select id="char-race" onchange="updateSize()">
-                <option value="human">Human</option>
-                <option value="elf">Elf</option>
-                <option value="dwarf">Dwarf</option>
-                <option value="gnome">Gnome</option>
-                <option value="halfling">Halfling</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label>SIZE CATEGORY:</label>
-            <input type="text" id="char-size" value="Medium" disabled>
-        </div>
-
-        <button class="btn" onclick="goToStats()">Next</button>
-        <button class="btn" style="border-color: #444; color: #888;" onclick="window.location.href='index.html'">Back</button>
+<div class="selection-container">
+    <h2>Identify Operative</h2>
+    
+    <div class="input-group">
+        <label>Character Name</label>
+        <input type="text" id="char-name" placeholder="ENTER NAME...">
     </div>
 
-    <script>
-        function updateSize() {
-            const race = document.getElementById('char-race').value;
-            const size = document.getElementById('char-size');
+    <div class="input-group">
+        <label>Race</label>
+        <select id="race-select">
+            <option value="human">Human</option>
+            <option value="elf">Elf</option>
+            <option value="dwarf">Dwarf</option>
+            <option value="gnome">Gnome</option>
+            <option value="halfling">Halfling</option>
+        </select>
+    </div>
 
-            if (race === 'gnome' || race === 'halfling') {
-                size.value = 'SMALL';
-            } else {
-                size.value = 'MEDIUM';
-            }
+    <div class="input-group">
+        <label>Primary Class</label>
+        <select id="class-select">
+            <option value="Paladin">Paladin</option>
+            <option value="Cleric">Cleric</option>
+            <option value="Mage">Mage</option>
+            <option value="Warrior">Warrior</option>
+        </select>
+    </div>
+
+    <div class="btn-row">
+        <button class="start-btn" onclick="initializeCharacter()">Initialize Stats</button>
+    </div>
+</div>
+
+<script>
+    function initializeCharacter() {
+        const name = document.getElementById('char-name').value;
+        const race = document.getElementById('race-select').value;
+        const className = document.getElementById('class-select').value;
+
+        if (!name) {
+            alert("Please enter a character name.");
+            return;
         }
 
-        function goToStats() {
-            const name = document.getElementById('char-name').value;
-            if (!name) {
-                alert("Operator must have a name.");
-                return;
-			}
-     		const race = document.getElementById('char-race').value;
-		const size = document.getElementById('char-size').value;
-    
+        // Logic for Size Category based on your constraints
+        // Medium for all except gnome and halfling
+        let size = "Medium";
+        if (race === "gnome" || race === "halfling") {
+            size = "Small";
+        }
 
-    // 3. Save to the browser's "Notebook"
-    const charData = { name, race, size };
-    localStorage.setItem('activeCharacter', JSON.stringify(charData));
+        // Save everything to LocalStorage for the Stats Module to pick up
+        localStorage.setItem('charName', name);
+        localStorage.setItem('race', race);
+        localStorage.setItem('class', className);
+        localStorage.setItem('size', size);
 
-    // 4. NOW change the screen
-    window.location.href = "stats_module.html"; 
-}
-
-    </script>
-
+        // Redirect to the stats module exactly as requested
+        window.location.href = 'stats_module.html';
+    }
+</script>
 
 </body>
 </html>
