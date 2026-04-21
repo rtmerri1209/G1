@@ -3,14 +3,25 @@
 <head>
     <title>Character Stats</title>
     <style>
-        body { font-family: sans-serif; text-align: center; background-color: #f4f4f4; }
-        .header-container { margin-top: 20px; }
-        .name-race { font-size: 24px; font-weight: bold; display: flex; justify-content: center; gap: 20px; }
-        .char-size { font-size: 18px; color: #555; margin-bottom: 30px; }
-        .stat-row { margin: 10px; display: flex; justify-content: center; align-items: center; gap: 10px; }
-        input[type="number"] { width: 50px; padding: 5px; text-align: center; }
-        .error { color: red; font-weight: bold; margin-top: 10px; }
-        #total-display { font-weight: bold; margin-top: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #222; color: #ddd; }
+        .header-container { margin-top: 20px; border-bottom: 2px solid #444; padding-bottom: 10px; }
+        .name-race { font-size: 28px; font-weight: bold; display: flex; justify-content: center; gap: 30px; color: #fff; }
+        .char-size { font-size: 18px; color: #aaa; margin-top: 5px; }
+        
+        #stats-container { margin: 30px auto; width: fit-content; text-align: right; }
+        .stat-row { margin: 15px; font-size: 18px; }
+        
+        input[type="number"] { width: 60px; padding: 8px; text-align: center; background: #333; color: #fff; border: 1px solid #555; border-radius: 4px; font-size: 18px; }
+        .bonus-label { display: inline-block; width: 50px; text-align: left; margin-left: 10px; font-weight: bold; }
+        .pos { color: #4CAF50; } /* Green for bonuses */
+        .neg { color: #F44336; } /* Red for penalties */
+
+        #total-display { font-size: 22px; margin-top: 20px; }
+        .error { color: #ff4444; font-weight: bold; height: 20px; margin-top: 10px; }
+        
+        .btn { padding: 15px 30px; font-size: 18px; cursor: pointer; background-color: #444; color: white; border: none; border-radius: 5px; margin-top: 20px; }
+        .btn:disabled { background-color: #222; color: #555; cursor: not-allowed; border: 1px solid #333; }
+        .btn:hover:not(:disabled) { background-color: #666; }
     </style>
 </head>
 <body>
@@ -24,60 +35,91 @@
     </div>
 
     <div id="stats-container">
-        <div class="stat-row">Strength: <input type="number" class="stat" value="8" min="8" max="20"></div>
-        <div class="stat-row">Dexterity: <input type="number" class="stat" value="8" min="8" max="20"></div>
-        <div class="stat-row">Constitution: <input type="number" class="stat" value="8" min="8" max="20"></div>
-        <div class="stat-row">Intelligence: <input type="number" class="stat" value="8" min="8" max="20"></div>
-        <div class="stat-row">Wisdom: <input type="number" class="stat" value="8" min="8" max="20"></div>
-        <div class="stat-row">Charisma: <input type="number" class="stat" value="8" min="8" max="20"></div>
+        <div class="stat-row">STRENGTH: <input type="number" id="str" class="stat" value="10" min="8" max="20"> <span id="str-bonus" class="bonus-label"></span></div>
+        <div class="stat-row">DEXTERITY: <input type="number" id="dex" class="stat" value="10" min="8" max="20"> <span id="dex-bonus" class="bonus-label"></span></div>
+        <div class="stat-row">CONSTITUTION: <input type="number" id="con" class="stat" value="10" min="8" max="20"> <span id="con-bonus" class="bonus-label"></span></div>
+        <div class="stat-row">INTELLIGENCE: <input type="number" id="int" class="stat" value="10" min="8" max="20"> <span id="int-bonus" class="bonus-label"></span></div>
+        <div class="stat-row">WISDOM: <input type="number" id="wis" class="stat" value="10" min="8" max="20"> <span id="wis-bonus" class="bonus-label"></span></div>
+        <div class="stat-row">CHARISMA: <input type="number" id="cha" class="stat" value="10" min="8" max="20"> <span id="cha-bonus" class="bonus-label"></span></div>
     </div>
 
-    <div id="total-display">Total Points: <span id="current-total">48</span> / 72</div>
+    <div id="total-display">Total Points: <span id="current-total">60</span> / 80</div>
     <div id="msg" class="error"></div>
 
-    <script>
-        // 1. Retrieve the constants from localStorage
-        const charData = JSON.parse(localStorage.getItem('activeCharacter'));
+    <button id="finalize-btn" class="btn" onclick="saveCharacter()" disabled>FINALIZE CHARACTER</button>
 
+    <script>
+        // 1. Setup racial bonus data
+        const racialBonuses = {
+            "dwarf": { con: 2, cha: -2 },
+            "human": {},
+            "gnome": { con: -2, dex: 2 },
+            "halfling": { dex: 2 },
+            "elf": { dex: 1, cha: 1, con: -2 }
+        };
+
+        const charData = JSON.parse(localStorage.getItem('activeCharacter'));
+        const userRace = charData ? charData.race.toLowerCase() : 'human';
+
+        // 2. Initial setup
         if (charData) {
             document.getElementById('display-name').innerText = charData.name;
             document.getElementById('display-race').innerText = charData.race.toUpperCase();
             document.getElementById('display-size').innerText = charData.size;
+            applyRacialLabels();
         }
 
-        // 2. Logic for Stat Validation
         const statInputs = document.querySelectorAll('.stat');
         const totalDisplay = document.getElementById('current-total');
         const msg = document.getElementById('msg');
+        const finalizeBtn = document.getElementById('finalize-btn');
 
         statInputs.forEach(input => {
             input.addEventListener('input', validateStats);
         });
 
+        function applyRacialLabels() {
+            const bonuses = racialBonuses[userRace] || {};
+            for (const [stat, value] of Object.entries(bonuses)) {
+                const label = document.getElementById(`${stat}-bonus`);
+                if (label) {
+                    label.innerText = value > 0 ? `+${value}` : value;
+                    label.className = value > 0 ? 'bonus-label pos' : 'bonus-label neg';
+                }
+            }
+        }
+
         function validateStats() {
             let total = 0;
-            let overLimit = false;
-
             statInputs.forEach(input => {
                 let val = parseInt(input.value) || 0;
-                
-                // Keep individual stats within 8-20
-                if (val < 8) val = 8;
-                if (val > 20) val = 20;
-                
-                total += val;
+                // Enforce the 8-20 rule
+                if (val < 8) input.value = 8;
+                if (val > 20) input.value = 20;
+                total += parseInt(input.value);
             });
 
             totalDisplay.innerText = total;
 
-            if (total > 72) {
-                msg.innerText = "Total stats cannot exceed 72!";
-                totalDisplay.style.color = "red";
+            if (total > 80) {
+                msg.innerText = "Total stats cannot exceed 80!";
+                totalDisplay.style.color = "#ff4444";
+                finalizeBtn.disabled = true;
             } else {
                 msg.innerText = "";
-                totalDisplay.style.color = "black";
+                totalDisplay.style.color = "#ddd";
+                finalizeBtn.disabled = false;
             }
         }
+
+        function saveCharacter() {
+            alert("Character Finalized! Checking local logs...");
+            // Logic to move to next screen or save final sheet would go here
+        }
+
+        // Run once on load to check the default values (60)
+        validateStats();
+
     </script>
 </body>
 </html>
