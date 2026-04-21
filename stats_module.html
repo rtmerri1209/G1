@@ -2,277 +2,207 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Achilles Mark 1 - Character Stats Module</title>
+    <title>Achilles Mark 1 - Custom UI Stats Module</title>
     <style>
-        body {
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            padding: 40px;
+        :root {
+            --brand-color: #FFC666; /* Your requested color */
+            --highlight-color: #00ffcc; /* The special highlight for Slot 4 */
+            --bg-dark: #1a1a1a;
+            --panel-bg: #252525;
         }
 
-        .stats-container {
-            width: 700px;
-            background: #252525;
-            padding: 30px;
-            border: 2px solid #444;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        body { 
+            background-color: var(--bg-dark); 
+            color: #e0e0e0; 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 40px; 
         }
 
-        /* Header Layout: Name | Class | Race */
-        .identity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #555;
-            padding-bottom: 15px;
-            margin-bottom: 10px;
+        .setup-controls { 
+            background: #333; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--brand-color); 
         }
 
-        .id-box {
-            flex: 1;
-            text-align: center;
+        select { background: #444; color: white; border: 1px solid #666; padding: 5px; margin: 0 10px; border-radius: 4px; }
+        
+        .stats-container { 
+            width: 750px; 
+            background: var(--panel-bg); 
+            padding: 30px; 
+            border: 2px solid var(--brand-color); /* Main Border */
+            border-radius: 8px; 
+        }
+        
+        .identity-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 2px solid var(--brand-color); /* Header Border */
+            padding-bottom: 15px; 
+            margin-bottom: 10px; 
         }
 
-        .id-box label {
-            display: block;
-            font-size: 0.8rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .id-box label { 
+            display: block; 
+            font-size: 0.7rem; 
+            color: var(--brand-color); /* Label Color */
+            text-transform: uppercase; 
         }
 
-        .id-box span {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #fff;
+        .id-box span { font-size: 1.3rem; font-weight: bold; color: #fff; }
+
+        .size-row { text-align: center; margin: 15px 0; }
+        
+        .size-badge { 
+            background: #111; 
+            padding: 5px 25px; 
+            border-radius: 20px; 
+            color: var(--brand-color); /* Size Text Color */
+            border: 1px solid var(--brand-color); /* Size Border Color */
         }
 
-        /* Size Category - Centered */
-        .size-row {
-            text-align: center;
-            margin-bottom: 30px;
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        .stat-control { 
+            background: #2d2d2d; 
+            padding: 12px; 
+            border-radius: 6px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border: 1px solid #3d3d3d; 
         }
 
-        .size-badge {
-            background: #333;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: #00ffcc;
-            border: 1px solid #444;
+        .stat-info label { 
+            display: block; 
+            font-weight: bold; 
+            color: #aaa; 
+            font-size: 0.9rem; 
         }
 
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        .stat-info .value { font-size: 1.6rem; color: #fff; }
+        
+        .controls button { 
+            background: #444; 
+            color: white; 
+            border: 1px solid var(--brand-color); /* Button Outlines */
+            padding: 8px 12px; 
+            cursor: pointer; 
+            border-radius: 4px; 
         }
 
-        .stat-control {
-            background: #2d2d2d;
-            padding: 15px;
-            border-radius: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #3d3d3d;
+        .pool-display { 
+            margin-top: 25px; 
+            text-align: center; 
+            padding: 15px; 
+            background: #1e1e1e; 
+            border: 1px solid var(--brand-color); /* Pool Border */
+            border-radius: 4px; 
+            color: var(--brand-color); /* Pool Text Color */
         }
 
-        .stat-info label {
-            display: block;
-            font-weight: bold;
-            color: #aaa;
-        }
-
-        .stat-info .value {
-            font-size: 1.8rem;
-            color: #fff;
-        }
-
-        .controls button {
-            background: #444;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            border-radius: 4px;
-            margin-left: 5px;
-        }
-
-        .controls button:hover {
-            background: #666;
-        }
-
-        /* Points Remaining */
-        .pool-display {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 1.2rem;
-            padding: 15px;
-            background: #1e1e1e;
-            border-radius: 4px;
-            border: 1px solid #00ffcc;
-        }
-
-        #points-count {
-            color: #00ffcc;
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .special-note {
-            font-size: 0.75rem;
-            color: #888;
-            margin-top: 5px;
+        #points-count { 
+            color: #fff; /* Keeping the actual number white for contrast */
+            font-weight: bold; 
+            font-size: 1.6rem; 
         }
     </style>
 </head>
 <body>
 
+<div class="setup-controls">
+    <label>Race:</label>
+    <select id="race-select" onchange="initModule()">
+        <option value="Human">Human</option>
+        <option value="Dwarf">Dwarf</option>
+        <option value="Elf">Elf</option>
+    </select>
+    <label>Class:</label>
+    <select id="class-select" onchange="initModule()">
+        <option value="Fighter">Fighter</option>
+        <option value="Paladin">Paladin</option>
+        <option value="Witch Doctor">Witch Doctor</option>
+    </select>
+</div>
+
 <div class="stats-container">
     <div class="identity-header">
-        <div class="id-box">
-            <label>Name</label>
-            <span>Kaelen</span>
-        </div>
-        <div class="id-box">
-            <label>Class</label>
-            <span id="class-display">Paladin</span>
-        </div>
-        <div class="id-box">
-            <label>Race</label>
-            <span id="race-display">Human</span>
-        </div>
+        <div class="id-box"><label>Name</label><span>Kaelen</span></div>
+        <div class="id-box"><label>Class</label><span id="display-class">---</span></div>
+        <div class="id-box"><label>Race</label><span id="display-race">---</span></div>
     </div>
 
     <div class="size-row">
-        <span class="size-badge">Size: Medium</span>
+        <span class="size-badge" id="display-size">SIZE: MEDIUM</span>
     </div>
 
     <div class="stats-grid">
-        <div class="stat-control">
-            <div class="stat-info">
-                <label>Strength</label>
-                <span class="value" id="str-val">10</span>
-            </div>
-            <div class="controls">
-                <button onclick="changeStat('str', -1)">-</button>
-                <button onclick="changeStat('str', 1)">+</button>
-            </div>
-        </div>
+        <div class="stat-control"><div class="stat-info"><label>STRENGTH</label><span class="value" id="str-val">10</span></div>
+            <div class="controls"><button onclick="changeStat('str', -1)">-</button><button onclick="changeStat('str', 1)">+</button></div></div>
+        
+        <div class="stat-control"><div class="stat-info"><label>DEXTERITY</label><span class="value" id="dex-val">10</span></div>
+            <div class="controls"><button onclick="changeStat('dex', -1)">-</button><button onclick="changeStat('dex', 1)">+</button></div></div>
 
-        <div class="stat-control">
-            <div class="stat-info">
-                <label>Dexterity</label>
-                <span class="value" id="dex-val">10</span>
-            </div>
-            <div class="controls">
-                <button onclick="changeStat('dex', -1)">-</button>
-                <button onclick="changeStat('dex', 1)">+</button>
-            </div>
-        </div>
+        <div class="stat-control"><div class="stat-info"><label>SURVIVABILITY</label><span class="value" id="sur-val">10</span></div>
+            <div class="controls"><button onclick="changeStat('sur', -1)">-</button><button onclick="changeStat('sur', 1)">+</button></div></div>
 
-        <div class="stat-control">
-            <div class="stat-info">
-                <label>Survivability</label>
-                <span class="value" id="sur-val">10</span>
-            </div>
-            <div class="controls">
-                <button onclick="changeStat('sur', -1)">-</button>
-                <button onclick="changeStat('sur', 1)">+</button>
-            </div>
-        </div>
+        <div class="stat-control" style="border: 2px solid var(--highlight-color);"><div class="stat-info"><label id="slot4-label">LOGIC</label><span class="value" id="slot4-val">10</span></div>
+            <div class="controls"><button onclick="changeStat('slot4', -1)">-</button><button onclick="changeStat('slot4', 1)">+</button></div></div>
 
-        <div class="stat-control" style="border-color: #00ffcc;">
-            <div class="stat-info">
-                <label id="slot4-label">Piety</label>
-                <span class="value" id="slot4-val">10</span>
-            </div>
-            <div class="controls">
-                <button onclick="changeStat('slot4', -1)">-</button>
-                <button onclick="changeStat('slot4', 1)">+</button>
-            </div>
-        </div>
+        <div class="stat-control"><div class="stat-info"><label>INTUITION</label><span class="value" id="int-val">10</span></div>
+            <div class="controls"><button onclick="changeStat('int', -1)">-</button><button onclick="changeStat('int', 1)">+</button></div></div>
 
-        <div class="stat-control">
-            <div class="stat-info">
-                <label>Intuition</label>
-                <span class="value" id="int-val">10</span>
-            </div>
-            <div class="controls">
-                <button onclick="changeStat('int', -1)">-</button>
-                <button onclick="changeStat('int', 1)">+</button>
-            </div>
-        </div>
-
-        <div class="stat-control">
-            <div class="stat-info">
-                <label>Presence</label>
-                <span class="value" id="pre-val">10</span>
-            </div>
-            <div class="controls">
-                <button onclick="changeStat('pre', -1)">-</button>
-                <button onclick="changeStat('pre', 1)">+</button>
-            </div>
-        </div>
+        <div class="stat-control"><div class="stat-info"><label>PRESENCE</label><span class="value" id="pre-val">10</span></div>
+            <div class="controls"><button onclick="changeStat('pre', -1)">-</button><button onclick="changeStat('pre', 1)">+</button></div></div>
     </div>
 
     <div class="pool-display">
-        Points Remaining: <span id="points-count">25</span>
-        <div class="special-note" id="race-bonus-note">+5 Human Bonus Applied</div>
+        POINTS REMAINING: <span id="points-count">0</span>
     </div>
 </div>
 
 <script>
-    // Initializing based on your logic
-    let isHuman = true;
-    let pointsRemaining = isHuman ? 85 : 80;
-    
-    // Starting all stats at 10 (spending 60 points)
-    let stats = {
-        str: 10, dex: 10, sur: 10, slot4: 10, int: 10, pre: 10
-    };
+    let stats = { str: 10, dex: 10, sur: 10, slot4: 10, int: 10, pre: 10 };
+    let pointsRemaining = 0;
 
-    pointsRemaining -= 60; 
-
-    function updateUI() {
-        document.getElementById('str-val').innerText = stats.str;
-        document.getElementById('dex-val').innerText = stats.dex;
-        document.getElementById('sur-val').innerText = stats.sur;
-        document.getElementById('slot4-val').innerText = stats.slot4;
-        document.getElementById('int-val').innerText = stats.int;
-        document.getElementById('pre-val').innerText = stats.pre;
-        document.getElementById('points-count').innerText = pointsRemaining;
-    }
-
-    function changeStat(stat, amount) {
-        let currentVal = stats[stat];
-        let floor = 3;
-        let ceiling = 20;
-
-        // Logic for the 22 Racial Ceiling
-        // (In a full app, this would check specific race/stat combinations)
-        if (isHuman) ceiling = 22; 
-
-        if (amount > 0 && pointsRemaining > 0 && currentVal < ceiling) {
-            stats[stat]++;
-            pointsRemaining--;
-        } else if (amount < 0 && currentVal > floor) {
-            stats[stat]--;
-            pointsRemaining++;
-        }
+    function initModule() {
+        const race = document.getElementById('race-select').value;
+        const className = document.getElementById('class-select').value;
+        document.getElementById('display-race').innerText = race;
+        document.getElementById('display-class').innerText = className;
+        document.getElementById('display-size').innerText = (race === "Dwarf") ? "SIZE: SMALL" : "SIZE: MEDIUM";
         
+        const pietyClasses = ["Paladin", "Witch Doctor"];
+        document.getElementById('slot4-label').innerText = pietyClasses.includes(className) ? "PIETY" : "LOGIC";
+
+        pointsRemaining = (race === "Human") ? 85 : 80;
+        stats = { str: 10, dex: 10, sur: 10, slot4: 10, int: 10, pre: 10 };
+        pointsRemaining -= 60; 
         updateUI();
     }
 
-    updateUI();
-</script>
+    function changeStat(stat, amt) {
+        const race = document.getElementById('race-select').value;
+        const ceiling = (race === "Human") ? 22 : 20;
+        if (amt > 0 && pointsRemaining > 0 && stats[stat] < ceiling) {
+            stats[stat]++; pointsRemaining--;
+        } else if (amt < 0 && stats[stat] > 3) {
+            stats[stat]--; pointsRemaining++;
+        }
+        updateUI();
+    }
 
+    function updateUI() {
+        for (let key in stats) { document.getElementById(key + '-val').innerText = stats[key]; }
+        document.getElementById('points-count').innerText = pointsRemaining;
+    }
+    initModule();
+</script>
 </body>
 </html>
