@@ -18,7 +18,7 @@
             background-attachment: fixed;
             background-color: var(--bg-dark);
             color: #eee;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
             display: flex;
             justify-content: center;
@@ -27,7 +27,7 @@
         }
 
         .main-box {
-            width: 750px;
+            width: 800px;
             background: var(--panel-bg);
             border: 2px solid var(--brand-color);
             padding: 30px;
@@ -38,69 +38,42 @@
         /* Top Header Layout */
         .top-nav {
             display: grid;
-            grid-template-columns: 1fr 1.5fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             text-align: center;
             border-bottom: 1px solid #444;
-            padding-bottom: 15px;
+            padding-bottom: 20px;
             margin-bottom: 25px;
         }
 
-        .nav-item label {
-            display: block;
-            font-size: 0.7rem;
-            color: var(--brand-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .nav-item span {
-            font-size: 1.3rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .size-sub {
-            font-size: 0.8rem;
-            color: #aaa;
-            margin-top: 2px;
-        }
+        .nav-item label { display: block; font-size: 0.7rem; color: var(--brand-color); text-transform: uppercase; }
+        .nav-item span { font-size: 1.4rem; font-weight: bold; text-transform: uppercase; }
+        .size-sub { font-size: 0.85rem; color: #888; margin-top: 5px; }
 
         /* Grid Layout for Stats */
         .stat-columns {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 40px;
         }
 
         .stat-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0,0,0,0.4);
-            margin-bottom: 12px;
-            padding: 10px 15px;
+            background: rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+            padding: 12px 20px;
             border: 1px solid #333;
-            border-radius: 6px;
-            position: relative;
+            border-radius: 8px;
         }
 
-        .primary-stat { border: 2px solid var(--brand-color); }
-        .secondary-stat { border: 2px solid var(--secondary-color); }
+        .primary-stat { border: 2px solid var(--brand-color); box-shadow: inset 0 0 10px rgba(255,198,102,0.2); }
+        .secondary-stat { border: 2px solid var(--secondary-color); box-shadow: inset 0 0 10px rgba(0,242,255,0.1); }
 
-        .stat-label-group label {
-            display: block;
-            font-size: 0.75rem;
-            color: #888;
-            text-transform: uppercase;
-        }
+        .stat-label-group label { display: block; font-size: 0.7rem; color: #777; text-transform: uppercase; }
+        .stat-val-text { font-size: 1.8rem; font-weight: bold; }
 
-        .stat-val-text { font-size: 1.4rem; font-weight: bold; }
-
-        .race-mod-text {
-            font-size: 0.8rem;
-            margin-left: 8px;
-            font-weight: bold;
-        }
+        .race-mod-text { font-size: 0.85rem; margin-left: 10px; font-weight: bold; }
         .pos { color: #00ff88; }
         .neg { color: #ff4444; }
 
@@ -108,10 +81,12 @@
             background: transparent;
             color: var(--brand-color);
             border: 1px solid var(--brand-color);
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             cursor: pointer;
+            font-size: 1.2rem;
             font-weight: bold;
+            border-radius: 4px;
         }
 
         .btn-group button:hover { background: var(--brand-color); color: #000; }
@@ -120,10 +95,10 @@
             margin-top: 30px;
             text-align: center;
             border-top: 1px solid #444;
-            padding-top: 20px;
+            padding-top: 25px;
         }
 
-        #points-display { font-size: 2rem; color: var(--brand-color); font-weight: bold; }
+        #points-display { font-size: 2.5rem; color: var(--brand-color); font-weight: bold; }
     </style>
 </head>
 <body>
@@ -220,13 +195,13 @@
     </div>
 
     <div class="footer">
-        <div>POINTS REMAINING</div>
+        <label style="color: #777; text-transform: uppercase; font-size: 0.8rem;">Points Remaining</label>
         <div id="points-display">0</div>
-        <button style="margin-top:20px;" class="btn-group" onclick="alert('Saving...')">FINALIZE OPERATIVE</button>
     </div>
 </div>
 
 <script>
+// 1. THE DATA BASELINE
 const RACE_MODS = {
     "human": { str: 0, dex: 0, sur: 0, slot4: 0, int: 0, pre: 0 },
     "elf": { str: -2, dex: 2, sur: -1, slot4: 0, int: 1, pre: 0 },
@@ -240,16 +215,18 @@ let points = 0;
 let primary = "";
 let secondary = "";
 
+// 2. INITIALIZE PAGE
 function init() {
     const race = localStorage.getItem('race') || "human";
     const className = localStorage.getItem('class') || "Warrior";
     const spec = localStorage.getItem('specialization');
 
-    points = (race === "human") ? 85 : 80;
+    // BUDGET: 35 for Humans, 30 for others
+    points = (race === "human") ? 35 : 30;
 
-    // Set Labels and Archetypes
+    // CLASS SETTINGS
     if (className === "Warrior") {
-        primary = "sur"; secondary = spec; // str or dex
+        primary = "sur"; secondary = spec; 
         document.getElementById('label-slot4').innerText = "LOGIC";
     } else if (className === "Mage") {
         primary = "slot4"; secondary = (spec === "logic") ? "dex" : "sur";
@@ -262,12 +239,12 @@ function init() {
         document.getElementById('label-slot4').innerText = "PIETY";
     }
 
-    // Visual Borders
+    // VISUAL HIGHLIGHTS
     document.getElementById(`ctrl-${primary}`).classList.add('primary-stat');
     document.getElementById(`ctrl-${secondary}`).classList.add('secondary-stat');
 
-    // UI Headers
-    document.getElementById('display-name').innerText = localStorage.getItem('charName') || "UNKNOWN";
+    // HEADER INFO
+    document.getElementById('display-name').innerText = localStorage.getItem('charName') || "OPERATIVE";
     document.getElementById('display-class').innerText = className;
     document.getElementById('display-race').innerText = race;
     document.getElementById('display-size').innerText = localStorage.getItem('size') || "Medium";
@@ -275,31 +252,51 @@ function init() {
     update();
 }
 
+// 3. STAT BUTTON LOGIC
 function changeStat(s, d) {
-    const race = localStorage.getItem('race') || "human";
-    const cap = (race === "human" && s === primary) ? 22 : 18;
-    if (d > 0 && points > 0 && baseStats[s] < cap) { baseStats[s]++; points--; }
-    else if (d < 0 && baseStats[s] > 10) { baseStats[s]--; points++; }
+    const buyCap = 20; // Hard limit on point-spending
+    const floor = 3;  // Hard limit on down-tuning
+
+    if (d > 0 && points > 0 && baseStats[s] < buyCap) { 
+        baseStats[s]++; 
+        points--; 
+    }
+    else if (d < 0 && baseStats[s] > floor) { 
+        baseStats[s]--; 
+        points++; 
+    }
     update();
 }
 
+// 4. DISPLAY ENGINE (CALCULATES RACE AFTER BUY)
 function update() {
     const race = localStorage.getItem('race') || "human";
     const mods = RACE_MODS[race];
 
     for (let s in baseStats) {
-        const final = baseStats[s] + mods[s];
-        document.getElementById(`val-${s}`).innerText = final;
+        // MATH: Points + Racial Modifier
+        const finalValue = baseStats[s] + mods[s];
+        
+        // Display Final Value (can go to 22 or drop to 0)
+        document.getElementById(`val-${s}`).innerText = finalValue;
+        
+        // Display Modifier Indicator
         const modEl = document.getElementById(`mod-${s}`);
         const m = mods[s];
-        modEl.innerText = m > 0 ? `(+${m})` : (m < 0 ? `(${m})` : "");
-        modEl.className = "race-mod-text " + (m > 0 ? "pos" : "neg");
+        if (m > 0) {
+            modEl.innerText = `(+${m} Race)`;
+            modEl.className = "race-mod-text pos";
+        } else if (m < 0) {
+            modEl.innerText = `(${m} Race)`;
+            modEl.className = "race-mod-text neg";
+        } else {
+            modEl.innerText = "";
+        }
     }
     document.getElementById('points-display').innerText = points;
 }
 
 window.onload = init;
 </script>
-
 </body>
 </html>
