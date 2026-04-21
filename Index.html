@@ -147,5 +147,21 @@
             document.getElementById('start-screen').classList.remove('hidden');
         }
     </script>
+	<script>
+    function showModule(moduleName) {
+        // 1. Alert for testing (We'll remove this once we build the screens)
+        console.log("Switching to: " + moduleName);
+        
+        // 2. Hide the main menu (The app-wrapper)
+        document.getElementById('app-wrapper').style.display = 'none';
+
+        // 3. Logic to show the new screen
+        alert("Entering " + moduleName + " mode...");
+        
+        // Note: We will build the actual 'Deploy' and 'Loadout' 
+        // containers in the next step!
+    }
+</script>
+
 </body>
 </html>
