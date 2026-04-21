@@ -2,211 +2,150 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Achilles Mark 1 - Stats Module</title>
+    <title>RPG One - Character Stats</title>
     <style>
         :root {
-            --brand-color: #FFC666; 
-            --highlight-color: #00ffcc; 
-            --bg-overlay: rgba(26, 26, 26, 0.85); /* Darkens the photo for readability */
-            --panel-bg: rgba(37, 37, 37, 0.9); /* Slight transparency for the panel */
+            --brand-color: #FFC666;
+            --secondary-color: #00F2FF;
+            --bg-dark: #121212;
+            --panel-bg: rgba(25, 25, 25, 0.95);
         }
 
-        body { 
-            /* THE BACKGROUND PHOTO SECTION */
-            background-image: url('background.jpg'); /* REPLACE WITH YOUR FILENAME */
+        body {
+            background-image: url('background.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-color: #1a1a1a; /* Fallback color */
-            
-            color: #e0e0e0; 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            padding: 40px; 
+            background-color: var(--bg-dark);
+            color: #eee;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
             margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
         }
 
-        /* Adds a layer over the image to keep the "Grounded" dark feel */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-overlay);
-            z-index: -1;
+        .main-box {
+            width: 750px;
+            background: var(--panel-bg);
+            border: 2px solid var(--brand-color);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
         }
 
-        .stats-container { 
-            width: 750px; 
-            background: var(--panel-bg); 
-            padding: 30px; 
-            border: 2px solid var(--brand-color); 
-            border-radius: 8px; 
-            box-shadow: 0 0 20px rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px); /* Blurs the background image behind the panel */
-        }
-        function goToSkills() {
-    if (pointsRemaining > 0) {
-        alert("Wait! You still have " + pointsRemaining + " points to distribute.");
-    } else {
-        console.log("Attributes Locked In:", stats);
-         localStorage.setItem('characterStats', JSON.stringify(stats))
-        
-        window.location.href = 'stats2.html'; 
-    }
-}
-
-        .identity-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 2px solid var(--brand-color); 
-            padding-bottom: 15px; 
-            margin-bottom: 10px; 
+        /* Top Header Layout */
+        .top-nav {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr;
+            text-align: center;
+            border-bottom: 1px solid #444;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
         }
 
-        .id-box { flex: 1; text-align: center; }
-        .id-box label { 
-            display: block; 
-            font-size: 0.75rem; 
-            color: var(--brand-color); 
-            text-transform: uppercase; 
+        .nav-item label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--brand-color);
+            text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .id-box span { font-size: 1.4rem; font-weight: bold; color: #fff; }
 
-        .size-row { text-align: center; margin: 20px 0; }
-        .size-badge { 
-            background: rgba(0,0,0,0.5); 
-            padding: 6px 30px; 
-            border-radius: 20px; 
-            color: var(--brand-color); 
-            border: 1px solid var(--brand-color);
+        .nav-item span {
+            font-size: 1.3rem;
             font-weight: bold;
-        }
-
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-        
-        .stat-control { 
-            background: rgba(45, 45, 45, 0.8); 
-            padding: 15px; 
-            border-radius: 6px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border: 1px solid #3d3d3d; 
-        }
-
-        .stat-info label { 
-            display: block; 
-            font-weight: bold; 
-            color: #aaa; 
-            font-size: 0.85rem; 
             text-transform: uppercase;
         }
-        .stat-info .value { font-size: 1.8rem; color: #fff; font-weight: bold; }
-        
-        .controls button { 
-            background: #444; 
-            color: white; 
-            border: 1px solid var(--brand-color); 
-            padding: 10px 15px; 
-            cursor: pointer; 
-            border-radius: 4px; 
-            font-size: 1.2rem;
+
+        .size-sub {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-top: 2px;
         }
 
-        .pool-display { 
-            margin-top: 30px; 
-            text-align: center; 
-            padding: 20px; 
-            background: rgba(30, 30, 30, 0.9); 
-            border: 2px solid var(--brand-color); 
-            border-radius: 4px; 
-            color: var(--brand-color); 
+        /* Grid Layout for Stats */
+        .stat-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.4);
+            margin-bottom: 12px;
+            padding: 10px 15px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .primary-stat { border: 2px solid var(--brand-color); }
+        .secondary-stat { border: 2px solid var(--secondary-color); }
+
+        .stat-label-group label {
+            display: block;
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .stat-val-text { font-size: 1.4rem; font-weight: bold; }
+
+        .race-mod-text {
+            font-size: 0.8rem;
+            margin-left: 8px;
+            font-weight: bold;
+        }
+        .pos { color: #00ff88; }
+        .neg { color: #ff4444; }
+
+        .btn-group button {
+            background: transparent;
+            color: var(--brand-color);
+            border: 1px solid var(--brand-color);
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
             font-weight: bold;
         }
 
-        #points-count { color: #fff; font-size: 1.8rem; margin-left: 10px; }
+        .btn-group button:hover { background: var(--brand-color); color: #000; }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+        }
+
+        #points-display { font-size: 2rem; color: var(--brand-color); font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="stats-container">
-    <div class="identity-header">
-        <div class="id-box"><label>Name</label><span>Kaelen</span></div>
-        <div class="id-box"><label>Class</label><span id="display-class">...</span></div>
-        <div class="id-box"><label>Race</label><span id="display-race">...</span></div>
-    </div>
-
-    <div class="size-row">
-        <span class="size-badge" id="display-size">SIZE: MEDIUM</span>
-    </div>
-
-    <div class="stats-grid">
-        <div class="stat-control"><div class="stat-info"><label>Strength</label><span class="value" id="str-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('str', -1)">-</button><button onclick="changeStat('str', 1)">+</button></div></div>
-        
-        <div class="stat-control"><div class="stat-info"><label>Dexterity</label><span class="value" id="dex-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('dex', -1)">-</button><button onclick="changeStat('dex', 1)">+</button></div></div>
-
-        <div class="stat-control"><div class="stat-info"><label>Survivability</label><span class="value" id="sur-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('sur', -1)">-</button><button onclick="changeStat('sur', 1)">+</button></div></div>
-
-        <div class="stat-control" style="border: 2px solid var(--highlight-color);">
-            <div class="stat-info"><label id="slot4-label">LOGIC</label><span class="value" id="slot4-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('slot4', -1)">-</button><button onclick="changeStat('slot4', 1)">+</button></div>
+<div class="main-box">
+    <div class="top-nav">
+        <div class="nav-item">
+            <label>Name</label>
+            <span id="display-name">---</span>
         </div>
-
-        <div class="stat-control"><div class="stat-info"><label>Intuition</label><span class="value" id="int-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('int', -1)">-</button><button onclick="changeStat('int', 1)">+</button></div></div>
-
-        <div class="stat-control"><div class="stat-info"><label>Presence</label><span class="value" id="pre-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('pre', -1)">-</button><button onclick="changeStat('pre', 1)">+</button></div></div>
+        <div class="nav-item">
+            <label>Class</label>
+            <span id="display-class">---</span>
+            <div class="size-sub">Size: <span id="display-size">---</span></div>
+        </div>
+        <div class="nav-item">
+            <label>Race</label>
+            <span id="display-race">---</span>
+        </div>
     </div>
 
-    <div class="pool-display">
-        POINTS REMAINING: <span id="points-count">0</span>
-    </div>
-</div>
-
-<script>
-    // These would be imported from your char-creation data
-    const selectedRace = localStorage.getItem('race'); 
-    const selectedClass = localStorage.getItem('class'); 
-
-    let stats = { str: 10, dex: 10, sur: 10, slot4: 10, int: 10, pre: 10 };
-    let pointsRemaining = (selectedRace === "Human") ? 85 : 80;
-
-    function initModule() {
-        document.getElementById('display-race').innerText = selectedRace;
-        document.getElementById('display-class').innerText = selectedClass;
-        document.getElementById('display-size').innerText = (selectedRace === "Dwarf") ? "SIZE: SMALL" : "SIZE: MEDIUM";
-        
-        const pietyClasses = ["Paladin", "Cleric", "Witch Doctor"];
-        document.getElementById('slot4-label').innerText = pietyClasses.includes(selectedClass) ? "PIETY" : "LOGIC";
-
-        pointsRemaining -= 60; 
-        updateUI();
-    }
-
-    function changeStat(stat, amt) {
-        const ceiling = (selectedRace === "Human") ? 22 : 20;
-        if (amt > 0 && pointsRemaining > 0 && stats[stat] < ceiling) {
-            stats[stat]++; pointsRemaining--;
-        } else if (amt < 0 && stats[stat] > 3) {
-            stats[stat]--; pointsRemaining++;
-        }
-        updateUI();
-    }
-
-    function updateUI() {
-        for (let key in stats) { document.getElementById(key + '-val').innerText = stats[key]; }
-        document.getElementById('points-count').innerText = pointsRemaining;
-    }
-
-    initModule();
-</script>
-</body>
-</html>
+    <div class="stat-columns">
+        <div class="left-col">
+            <div class="stat-row" id="ctrl-str">
+                <div class="stat-label
