@@ -100,12 +100,12 @@
     <script>
         function updateSize() {
             const race = document.getElementById('char-race').value;
-            const sizeInput = document.getElementById('char-size');
+            const size = document.getElementById('char-size');
 
-            if (race === 'Gnome' || race === 'Halfling') {
-                sizeInput.value = 'SMALL';
+            if (race === 'gnome' || race === 'halfling') {
+                size.value = 'SMALL';
             } else {
-                sizeInput.value = 'MEDIUM';
+                size.value = 'MEDIUM';
             }
         }
 
@@ -113,11 +113,11 @@
             const name = document.getElementById('char-name').value;
             if (!name) {
                 alert("Operator must have a name.");
-                
-    // 1. Grab the data from your HTML elements
-    const name = document.getElementById('char-name').value; 
-    const race = document.getElementById('char-race').value;
-    const size = document.getelementById('char-size').value;
+                return;
+			}
+     		const race = document.getElementById('char-race').value;
+		const size = document.getElementById('char-size').value;
+    
 
     // 3. Save to the browser's "Notebook"
     const charData = { name, race, size };
@@ -129,7 +129,6 @@
 
     </script>
 
-}
 
 </body>
 </html>
