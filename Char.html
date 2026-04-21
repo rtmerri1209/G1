@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Character Registration - Project Alpha</title>
+    <style>
+        body {
+            background: #000;
+            color: #FFCC66; /* Your Pale Amber */
+            font-family: 'Courier New', Courier, monospace;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .terminal-box {
+            border: 1px solid #FFCC66;
+            background: rgba(40, 30, 20, 0.4);
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        input, select {
+            background: #111;
+            border: 1px solid #FFCC66;
+            color: #FFCC66;
+            padding: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+        input:disabled {
+            color: #888;
+            border-color: #444;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #FFCC66;
+            border: 1px solid #FFCC66;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: rgba(255, 204, 102, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="letter-spacing: 5px;">NEW OPERATOR REGISTRATION</h1>
+
+    <div class="terminal-box">
+        <div class="input-group">
+            <label>NAME:</label>
+            <input type="text" id="char-name" placeholder="Enter Designation...">
+        </div>
+
+        <div class="input-group">
+            <label>RACE:</label>
+            <select id="char-race" onchange="updateSize()">
+                <option value="human">HUMAN</option>
+                <option value="elf">ELF</option>
+                <option value="dwarf">DWARF</option>
+                <option value="gnome">GNOME</option>
+                <option value="halfling">HALFLING</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>SIZE CATEGORY:</label>
+            <input type="text" id="char-size" value="MEDIUM" disabled>
+        </div>
+
+        <button class="btn" onclick="goToStats()">NEXT: ALLOCATE STATS</button>
+        <button class="btn" style="border-color: #444; color: #888;" onclick="window.location.href='index.html'">ABORT</button>
+    </div>
+
+    <script>
+        function updateSize() {
+            const race = document.getElementById('char-race').value;
+            const sizeInput = document.getElementById('char-size');
+
+            if (race === 'gnome' || race === 'halfling') {
+                sizeInput.value = 'SMALL';
+            } else {
+                sizeInput.value = 'MEDIUM';
+            }
+        }
+
+        function goToStats() {
+            const name = document.getElementById('char-name').value;
+            if (!name) {
+                alert("Operator must have a name.");
+                return;
+            }
+            
+            // For now, we'll just alert. Later, this will move to the next page.
+            alert("Proceeding to stats for " + name);
+            // window.location.href = 'char_stats.html'; 
+        }
+    </script>
+
+</body>
+</html>
