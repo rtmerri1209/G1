@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Character Stats</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background-color: #f4f4f4; }
+        .header-container { margin-top: 20px; }
+        .name-race { font-size: 24px; font-weight: bold; display: flex; justify-content: center; gap: 20px; }
+        .char-size { font-size: 18px; color: #555; margin-bottom: 30px; }
+        .stat-row { margin: 10px; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        input[type="number"] { width: 50px; padding: 5px; text-align: center; }
+        .error { color: red; font-weight: bold; margin-top: 10px; }
+        #total-display { font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="name-race">
+            <span id="display-name"></span>
+            <span id="display-race"></span>
+        </div>
+        <div id="display-size" class="char-size"></div>
+    </div>
+
+    <div id="stats-container">
+        <div class="stat-row">Strength: <input type="number" class="stat" value="8" min="8" max="20"></div>
+        <div class="stat-row">Dexterity: <input type="number" class="stat" value="8" min="8" max="20"></div>
+        <div class="stat-row">Constitution: <input type="number" class="stat" value="8" min="8" max="20"></div>
+        <div class="stat-row">Intelligence: <input type="number" class="stat" value="8" min="8" max="20"></div>
+        <div class="stat-row">Wisdom: <input type="number" class="stat" value="8" min="8" max="20"></div>
+        <div class="stat-row">Charisma: <input type="number" class="stat" value="8" min="8" max="20"></div>
+    </div>
+
+    <div id="total-display">Total Points: <span id="current-total">48</span> / 72</div>
+    <div id="msg" class="error"></div>
+
+    <script>
+        // 1. Retrieve the constants from localStorage
+        const charData = JSON.parse(localStorage.getItem('activeCharacter'));
+
+        if (charData) {
+            document.getElementById('display-name').innerText = charData.name;
+            document.getElementById('display-race').innerText = charData.race.toUpperCase();
+            document.getElementById('display-size').innerText = charData.size;
+        }
+
+        // 2. Logic for Stat Validation
+        const statInputs = document.querySelectorAll('.stat');
+        const totalDisplay = document.getElementById('current-total');
+        const msg = document.getElementById('msg');
+
+        statInputs.forEach(input => {
+            input.addEventListener('input', validateStats);
+        });
+
+        function validateStats() {
+            let total = 0;
+            let overLimit = false;
+
+            statInputs.forEach(input => {
+                let val = parseInt(input.value) || 0;
+                
+                // Keep individual stats within 8-20
+                if (val < 8) val = 8;
+                if (val > 20) val = 20;
+                
+                total += val;
+            });
+
+            totalDisplay.innerText = total;
+
+            if (total > 72) {
+                msg.innerText = "Total stats cannot exceed 72!";
+                totalDisplay.style.color = "red";
+            } else {
+                msg.innerText = "";
+                totalDisplay.style.color = "black";
+            }
+        }
+    </script>
+</body>
+</html>
