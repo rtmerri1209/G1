@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Alpha: Mobile Shell</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            color: #00ff41;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+        }
+
+        /* LAYERS */
+        .bg-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('your-background.gif') no-repeat center center;
+            background-size: cover;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        /* MAIN CONTAINER */
+        #app-wrapper {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* CENTER BUTTONS (Shifted slightly below absolute center) */
+        .center-group {
+            position: absolute;
+            top: 55%; /* Pushes it just below the 50% mark */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 70%;
+            max-width: 300px;
+        }
+
+        .btn-main {
+            padding: 20px;
+            font-size: 1.2rem;
+            background: rgba(0, 255, 65, 0.1);
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        /* CORNER BUTTONS */
+        .btn-corner {
+            position: absolute;
+            bottom: 40px; /* Buffer for mobile nav bars */
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.5);
+            color: #00ff41;
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bottom-left {
+            left: 20px;
+            min-width: 80px;
+        }
+
+        .bottom-right {
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 5px;
+        }
+
+        .cog-icon {
+            width: 25px;
+            height: 25px;
+            /* Using a filter to make the image match our green theme */
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-layer"></div>
+    <div class="overlay"></div>
+
+    <div id="app-wrapper">
+        
+        <div id="start-screen">
+            <div class="center-group">
+                <button class="btn-main" onclick="initModule('deployment')">Deploy</button>
+                <button class="btn-main" onclick="initModule('loadout')">Loadout</button>
+            </div>
+
+            <button class="btn-corner bottom-left" onclick="window.open('https://patreon.com', '_blank')">
+                SUPPORT
+            </button>
+
+            <button class="btn-corner bottom-right" onclick="initModule('settings')">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/settings.png" class="cog-icon" alt="Settings">
+            </button>
+        </div>
+
+        <div id="deployment-module" class="hidden">
+            <button onclick="returnToMenu()">BACK</button>
+        </div>
+        
+        <div id="settings-module" class="hidden">
+            <h2>SYSTEM SETTINGS</h2>
+            <button onclick="returnToMenu()">CLOSE</button>
+        </div>
+
+    </div>
+
+    <script>
+        function initModule(id) {
+            document.getElementById('start-screen').classList.add('hidden');
+            const target = document.getElementById(`${id}-module`);
+            if (target) target.classList.remove('hidden');
+        }
+
+        function returnToMenu() {
+            document.getElementById('deployment-module').classList.add('hidden');
+            document.getElementById('settings-module').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
