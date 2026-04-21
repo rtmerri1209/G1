@@ -102,7 +102,7 @@
             const race = document.getElementById('char-race').value;
             const sizeInput = document.getElementById('char-size');
 
-            if (race === 'gnome' || race === 'halfling') {
+            if (race === 'Gnome' || race === 'Halfling') {
                 sizeInput.value = 'SMALL';
             } else {
                 sizeInput.value = 'MEDIUM';
@@ -115,11 +115,9 @@
                 alert("Operator must have a name.");
                 
     // 1. Grab the data from your HTML elements
-    const name = document.getElementById('name-input-id').value; 
-    const race = document.getElementById('race-dropdown-id').value;
-    
-    // 2. Logic for size (optional but helpful)
-    let size = (race === "Gnome" || race === "Halfling") ? "Small" : "Medium";
+    const name = document.getElementById('char-name').value; 
+    const race = document.getElementById('char-race').value;
+    const size = document.getelementById('char-size').value;
 
     // 3. Save to the browser's "Notebook"
     const charData = { name, race, size };
@@ -130,30 +128,7 @@
 }
 
     </script>
-function saveInitialRegistration() {
-    // 1. Grab the values from your HTML elements
-    const charName = document.getElementById('name-text-box').value; // Make sure this ID matches your HTML
-    const charRace = document.getElementById('race-dropdown').value;
-    
-    // 2. Logic for the size category (based on your dropdown rules)
-    let charSize = "Medium";
-    if (charRace === "Gnome" || charRace === "Halfling") {
-        charSize = "Small";
-    }
 
-    // 3. Create a character object
-    const characterData = {
-        name: charName,
-        race: charRace,
-        size: charSize,
-        stats: {} // We'll leave this empty to be filled by the NEXT module
-    };
-
-    // 4. Save to localStorage (The "Permanent" Notebook)
-    localStorage.setItem('activeCharacter', JSON.stringify(characterData));
-
-    // 5. Move to the next module
-    window.location.href = 'stats_module.html'; // Or however you trigger the screen swap
 }
 
 </body>
