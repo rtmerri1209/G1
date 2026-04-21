@@ -2,207 +2,165 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Achilles Mark 1 - Custom UI Stats Module</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Alpha: Mobile Shell</title>
     <style>
-        :root {
-            --brand-color: #FFC666; /* Your requested color */
-            --highlight-color: #00ffcc; /* The special highlight for Slot 4 */
-            --bg-dark: #1a1a1a;
-            --panel-bg: #252525;
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            color: #00ff41;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
         }
 
-        body { 
-            background-color: var(--bg-dark); 
-            color: #e0e0e0; 
-            font-family: 'Segoe UI', sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 40px; 
+        /* LAYERS */
+        .bg-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('Dope.jpg') no-repeat center center;
+            background-size: cover;
+            z-index: 1;
         }
 
-        .setup-controls { 
-            background: #333; 
-            padding: 15px; 
-            border-radius: 8px; 
-            margin-bottom: 20px; 
-            border: 1px solid var(--brand-color); 
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2;
         }
 
-        select { background: #444; color: white; border: 1px solid #666; padding: 5px; margin: 0 10px; border-radius: 4px; }
-        
-        .stats-container { 
-            width: 750px; 
-            background: var(--panel-bg); 
-            padding: 30px; 
-            border: 2px solid var(--brand-color); /* Main Border */
-            border-radius: 8px; 
-        }
-        
-        .identity-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 2px solid var(--brand-color); /* Header Border */
-            padding-bottom: 15px; 
-            margin-bottom: 10px; 
+        /* MAIN CONTAINER */
+        #app-wrapper {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+	    z-index: 10;
         }
 
-        .id-box label { 
-            display: block; 
-            font-size: 0.7rem; 
-            color: var(--brand-color); /* Label Color */
-            text-transform: uppercase; 
+        /* CENTER BUTTONS (Shifted slightly below absolute center) */
+        .center-group {
+            position: absolute;
+            top: 46%; /* Pushes it just below the 50% mark */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 70%;
+            max-width: 300px;
         }
 
-        .id-box span { font-size: 1.3rem; font-weight: bold; color: #fff; }
-
-        .size-row { text-align: center; margin: 15px 0; }
-        
-        .size-badge { 
-            background: #111; 
-            padding: 5px 25px; 
-            border-radius: 20px; 
-            color: var(--brand-color); /* Size Text Color */
-            border: 1px solid var(--brand-color); /* Size Border Color */
+        .btn-main {
+            padding: 20px;
+            border-radius: 12px;
+	    font-size: 1.2rem;
+            background: rgba(40, 30, 10, 0.7);
+            border: 2px solid #FFCC66;
+            color: #FFCC66;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
         }
 
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        
-        .stat-control { 
-            background: #2d2d2d; 
-            padding: 12px; 
-            border-radius: 6px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border: 1px solid #3d3d3d; 
+        /* CORNER BUTTONS */
+        .btn-corner {
+            position: absolute;
+            bottom: 40px; /* Buffer for mobile nav bars */
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.5);
+            color: #FFCC66;
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .stat-info label { 
-            display: block; 
-            font-weight: bold; 
-            color: #aaa; 
-            font-size: 0.9rem; 
+        .bottom-left {
+            left: 20px;
+            min-width: 80px;
         }
 
-        .stat-info .value { font-size: 1.6rem; color: #fff; }
-        
-        .controls button { 
-            background: #444; 
-            color: white; 
-            border: 1px solid var(--brand-color); /* Button Outlines */
-            padding: 8px 12px; 
-            cursor: pointer; 
-            border-radius: 4px; 
+        .bottom-right {
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 5px;
         }
 
-        .pool-display { 
-            margin-top: 25px; 
-            text-align: center; 
-            padding: 15px; 
-            background: #1e1e1e; 
-            border: 1px solid var(--brand-color); /* Pool Border */
-            border-radius: 4px; 
-            color: var(--brand-color); /* Pool Text Color */
+        .cog-icon {
+            width: 25px;
+            height: 25px;
+            /* Using a filter to make the image match our green theme */
         }
 
-        #points-count { 
-            color: #fff; /* Keeping the actual number white for contrast */
-            font-weight: bold; 
-            font-size: 1.6rem; 
-        }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-<div class="setup-controls">
-    <label>Race:</label>
-    <select id="race-select" onchange="initModule()">
-        <option value="Human">Human</option>
-        <option value="Dwarf">Dwarf</option>
-        <option value="Elf">Elf</option>
-    </select>
-    <label>Class:</label>
-    <select id="class-select" onchange="initModule()">
-        <option value="Fighter">Fighter</option>
-        <option value="Paladin">Paladin</option>
-        <option value="Witch Doctor">Witch Doctor</option>
-    </select>
-</div>
+    <div class="bg-layer"></div>
+    <div class="overlay"></div>
 
-<div class="stats-container">
-    <div class="identity-header">
-        <div class="id-box"><label>Name</label><span>Kaelen</span></div>
-        <div class="id-box"><label>Class</label><span id="display-class">---</span></div>
-        <div class="id-box"><label>Race</label><span id="display-race">---</span></div>
-    </div>
-
-    <div class="size-row">
-        <span class="size-badge" id="display-size">SIZE: MEDIUM</span>
-    </div>
-
-    <div class="stats-grid">
-        <div class="stat-control"><div class="stat-info"><label>STRENGTH</label><span class="value" id="str-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('str', -1)">-</button><button onclick="changeStat('str', 1)">+</button></div></div>
+    <div id="app-wrapper">
         
-        <div class="stat-control"><div class="stat-info"><label>DEXTERITY</label><span class="value" id="dex-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('dex', -1)">-</button><button onclick="changeStat('dex', 1)">+</button></div></div>
+        <div id="start-screen">
+            <div class="center-group">
+                <button class="btn-main" onclick="window.location.href='char.html'">New Game</button>
+                <button class="btn-main" onclick="initModule('loadout')">Load Game</button>
+            </div>
 
-        <div class="stat-control"><div class="stat-info"><label>SURVIVABILITY</label><span class="value" id="sur-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('sur', -1)">-</button><button onclick="changeStat('sur', 1)">+</button></div></div>
+            <button class="btn-corner bottom-left" onclick="window.open('https://patreon.com', '_blank')">
+                SUPPORT
+            </button>
 
-        <div class="stat-control" style="border: 2px solid var(--highlight-color);"><div class="stat-info"><label id="slot4-label">LOGIC</label><span class="value" id="slot4-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('slot4', -1)">-</button><button onclick="changeStat('slot4', 1)">+</button></div></div>
+            <button class="btn-corner bottom-right" onclick="initModule('settings')">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/settings.png" class="cog-icon" alt="Settings">
+            </button>
+        </div>
 
-        <div class="stat-control"><div class="stat-info"><label>INTUITION</label><span class="value" id="int-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('int', -1)">-</button><button onclick="changeStat('int', 1)">+</button></div></div>
-
-        <div class="stat-control"><div class="stat-info"><label>PRESENCE</label><span class="value" id="pre-val">10</span></div>
-            <div class="controls"><button onclick="changeStat('pre', -1)">-</button><button onclick="changeStat('pre', 1)">+</button></div></div>
-    </div>
-
-    <div class="pool-display">
-        POINTS REMAINING: <span id="points-count">0</span>
-    </div>
-</div>
-
-<script>
-    let stats = { str: 10, dex: 10, sur: 10, slot4: 10, int: 10, pre: 10 };
-    let pointsRemaining = 0;
-
-    function initModule() {
-        const race = document.getElementById('race-select').value;
-        const className = document.getElementById('class-select').value;
-        document.getElementById('display-race').innerText = race;
-        document.getElementById('display-class').innerText = className;
-        document.getElementById('display-size').innerText = (race === "Dwarf") ? "SIZE: SMALL" : "SIZE: MEDIUM";
+        <div id="deployment-module" class="hidden">
+            <button onclick="returnToMenu()">BACK</button>
+        </div>
         
-        const pietyClasses = ["Paladin", "Witch Doctor"];
-        document.getElementById('slot4-label').innerText = pietyClasses.includes(className) ? "PIETY" : "LOGIC";
+        <div id="settings-module" class="hidden">
+            <h2>SYSTEM SETTINGS</h2>
+            <button onclick="returnToMenu()">CLOSE</button>
+        </div>
 
-        pointsRemaining = (race === "Human") ? 85 : 80;
-        stats = { str: 10, dex: 10, sur: 10, slot4: 10, int: 10, pre: 10 };
-        pointsRemaining -= 60; 
-        updateUI();
-    }
+    </div>
 
-    function changeStat(stat, amt) {
-        const race = document.getElementById('race-select').value;
-        const ceiling = (race === "Human") ? 22 : 20;
-        if (amt > 0 && pointsRemaining > 0 && stats[stat] < ceiling) {
-            stats[stat]++; pointsRemaining--;
-        } else if (amt < 0 && stats[stat] > 3) {
-            stats[stat]--; pointsRemaining++;
+    <script>
+        function initModule(id) {
+            document.getElementById('start-screen').classList.add('hidden');
+            const target = document.getElementById(`${id}-module`);
+            if (target) target.classList.remove('hidden');
         }
-        updateUI();
-    }
 
-    function updateUI() {
-        for (let key in stats) { document.getElementById(key + '-val').innerText = stats[key]; }
-        document.getElementById('points-count').innerText = pointsRemaining;
+        function returnToMenu() {
+            document.getElementById('deployment-module').classList.add('hidden');
+            document.getElementById('settings-module').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+    </script>
+	<script>
+    function showModule(moduleName) {
+        // 1. Alert for testing (We'll remove this once we build the screens)
+        console.log("Switching to: " + moduleName);
+        
+        // 2. Hide the main menu (The app-wrapper)
+        document.getElementById('app-wrapper').style.display = 'none';
+
+        // 3. Logic to show the new screen
+        alert("Entering " + moduleName + " mode...");
+        
+        // Note: We will build the actual 'Deploy' and 'Loadout' 
+        // containers in the next step!
     }
-    initModule();
 </script>
+
 </body>
 </html>
