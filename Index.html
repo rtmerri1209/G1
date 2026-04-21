@@ -20,16 +20,16 @@
         .bg-layer {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: url('your-background.gif') no-repeat center center;
+            background: url('Dope.jpg') no-repeat center center;
             background-size: cover;
-            z-index: -2;
+            z-index: 1;
         }
 
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.4);
-            z-index: -1;
+            z-index: 2;
         }
 
         /* MAIN CONTAINER */
@@ -37,12 +37,13 @@
             position: relative;
             height: 100vh;
             width: 100vw;
+	    z-index: 10;
         }
 
         /* CENTER BUTTONS (Shifted slightly below absolute center) */
         .center-group {
             position: absolute;
-            top: 55%; /* Pushes it just below the 50% mark */
+            top: 46%; /* Pushes it just below the 50% mark */
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
@@ -54,10 +55,11 @@
 
         .btn-main {
             padding: 20px;
-            font-size: 1.2rem;
-            background: rgba(0, 255, 65, 0.1);
-            border: 2px solid #00ff41;
-            color: #00ff41;
+            border-radius: 12px;
+	    font-size: 1.2rem;
+            background: rgba(40, 30, 10, 0.7);
+            border: 2px solid #FFCC66;
+            color: #FFCC66;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
@@ -69,7 +71,7 @@
             bottom: 40px; /* Buffer for mobile nav bars */
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(0, 255, 65, 0.5);
-            color: #00ff41;
+            color: #FFCC66;
             padding: 10px;
             cursor: pointer;
             display: flex;
@@ -108,8 +110,8 @@
         
         <div id="start-screen">
             <div class="center-group">
-                <button class="btn-main" onclick="initModule('deployment')">Deploy</button>
-                <button class="btn-main" onclick="initModule('loadout')">Loadout</button>
+                <button class="btn-main" onclick="initModule('New Game')">Deploy</button>
+                <button class="btn-main" onclick="initModule('Load Game')">Loadout</button>
             </div>
 
             <button class="btn-corner bottom-left" onclick="window.open('https://patreon.com', '_blank')">
