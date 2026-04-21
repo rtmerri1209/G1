@@ -2,123 +2,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Character Creation</title>
+    <title>Achilles - Character Registration</title>
     <style>
         :root {
-            --brand-color: #FFC666; 
-            --bg-overlay: rgba(26, 26, 26, 0.9);
-            --panel-bg: rgba(37, 37, 37, 0.95);
+            --brand-color: #FFC666;
+            --bg-dark: #1a1a1a;
+            --input-bg: #252525;
         }
 
-        body { 
-            background-image: url('background.jpg'); 
+        body {
+            background-image: url('background.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-color: #1a1a1a;
-            color: #e0e0e0; 
-            font-family: 'Segoe UI', sans-serif; 
-            display: flex; 
-            justify-content: center; 
+            background-color: var(--bg-dark);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-overlay);
-            z-index: -1;
+        .selection-panel {
+            width: 450px;
+            background: rgba(30, 30, 30, 0.95);
+            padding: 30px;
+            border: 2px solid var(--brand-color);
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
         }
 
-        .selection-container { 
-            width: 500px; 
-            background: var(--panel-bg); 
-            padding: 40px; 
-            border: 2px solid var(--brand-color); 
-            border-radius: 8px; 
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
-            text-align: center;
-        }
+        h2 { color: var(--brand-color); text-transform: uppercase; letter-spacing: 2px; text-align: center; border-bottom: 1px solid #444; padding-bottom: 10px; }
 
-        h2 { 
-            color: var(--brand-color); 
-            text-transform: uppercase; 
-            letter-spacing: 3px;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--brand-color);
-            padding-bottom: 10px;
-        }
+        .form-group { margin-bottom: 20px; }
 
-        .input-group {
-            margin-bottom: 25px;
-            text-align: left;
-        }
+        label { display: block; font-size: 0.75rem; color: var(--brand-color); text-transform: uppercase; margin-bottom: 5px; font-weight: bold; }
 
-        label {
-            display: block;
-            color: var(--brand-color);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        input[type="text"], select {
+        input, select {
             width: 100%;
             padding: 12px;
-            background: #111;
+            background: var(--input-bg);
             border: 1px solid #444;
             color: #fff;
             border-radius: 4px;
             font-size: 1rem;
-            box-sizing: border-box;
-        }
-
-        input[type="text"]:focus, select:focus {
-            border-color: var(--brand-color);
             outline: none;
         }
 
-        .btn-row {
-            margin-top: 40px;
+        input:focus, select:focus { border-color: var(--brand-color); }
+
+        /* The "Grayed Out" State */
+        select:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            border-color: #333;
         }
 
         .start-btn {
+            width: 100%;
             background: transparent;
             color: var(--brand-color);
             border: 2px solid var(--brand-color);
-            padding: 15px 50px;
+            padding: 15px;
             font-size: 1.1rem;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
             cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-transform: uppercase;
+            transition: 0.3s;
         }
 
-        .start-btn:hover {
-            background: var(--brand-color);
-            color: #1a1a1a;
-            box-shadow: 0 0 20px rgba(255, 198, 102, 0.4);
-        }
+        .start-btn:hover { background: var(--brand-color); color: #000; box-shadow: 0 0 15px var(--brand-color); }
     </style>
 </head>
 <body>
 
-<div class="selection-container">
-    <h2>Identify Operative</h2>
+<div class="selection-panel">
+    <h2>Operative Selection</h2>
     
-    <div class="input-group">
-        <label>Character Name</label>
-        <input type="text" id="char-name" placeholder="ENTER NAME...">
+    <div class="form-group">
+        <label>Unit Designation (Name)</label>
+        <input type="text" id="char-name" placeholder="IDENTIFY...">
     </div>
 
-    <div class="input-group">
-        <label>Race</label>
+    <div class="form-group">
+        <label>Biological Origin (Race)</label>
         <select id="race-select">
             <option value="human">Human</option>
             <option value="elf">Elf</option>
@@ -128,48 +98,78 @@
         </select>
     </div>
 
-    <div class="input-group">
-        <label>Primary Class</label>
-        <select id="class-select">
+    <div class="form-group">
+        <label>Combat Archetype (Class)</label>
+        <select id="class-select" onchange="toggleSpecialization()">
+            <option value="Warrior">Warrior</option>
+            <option value="Mage">Mage</option>
             <option value="Paladin">Paladin</option>
             <option value="Cleric">Cleric</option>
-            <option value="Mage">Mage</option>
-            <option value="Warrior">Warrior</option>
         </select>
     </div>
 
-    <div class="btn-row">
-        <button class="start-btn" onclick="initializeCharacter()">Initialize Stats</button>
+    <div class="form-group">
+        <label id="spec-label">Specialization Options</label>
+        <select id="spec-select" disabled>
+            <option value="">-- No Selection Required --</option>
+        </select>
     </div>
+
+    <button class="start-btn" onclick="saveAndStart()">Initialize Stats</button>
 </div>
 
 <script>
-    function initializeCharacter() {
+    function toggleSpecialization() {
+        const selectedClass = document.getElementById('class-select').value;
+        const specSelect = document.getElementById('spec-select');
+        const specLabel = document.getElementById('spec-label');
+
+        // Reset the dropdown
+        specSelect.innerHTML = "";
+        specSelect.disabled = true;
+        specLabel.innerText = "SPECIALIZATION OPTIONS";
+
+        if (selectedClass === "Warrior") {
+            specSelect.disabled = false;
+            specLabel.innerText = "WARRIOR: SELECT SECONDARY FOCUS";
+            specSelect.innerHTML = `
+                <option value="str">Strength (Heavy Arms)</option>
+                <option value="dex">Dexterity (Dual Wield)</option>
+            `;
+        } 
+        else if (selectedClass === "Mage") {
+            specSelect.disabled = false;
+            specLabel.innerText = "MAGE: SELECT PRIMARY FOCUS";
+            specSelect.innerHTML = `
+                <option value="logic">Logic (Secondary: Dex)</option>
+                <option value="piety">Piety (Secondary: Sur)</option>
+            `;
+        }
+    }
+
+    function saveAndStart() {
         const name = document.getElementById('char-name').value;
         const race = document.getElementById('race-select').value;
         const className = document.getElementById('class-select').value;
+        const spec = document.getElementById('spec-select').value;
 
-        if (!name) {
-            alert("Please enter a character name.");
-            return;
-        }
+        if (!name) { alert("Identify yourself, Operative."); return; }
 
-        // Logic for Size Category based on your constraints
-        // Medium for all except gnome and halfling
-        let size = "Medium";
-        if (race === "gnome" || race === "halfling") {
-            size = "Small";
-        }
+        // Size Logic
+        let size = (race === "gnome" || race === "halfling") ? "Small" : "Medium";
 
-        // Save everything to LocalStorage for the Stats Module to pick up
+        // Save to LocalStorage
         localStorage.setItem('charName', name);
         localStorage.setItem('race', race);
         localStorage.setItem('class', className);
         localStorage.setItem('size', size);
+        localStorage.setItem('specialization', spec); // This is the key "Choice" data
 
-        // Redirect to the stats module exactly as requested
         window.location.href = 'stats_module.html';
     }
+
+    // Initialize the state on page load
+    window.onload = toggleSpecialization;
 </script>
 
 </body>
