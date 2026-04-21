@@ -47,17 +47,11 @@
             backdrop-filter: blur(5px); /* Blurs the background image behind the panel */
         }
         function goToSkills() {
-    // Basic validation: Make sure they spent their points
     if (pointsRemaining > 0) {
         alert("Wait! You still have " + pointsRemaining + " points to distribute.");
     } else {
-        // Log the final stats to console for debugging
         console.log("Attributes Locked In:", stats);
-        
-        /* When you're ready to save these to local storage so 
-           the next page can read them, you'd use:
-           localStorage.setItem('characterStats', JSON.stringify(stats));
-        */
+         localStorage.setItem('characterStats', JSON.stringify(stats))
         
         window.location.href = 'stats2.html'; 
     }
@@ -179,8 +173,8 @@
 
 <script>
     // These would be imported from your char-creation data
-    const selectedRace = "Human"; 
-    const selectedClass = "Paladin"; 
+    const selectedRace = localStorage.getItem('race'); 
+    const selectedClass = localStorage.getItem('class'); 
 
     let stats = { str: 10, dex: 10, sur: 10, slot4: 10, int: 10, pre: 10 };
     let pointsRemaining = (selectedRace === "Human") ? 85 : 80;
