@@ -69,32 +69,32 @@
 </head>
 <body>
 
-    <h1 style="letter-spacing: 5px;">NEW OPERATOR REGISTRATION</h1>
+    <h1 style="letter-spacing: 5px;">New Character</h1>
 
     <div class="terminal-box">
         <div class="input-group">
             <label>NAME:</label>
-            <input type="text" id="char-name" placeholder="Enter Designation...">
+            <input type="text" id="char-name" placeholder="Character Name">
         </div>
 
         <div class="input-group">
             <label>RACE:</label>
             <select id="char-race" onchange="updateSize()">
-                <option value="human">HUMAN</option>
-                <option value="elf">ELF</option>
-                <option value="dwarf">DWARF</option>
-                <option value="gnome">GNOME</option>
-                <option value="halfling">HALFLING</option>
+                <option value="human">Human</option>
+                <option value="elf">Elf</option>
+                <option value="dwarf">Dwarf</option>
+                <option value="gnome">Gnome</option>
+                <option value="halfling">Halfling</option>
             </select>
         </div>
 
         <div class="input-group">
             <label>SIZE CATEGORY:</label>
-            <input type="text" id="char-size" value="MEDIUM" disabled>
+            <input type="text" id="char-size" value="Medium" disabled>
         </div>
 
-        <button class="btn" onclick="goToStats()">NEXT: ALLOCATE STATS</button>
-        <button class="btn" style="border-color: #444; color: #888;" onclick="window.location.href='index.html'">ABORT</button>
+        <button class="btn" onclick="goToStats()">Next</button>
+        <button class="btn" style="border-color: #444; color: #888;" onclick="window.location.href='index.html'">Back</button>
     </div>
 
     <script>
@@ -113,14 +113,48 @@
             const name = document.getElementById('char-name').value;
             if (!name) {
                 alert("Operator must have a name.");
-                return;
-            }
-            
-            // For now, we'll just alert. Later, this will move to the next page.
-            alert("Proceeding to stats for " + name);
-            // window.location.href = 'char_stats.html'; 
-        }
+                
+    // 1. Grab the data from your HTML elements
+    const name = document.getElementById('name-input-id').value; 
+    const race = document.getElementById('race-dropdown-id').value;
+    
+    // 2. Logic for size (optional but helpful)
+    let size = (race === "Gnome" || race === "Halfling") ? "Small" : "Medium";
+
+    // 3. Save to the browser's "Notebook"
+    const charData = { name, race, size };
+    localStorage.setItem('activeCharacter', JSON.stringify(charData));
+
+    // 4. NOW change the screen
+    window.location.href = "stats_module.html"; 
+}
+
     </script>
+function saveInitialRegistration() {
+    // 1. Grab the values from your HTML elements
+    const charName = document.getElementById('name-text-box').value; // Make sure this ID matches your HTML
+    const charRace = document.getElementById('race-dropdown').value;
+    
+    // 2. Logic for the size category (based on your dropdown rules)
+    let charSize = "Medium";
+    if (charRace === "Gnome" || charRace === "Halfling") {
+        charSize = "Small";
+    }
+
+    // 3. Create a character object
+    const characterData = {
+        name: charName,
+        race: charRace,
+        size: charSize,
+        stats: {} // We'll leave this empty to be filled by the NEXT module
+    };
+
+    // 4. Save to localStorage (The "Permanent" Notebook)
+    localStorage.setItem('activeCharacter', JSON.stringify(characterData));
+
+    // 5. Move to the next module
+    window.location.href = 'stats_module.html'; // Or however you trigger the screen swap
+}
 
 </body>
 </html>
