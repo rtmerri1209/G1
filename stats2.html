@@ -159,6 +159,33 @@ featsData.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     renderFeats();
+    
+    function saveSelectedFeats() {
+    // 1. Find all checkboxes in your feat list
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let selectedFeats = [];
+
+    // 2. Loop through and find the ones that are checked
+    checkboxes.forEach((box) => {
+        if (box.checked) {
+            // We use the ID or a label name to identify the feat
+            selectedFeats.push(box.value || box.id); 
+        }
+    });
+
+    // 3. Save the list as a string to LocalStorage
+    localStorage.setItem('selectedFeats', JSON.stringify(selectedFeats));
+    
+    console.log("Feats saved:", selectedFeats);
+}
+
+// 4. Attach this function to every checkbox click
+document.addEventListener('change', function(e) {
+    if (e.target.type === 'checkbox') {
+        saveSelectedFeats();
+    }
+});
+
 </script>
 
 </body>
