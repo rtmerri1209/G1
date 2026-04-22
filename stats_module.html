@@ -34,6 +34,38 @@
             border-radius: 12px;
             box-shadow: 0 0 40px rgba(0,0,0,0.9);
         }
+/* 1. Make the stat box a "parent" so the letters stay inside it */
+.stat-item { 
+    position: relative; 
+}
+
+/* 2. Create the 'P' for Primary Stats */
+.primary-stat::after {
+    content: 'P';
+    position: absolute;
+    right: 50%; /* This puts it in the middle gap */
+    top: 50%;
+    transform: translate(50%, -50%);
+    color: var(--brand-color); /* Uses your orange-ish brand color */
+    font-weight: bold;
+    font-size: 1.2rem;
+    opacity: 0.5; /* Makes it slightly see-through so it looks like a HUD */
+    pointer-events: none;
+}
+
+/* 3. Create the 'S' for Secondary Stats */
+.secondary-stat::after {
+    content: 'S';
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    transform: translate(50%, -50%);
+    color: var(--secondary-color); /* Uses your blue secondary color */
+    font-weight: bold;
+    font-size: 1.2rem;
+    opacity: 0.5;
+    pointer-events: none;
+}
 
         /* Top Header Layout */
         .top-nav {
