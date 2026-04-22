@@ -32,9 +32,40 @@
 </div>
 
 <script>
-    // --- CONFIGURATION ---
-    const MAX_FEATS = 5; // You can change this based on character level/stats later
+    // --- CONFIG
+    // --- DYNAMIC FEAT SLOT CALCULATION ---
+
+// These would ideally be linked to your Race/Class selection inputs
+let selectedRace = localStorage.getItem('race');   // e.g., document.getElementById('race-select').value
+let selectedClass = localStorage.getItem('class');  // e.g., document.getElementById('class-select').value
+
+function calculateStartingFeats(race, className) {
+    let total = 0; // Everyone starts at 0
+
+    // Add 1 if Human
+    if (race === "Human") {
+        total += 1;
+    }
+
+    // Add 1 if Rogue
+    if (className === "Rogue") {
+        total += 1;
+    }
+
+    // Add 1 if Warrior
+    if (className === "Warrior") {
+        total += 1;
+    }
+
+    // Note: Mages or any other class not listed above 
+    // will stay at 0 (or 1 if they are a Human Mage).
     
+    return total;
+}
+
+// Initialize the MAX_FEATS variable
+let MAX_FEATS = calculateStartingFeats(selectedRace, selectedClass);
+
     const featsData = [
         { name: "Rugged Body", desc: "Increases HP scaling and grants knockback resistance.", limit: "Constant" },
         { name: "Sawed-Off", desc: "Removes accuracy penalties for ranged weapons in melee range.", limit: "Constant" },
