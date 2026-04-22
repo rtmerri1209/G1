@@ -57,6 +57,8 @@
         { name: "Divine Burden", desc: "Piety/Divine debuffs roll 2d20 and keep highest.", limit: "Non-Stackable" },
         { name: "Divine Echo", desc: "Heals trigger secondary effect: 1/3 value heals ally or damages enemy.", limit: "Non-Stackable" }
     ];
+// Sort the feats alphabetically by name
+featsData.sort((a, b) => a.name.localeCompare(b.name));
 
     const listContainer = document.getElementById('feat-list');
     const slotsDisplay = document.getElementById('slots-left');
