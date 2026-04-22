@@ -12,7 +12,7 @@
         }
 
         body {
-            background-image: url('background.jpg');
+            background-image: url('Dope.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -34,14 +34,16 @@
             border-radius: 12px;
             box-shadow: 0 0 40px rgba(0,0,0,0.9);
         }
-/* 1. Make the stat box a "parent" so the letters stay inside it */
-.stat-item { 
+/* 1. Make the stat box a "parent" so the letters stay inside it */ 
+.stat-item{
+}    
+[id^="ctrl-"] {
     position: relative; 
 }
 
 /* 2. Create the 'P' for Primary Stats */
 .primary-stat::after {
-    content: 'P';
+    content: 'Primary';
     position: absolute;
     right: 50%; /* This puts it in the middle gap */
     top: 50%;
@@ -55,7 +57,7 @@
 
 /* 3. Create the 'S' for Secondary Stats */
 .secondary-stat::after {
-    content: 'S';
+    content: 'Secondary';
     position: absolute;
     right: 50%;
     top: 50%;
@@ -255,6 +257,7 @@ let baseStats = { str: 10, dex: 10, sur: 10, slot4: 10, int: 10, pre: 10 };
 let points = 0;
 let primary = "";
 let secondary = "";
+let buyCap;
 
 // 2. INITIALIZE PAGE
 function init() {
@@ -263,7 +266,7 @@ function init() {
     const spec = localStorage.getItem('specialization');
 
     // BUDGET: 35 for Humans, 30 for others
-    points = (race === "human") ? 35 : 30;
+    points = (race === "human") ? 30 : 25;
 
     // CLASS SETTINGS
     if (className === "Warrior") {
@@ -295,7 +298,14 @@ function init() {
 
 // 3. STAT BUTTON LOGIC
 function changeStat(s, d) {
-    const buyCap = 20; // Hard limit on point-spending
+	const race = localStorage.getItem('race')
+	let buyCap;
+	if (race === 'human') // Hard limit on point-spending
+    {
+	buyCap = 22;
+    } else {
+	buyCap = 20;
+    }
     const floor = 3;  // Hard limit on down-tuning
 
     if (d > 0 && points > 0 && baseStats[s] < buyCap) { 
