@@ -47,6 +47,10 @@
     </style>
 </head>
 <body>
+/* test page button */ 
+<a href="test.html"
+id="temp-debug-link">Data Integrity</a>
+/* end test button*/
 
 <div id="counter">Slots Remaining: <span id="slots-left">0</span></div>
 
@@ -64,8 +68,8 @@
     // --- DYNAMIC FEAT SLOT CALCULATION ---
 
 // These would ideally be linked to your Race/Class selection inputs
-let selectedRace = localStorage.getItem('race-select');   // e.g., document.getElementById('race-select').value
-let selectedClass = localStorage.getItem('class-select');  // e.g., document.getElementById('class-select').value
+let selectedRace = localStorage.getItem('race');   // e.g., document.getElementById('race-select').value
+let selectedClass = localStorage.getItem('class');  // e.g., document.getElementById('class-select').value
 
 function calculateStartingFeats(race, className) {
     let total = 0; // Everyone starts at 0
@@ -132,7 +136,7 @@ featsData.sort((a, b) => a.name.localeCompare(b.name));
             const featDiv = document.createElement('div');
             featDiv.className = 'feat-item';
             featDiv.innerHTML = `
-                <input type="checkbox" id="feat-${index}" onchange="handleSelection(this)">
+                <input type="checkbox" id="feat-${index}" value="${feat.name}" onchange="handleSelection(this)">
                 <div class="feat-details">
                     <label for="feat-${index}" class="feat-name">${feat.name}</label>
                     <span class="feat-desc">${feat.desc}</span><br>
@@ -156,6 +160,7 @@ featsData.sort((a, b) => a.name.localeCompare(b.name));
             selectedCount--;
         }
         updateCounter();
+	saveSelectedFeats();
     }
 
     renderFeats();
