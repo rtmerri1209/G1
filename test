@@ -1,1 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>System Debug - Data Dump</title>
+    <style>
+        body { background: #1a1a1a; color: #00ff00; font-family: monospace; padding: 20px; }
+        .debug-card { border: 1px solid #333; padding: 15px; margin-bottom: 10px; background: #222; }
+        h2 { color: #ffcc00; border-bottom: 1px solid #ffcc00; }
+        .stat-line { margin: 5px 0; }
+    </style>
+</head>
+<body>
+
+    <h1>Tinkk Engine: Data Audit</h1>
+    <hr>
+
+    <div class="debug-card">
+        <h2>Core Identity</h2>
+        <div id="identity-output"></div>
+    </div>
+
+    <div class="debug-card">
+        <h2>Final Calculated Stats</h2>
+        <div id="stats-output"></div>
+    </div>
+
+    <div class="debug-card">
+        <h2>Selected Feats</h2>
+        <div id="feats-output"></div>
+    </div>
+
+    <script>
+        // 1. Pull Raw Data
+        const savedRace = localStorage.getItem('race') || "Not Found";
+        const savedClass = localStorage.getItem('class') || "Not Found";
+        const savedName = localStorage.getItem('charName') || "Not Found";
+        
+        // 2. Pull and Parse the Objects (Stats & Feats)
+        const rawStats = localStorage.getItem('finalCalculatedStats');
+        const rawFeats = localStorage.getItem('selectedFeats'); // Adjust key name if different
+
+        // Identity Display
+        document.getElementById('identity-output').innerHTML = `
+            <p><strong>Name:</strong> ${savedName}</p>
+            <p><strong>Race:</strong> ${savedRace}</p>
+            <p><strong>Class:</strong> ${savedClass}</p>
+        `;
+
+        // Stats Display (Parsing the JSON object)
+        const statsOutput = document.getElementById('stats-output');
+        if (rawStats) {
+            const statsObj = JSON.parse(rawStats);
+            for (let s in statsObj) {
+                statsOutput.innerHTML += `<div class="stat-line"><strong>${s.toUpperCase()}:</strong> ${statsObj[s]}</div>`;
+            }
+        } else {
+            statsOutput.innerHTML = "No stats found in storage.";
+        }
+
+        // Feats Display
+        const featsOutput = document.getElementById('feats-output');
+        if (rawFeats) {
+            // If feats are an array/object, parse them. If it's a single string, just show it.
+            try {
+                const feats = JSON.parse(rawFeats);
+                featsOutput.innerHTML = Array.isArray(feats) ? feats.join(", ") : JSON.stringify(feats);
+            } catch(e) {
+                featsOutput.innerHTML = rawFeats;
+            }
+        } else {
+            featsOutput.innerHTML = "No feats selected.";
+        }
+    </script>
+</body>
+</html>
 
