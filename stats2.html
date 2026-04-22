@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feat Selection Module</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a1a; color: #e0e0e0; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: #2d2d2d; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        h1 { border-bottom: 2px solid #444; padding-bottom: 10px; color: #ff9800; }
+        .feat-item { display: flex; align-items: flex-start; padding: 10px; border-bottom: 1px solid #444; transition: background 0.2s; }
+        .feat-item:hover { background: #383838; }
+        .feat-item input { margin-top: 5px; cursor: pointer; }
+        .feat-details { margin-left: 15px; }
+        .feat-name { font-weight: bold; color: #4caf50; display: block; }
+        .feat-desc { font-size: 0.9em; color: #bbb; }
+        .feat-limit { font-size: 0.8em; color: #ff5722; font-style: italic; }
+        #counter { position: fixed; top: 20px; right: 20px; background: #ff9800; color: #000; padding: 10px 20px; border-radius: 5px; font-weight: bold; }
+        .gap { height: 50px; border: 2px dashed #444; margin-top: 20px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #666; }
+    </style>
+</head>
+<body>
+
+<div id="counter">Slots Remaining: <span id="slots-left">0</span></div>
+
+<div class="container">
+    <h1>Character Feats Configuration</h1>
+    <div id="feat-list">
+        </div>
+
+    <div class="gap">ADD CUSTOM FEAT SLOT 1 (Edit HTML)</div>
+    <div class="gap">ADD CUSTOM FEAT SLOT 2 (Edit HTML)</div>
+</div>
+
+<script>
+    // --- CONFIGURATION ---
+    const MAX_FEATS = 5; // You can change this based on character level/stats later
+    
+    const featsData = [
+        { name: "Rugged Body", desc: "Increases HP scaling and grants knockback resistance.", limit: "Constant" },
+        { name: "Sawed-Off", desc: "Removes accuracy penalties for ranged weapons in melee range.", limit: "Constant" },
+        { name: "Iron Lung", desc: "Increases Sprint move speed by an additional 10 ft.", limit: "Active" },
+        { name: "Shield Wall", desc: "Stacking armor bonus for every ally within 5ft.", limit: "Aura" },
+        { name: "Second Wind", desc: "Recover HP = Survivability Skill when below 25% Health.", limit: "1/Day per Rank (Stackable)" },
+        { name: "Cat-Like Reflexes", desc: "Grants +1 additional Reaction per turn.", limit: "Stackable" },
+        { name: "Pack Mule", desc: "Increases base carry capacity by +50 lbs.", limit: "Non-Stackable" },
+        { name: "Fearless", desc: "Roll an additional d6 on checks against Fear/Frightened/Shaken.", limit: "Stackable" },
+        { name: "Breacher", desc: "Add +1d6 to damage vs objects (Applied BEFORE hardness).", limit: "Non-Stackable" },
+        { name: "Scavenger", desc: "2/Day roll d100 for lost items/gold.", limit: "Stackable (+1 use per rank)" },
+        { name: "Will of Domination", desc: "Increases Save DC of mind-altering spells by +1d4.", limit: "Stackable" },
+        { name: "Well of the Mind", desc: "Rank 1: +1 Lvl 1 slot/cantrip. Higher ranks add higher level slots.", limit: "Stackable" },
+        { name: "Quiet Casting", desc: "Roll d20 vs Target Perception to cast unnoticed.", limit: "Non-Stackable" },
+        { name: "Blood Magic", desc: "Once per day, cast using HP (1d10 per spell level) instead of slot.", limit: "Stackable (+2 uses per rank)" },
+        { name: "Spell Sniper", desc: "Increases effective range of projectile spells by 25%.", limit: "Non-Stackable" },
+        { name: "Battle Medic", desc: "Cast healing spells as a Reaction when ally within 10ft takes damage.", limit: "Non-Stackable" },
+        { name: "Blanket", desc: "Defensive buff spells target one additional party member.", limit: "Stackable (Cap: 3)" },
+        { name: "Bolster", desc: "Defensive spells on Heavy Armor allies grant them +1 Reaction.", limit: "Non-Stackable" },
+        { name: "Divine Burden", desc: "Piety/Divine debuffs roll 2d20 and keep highest.", limit: "Non-Stackable" },
+        { name: "Divine Echo", desc: "Heals trigger secondary effect: 1/3 value heals ally or damages enemy.", limit: "Non-Stackable" }
+    ];
+
+    const listContainer = document.getElementById('feat-list');
+    const slotsDisplay = document.getElementById('slots-left');
+    let selectedCount = 0;
+
+    function updateCounter() {
+        slotsDisplay.innerText = MAX_FEATS - selectedCount;
+    }
+
+    function renderFeats() {
+        featsData.forEach((feat, index) => {
+            const featDiv = document.createElement('div');
+            featDiv.className = 'feat-item';
+            featDiv.innerHTML = `
+                <input type="checkbox" id="feat-${index}" onchange="handleSelection(this)">
+                <div class="feat-details">
+                    <label for="feat-${index}" class="feat-name">${feat.name}</label>
+                    <span class="feat-desc">${feat.desc}</span><br>
+                    <span class="feat-limit">${feat.limit}</span>
+                </div>
+            `;
+            listContainer.appendChild(featDiv);
+        });
+        updateCounter();
+    }
+
+    function handleSelection(checkbox) {
+        if (checkbox.checked) {
+            if (selectedCount >= MAX_FEATS) {
+                checkbox.checked = false;
+                alert("Maximum feat slots reached!");
+            } else {
+                selectedCount++;
+            }
+        } else {
+            selectedCount--;
+        }
+        updateCounter();
+    }
+
+    renderFeats();
+</script>
+
+</body>
+</html>
 
