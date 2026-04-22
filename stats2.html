@@ -71,17 +71,17 @@ function calculateStartingFeats(race, className) {
     let total = 0; // Everyone starts at 0
 
     // Add 1 if Human
-    if (race === "Human") {
+    if (selectedRace === "human") {
         total += 1;
     }
 
     // Add 1 if Rogue
-    if (className === "Rogue") {
+    if (selectedClass === "Rogue") {
         total += 1;
     }
 
     // Add 1 if Warrior
-    if (className === "Warrior") {
+    if (selectedClass === "Warrior") {
         total += 1;
     }
 
@@ -190,4 +190,3 @@ document.addEventListener('change', function(e) {
 
 </body>
 </html>
-
