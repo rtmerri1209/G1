@@ -39,6 +39,28 @@
     </style>
 </head>
 <body>
+/* START DEBUG BUTTON STYLE - DELETE LATER */
+.debug-btn {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    z-index: 10000;
+    padding: 15px;
+    background-color: #ff3300; /* Bright red to stand out */
+    color: white;
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    border: 3px solid white;
+    border-radius: 8px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+    cursor: pointer;
+}
+.debug-btn:hover {
+    background-color: #cc2900;
+}
+/* END DEBUG BUTTON STYLE - DELETE LATER */
 
 <div id="counter">Slots Remaining: <span id="slots-left">0</span></div>
 
