@@ -1,1 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        :root { --brand: #ffcc66; }
+        body { background-color: #121212; color: var(--brand); font-family: sans-serif; padding: 20px; }
+
+        /* The Header Pool */
+        .point-pool {
+            text-align: center;
+            font-size: 1.5rem;
+            border: 2px solid var(--brand);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        /* The 3-Column Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .category-box {
+            border: 2px solid var(--brand);
+            border-radius: 14px;
+            padding: 15px;
+            min-height: 300px;
+        }
+
+        .category-title {
+            text-align: center;
+            border-bottom: 1px solid var(--brand);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        /* Skill Row Styling */
+        .skill-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        /* Logic for "Locked" skills */
+        .locked {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        button.control {
+            background: transparent;
+            border: 1px solid var(--brand);
+            color: var(--brand);
+            cursor: pointer;
+            border-radius: 4px;
+            padding: 2px 8px;
+        }
+        
+        button.control:hover { background: var(--brand); color: #000; }
+    </style>
+</head>
+<body>
+
+    <div class="point-pool">
+        Points Remaining: <span id="pool-display">20</span>
+    </div>
+
+    <div class="skills-grid">
+        <div class="category-box" id="physical-cat">
+            <div class="category-title">Physical</div>
+            </div>
+        <div class="category-box" id="mental-cat">
+            <div class="category-title">Mental</div>
+        </div>
+        <div class="category-box" id="social-cat">
+            <div class="category-title">Social</div>
+        </div>
+    </div>
+
+    <script>
+        // Placeholder for user data (Usually passed from previous page)
+        let userClass = "Rogue"; 
+        let userFeats = ["Academic Training"]; // Example Feat that might unlock a skill
+        let points = 20;
+
+        // THE MASTER DATA
+        const skills = [
+            { id: 'athletics', name: 'Athletics', cat: 'physical', classes: ['Warrior', 'Barbarian'] },
+            { id: 'stealth', name: 'Stealth', cat: 'physical', classes: ['Rogue', 'Ranger'] },
+            { id: 'arcana', name: 'Arcana', cat: 'mental', classes: ['Wizard'], featUnlock: 'Academic Training' },
+            { id: 'persuasion', name: 'Persuasion', cat: 'social', classes: ['Paladin', 'Bard'] }
+        ];
+
+        // LOGIC TO RENDER SKILLS
+        function renderSkills() {
+            skills.forEach(skill => {
+                const container = document.getElementById(`${skill.cat}-cat`);
+                const isAllowed = skill.classes.includes(userClass) || userFeats.includes(skill.featUnlock);
+                
+                const html = `
+                    <div class="skill-row ${isAllowed ? '' : 'locked'}">
+                        <span>${skill.name}</span>
+                        <div>
+                            <button class="control" onclick="updateSkill('${skill.id}', -1)">-</button>
+                            <span id="val-${skill.id}">0</span>
+                            <button class="control" onclick="updateSkill('${skill.id}', 1)">+</button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        renderSkills();
+    </script>
+</body>
+</html>
 
