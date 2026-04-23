@@ -4,28 +4,7 @@
     <meta charset="UTF-8">
     <title>Character Creation</title>
     <style>
-        /* Container to push the button to the bottom center */
-.bottom-button-container {
-  position: fixed; /* Fixes it relative to the screen, not the content */
-  bottom: 20px;     /* A small margin from the very bottom edge */
-  left: 0;
-  width: 100%;      /* Spans the full width of the screen */
-  display: flex;    /* Enables flexible layout */
-  justify-content: center; /* Centers the button horizontally */
-  align-items: center;    /* Centers the button vertically (within its own tiny height) */
-  z-index: 1000;    /* Ensures it stays on top of other content */
-}
-
-/* * We also need a small tweak to make the button not 100% wide 
- * when it's just a regular button at the bottom.
- * This rule will only apply to the `.start-btn` IF it's inside 
- * our container.
- */
-.bottom-button-container .start-btn {
-  width: auto;         /* Allow the button to be as wide as its text */
-  padding: 15px 40px; /* Adjust padding for better horizontal spacing */
-  margin: 0;          /* Remove the top margin we saw in your CSS */
-}
+        
 
 		:root {
             --brand-color: #FFC666;
@@ -131,12 +110,6 @@
 	    <option value="Rogue">Rogue</option>
         </select>
     </div>
-<div class="bottom-button-container">
-  <a href="stats3.html">
-    <button type="button" class="start-btn">Next: View Stats</button>
-  </a>
-</div>
-
     <div class="form-group">
         <label id="spec-label">Specialization Options</label>
         <select id="spec-select" disabled>
