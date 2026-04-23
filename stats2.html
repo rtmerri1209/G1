@@ -44,28 +44,7 @@
         .feat-limit { font-size: 0.8em; color: #ff5722; font-style: italic; }
         #counter { position: fixed; top: 20px; right: 20px; background: #ff9800; color: #000; padding: 10px 20px; border-radius: 5px; font-weight: bold; }
         .gap { height: 50px; border: 2px dashed #444; margin-top: 20px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #666; }
-    /* Container to push the button to the bottom center */
-.bottom-button-container {
-  position: fixed; /* Fixes it relative to the screen, not the content */
-  bottom: 20px;     /* A small margin from the very bottom edge */
-  left: 0;
-  width: 100%;      /* Spans the full width of the screen */
-  display: flex;    /* Enables flexible layout */
-  justify-content: center; /* Centers the button horizontally */
-  align-items: center;    /* Centers the button vertically (within its own tiny height) */
-  z-index: 1000;    /* Ensures it stays on top of other content */
-}
 
-/* * We also need a small tweak to make the button not 100% wide 
- * when it's just a regular button at the bottom.
- * This rule will only apply to the `.start-btn` IF it's inside 
- * our container.
- */
-.bottom-button-container .start-btn {
-  width: auto;         /* Allow the button to be as wide as its text */
-  padding: 15px 40px; /* Adjust padding for better horizontal spacing */
-  margin: 0;          /* Remove the top margin we saw in your CSS */
-}
 
 	</style>
 </head>
@@ -85,10 +64,30 @@ id="temp-debug-link">Data Integrity</a>
     <div class="gap">ADD CUSTOM FEAT SLOT 1 (Edit HTML)</div>
     <div class="gap">ADD CUSTOM FEAT SLOT 2 (Edit HTML)</div>
 </div>
-<div class="bottom-button-container">
-  <a href="stats3.html">
-    <button type="button" class="start-btn">Next: View Stats</button>
+
+	<div style="position: fixed; bottom: 30px; left: 0; width: 100%; display: flex; justify-content: center; z-index: 9999;">
+  
+  <a href="stats3.html" style="
+    display: inline-block;
+    text-decoration: none;
+    background-color: transparent;
+    color: #ffcc66;
+    border: 2px solid #ffcc66;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: sans-serif;
+    border-radius: 4px; 
+  " 
+  onmouseover="this.style.backgroundColor='#ffcc66'; this.style.color='#000';" 
+  onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ffcc66';">
+    Next
   </a>
+
 </div>
 
 <script>
