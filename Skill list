@@ -1,0 +1,25 @@
+const MASTER_SKILL_LIST = [
+    // --- PHYSICAL (Class-Based Cost) ---
+    { id: "ath", name: "Athletics", stat: "strength", type: "standard" },
+    { id: "agi", name: "Agility", stat: "dexterity", type: "standard" },
+    { id: "snk", name: "Sneak", stat: "dexterity", type: "standard" },
+    { id: "sur", name: "Survival", stat: "survivability", type: "standard" },
+
+    // --- TECHNICAL (Universal 1pt Cost) ---
+    { id: "thi", name: "Thievery", stat: "dexterity", type: "standard" },
+    { id: "rep", name: "Repair", stats: ["dexterity", "logic"], type: "hybrid" },
+    { id: "cra", name: "Crafting", stats: ["dexterity", "logic"], type: "hybrid" },
+    { id: "med", name: "Medicine", stats: ["dexterity", "logic", "piety"], type: "hybrid" },
+    { id: "per", name: "Perception", stats: ["dexterity", "logic", "presence"], type: "hybrid" },
+
+    // --- SOCIAL (Universal 1pt Cost) ---
+    { id: "psu", name: "Persuasion", stat: "presence", type: "standard" },
+    { id: "itm", name: "Intimidation", stat: "presence", type: "standard" },
+    { id: "dec", name: "Deception", stat: "presence", type: "standard" },
+    { id: "ins", name: "Insight", stat: "mentalSlot", type: "standard" }, // Logic or Piety
+
+    // --- KNOWLEDGE (Class-Based Cost) ---
+    { id: "the", name: "Theism", stat: "mentalSlot", type: "standard" },
+    { id: "his", name: "History", stat: "mentalSlot", type: "standard" },
+    { id: "arc", name: "Arcana", stat: "mentalSlot", type: "standard" }
+];
