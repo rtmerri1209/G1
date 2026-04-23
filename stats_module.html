@@ -268,21 +268,6 @@ function init() {
     // BUDGET: 35 for Humans, 30 for others
     points = (race === "human") ? 30 : 25;
 
-    // CLASS SETTINGS
-    if (className === "Warrior") {
-        primary = "sur"; secondary = spec; 
-        document.getElementById('label-slot4').innerText = "LOGIC";
-    } else if (className === "Mage") {
-        primary = "slot4"; secondary = (spec === "logic") ? "dex" : "sur";
-        document.getElementById('label-slot4').innerText = spec.toUpperCase();
-    } else if (className === "Paladin") {
-        primary = "slot4"; secondary = "str";
-        document.getElementById('label-slot4').innerText = "PIETY";
-    } else if (className === "Cleric") {
-        primary = "slot4"; secondary = "pre";
-        document.getElementById('label-slot4').innerText = "PIETY";
-    }
-
     // VISUAL HIGHLIGHTS
     document.getElementById(`ctrl-${primary}`).classList.add('primary-stat');
     document.getElementById(`ctrl-${secondary}`).classList.add('secondary-stat');
