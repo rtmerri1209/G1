@@ -34,6 +34,7 @@
         const savedRace = localStorage.getItem('race') || "Not Found";
         const savedClass = localStorage.getItem('class') || "Not Found";
         const savedName = localStorage.getItem('charName') || "Not Found";
+        const savedSpec = localStorage.getItem('specialization') || "Not Found";
         
         // 2. Pull and Parse the Objects (Stats & Feats)
         const rawStats = localStorage.getItem('finalCalculatedStats');
@@ -44,6 +45,7 @@
             <p><strong>Name:</strong> ${savedName}</p>
             <p><strong>Race:</strong> ${savedRace}</p>
             <p><strong>Class:</strong> ${savedClass}</p>
+            <p><strong>Spec:</strong> ${savedSpec}</p>
         `;
 
         // Stats Display (Parsing the JSON object)
