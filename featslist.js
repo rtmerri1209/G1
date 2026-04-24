@@ -78,7 +78,7 @@ export const featsData =[
                 dex: 14
                 },      
                         desc: "Grants +1 additional Reaction per turn.", 
-                                limit: "prt" 
+                        limit: "prt" 
         },
         { 
                 id: 7,
