@@ -202,22 +202,30 @@ function init() {
 
     points = (race === "human") ? 30 : 25;
 
-    document.getElementById(`ctrl-${primary}`).classList.add('primary-stat');
-    document.getElementById(`ctrl-${secondary}`).classList.add('secondary-stat');
-
     document.getElementById('display-name').innerText = localStorage.getItem('charName');
     document.getElementById('display-class').innerText = className;
     document.getElementById('display-race').innerText = race;
     document.getElementById('display-size').innerText = localStorage.getItem('size');
-// 1. Get the current rules for the selected class
+// 1. Get the rules for the selected class (e.g., "Warrior" or "Mage")
 const rules = classRules[className];
 
 if (rules) {
-    let primary = rules.fixedStat; 
+    let primary = "";
     let secondary = "";
-    if (rules.options && rules.options[spec]) {
-        secondary = rules.options[spec].secondary;
+
+    if (rules.primaryIsFixed) {
+           primary = rules.fixedStat;
+        if (rules.options && rules.options[spec]) {
+            secondary = rules.options[spec].secondary;
+        }
+    } else {
+           primary = spec; 
+           if (rules.options && rules.options[spec]) {
+            secondary = rules.options[spec].secondary;
+        }
     }
+
+    // 2. APPLY THE VISUAL HIGHLIGHTS
     if (primary) {
         const pEl = document.getElementById(`ctrl-${primary}`);
         if (pEl) pEl.classList.add('primary-stat');
@@ -226,9 +234,9 @@ if (rules) {
         const sEl = document.getElementById(`ctrl-${secondary}`);
         if (sEl) sEl.classList.add('secondary-stat');
     }
-}
-  
-    update(); 
+}     
+   
+   update(); 
 }
 
 window.onload = init;
