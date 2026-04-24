@@ -187,12 +187,22 @@ function update() {
   }
     }
 function init() {
-	console.log("RPG One Engine Initialization");
-	const archetypeDropdown = document.getElementByID('archetype-select');
-	if (archetypeDropdown) {
-	const archetypeDropdown.addEventlistener('change', update);
-		}
-	update();	
+    console.log("RPG One Engine Initialization");
+
+    const classSelect = document.getElementById('class-select');
+    const specSelect = document.getElementById('spec-select');
+
+    // Watch the "Combat Archetype" (e.g., Warrior)
+    if (classSelect) {
+        classSelect.addEventListener('change', update);
+    }
+    // Watch the "Specialization" (e.g., Berserker)
+    if (specSelect) {
+        specSelect.addEventListener('change', update);
+    }
+
+    update(); 
 }
+
 
 window.onload = init;
