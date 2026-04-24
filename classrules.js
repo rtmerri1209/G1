@@ -206,36 +206,36 @@ function init() {
     document.getElementById('display-class').innerText = className;
     document.getElementById('display-race').innerText = race;
     document.getElementById('display-size').innerText = localStorage.getItem('size');
-// 1. Get the rules for the selected class (e.g., "Warrior" or "Mage")
+     
+   // 1. Get Rules & Define Primary/Secondary
 const rules = classRules[className];
+let primary = "";
+let secondary = "";
 
 if (rules) {
-    let primary = "";
-    let secondary = "";
-
     if (rules.primaryIsFixed) {
-           primary = rules.fixedStat;
-        if (rules.options && rules.options[spec]) {
-            secondary = rules.options[spec].secondary;
-        }
+        primary = rules.fixedStat;
+        secondary = rules.options[spec]?.secondary || "";
     } else {
-           primary = spec; 
-           if (rules.options && rules.options[spec]) {
-            secondary = rules.options[spec].secondary;
-        }
+        primary = spec; // For Mages, spec is the primary
+        secondary = rules.options[spec]?.secondary || "";
     }
+}
 
-    // 2. APPLY THE VISUAL HIGHLIGHTS
-    if (primary) {
-        const pEl = document.getElementById(`ctrl-${primary}`);
-        if (pEl) pEl.classList.add('primary-stat');
-    }
-    if (secondary) {
-        const sEl = document.getElementById(`ctrl-${secondary}`);
-        if (sEl) sEl.classList.add('secondary-stat');
-    }
-}     
-   
+// 2. THE FAT TRIMMER: Map "pie" to "slot4"
+const pKey = (primary === "pie" || primary === "piety") ? "slot4" : primary;
+const sKey = (secondary === "pie" || secondary === "piety") ? "slot4" : secondary;
+
+// 3. Apply Highlights & Label
+if (pKey) document.getElementById(`ctrl-${pKey}`)?.classList.add('primary-stat');
+if (sKey) document.getElementById(`ctrl-${sKey}`)?.classList.add('secondary-stat');
+
+// 4. Swap Label Text
+const slot4Label = document.getElementById('label-slot4');
+if (slot4Label) {
+    slot4Label.innerText = (pKey === "slot4" || sKey === "slot4") ? "PIETY" : "LOGIC";
+}
+
    update(); 
 }
 
