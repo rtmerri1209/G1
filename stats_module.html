@@ -249,15 +249,16 @@
 </div>
 
 <script>
+    // 1. Move the timer definition to the TOP
+    let syncTimer; 
+
     function syncCharacterDisplay() {
-        // 1. Pull data using exact keys from Application tab
         const n = localStorage.getItem('charName');
         const r = localStorage.getItem('race');
         const c = localStorage.getItem('class');
         const s = localStorage.getItem('specialization');
         const z = localStorage.getItem('size');
 
-        // 2. Inject into IDs confirmed by your console test
         const nameEl = document.getElementById('display-name');
         const raceEl = document.getElementById('display-race');
         const classEl = document.getElementById('display-class');
@@ -271,20 +272,16 @@
             classEl.textContent = (s ? s + " " : "") + c;
         }
 
-        // If the name is no longer "---", we can stop the loop
+        // 2. Now the function knows what syncTimer is and can clear it
         if (nameEl && nameEl.textContent !== "---") {
             clearInterval(syncTimer);
-            console.log("RPG Sync: Success.");
+            console.log("RPG Sync: Success and Timer Cleared.");
         }
     }
 
-    // Run it once immediately
-    syncCharacterDisplay();
-
-    // Run it every 100ms until it works (in case the background/other scripts are slow)
-    const syncTimer = setInterval(syncCharacterDisplay, 100);
+    // 3. Start the interval and assign it to the variable we made at the top
+    syncTimer = setInterval(syncCharacterDisplay, 100);
 </script>
-
 
 </body>
 </html>
