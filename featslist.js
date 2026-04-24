@@ -78,7 +78,7 @@ export const featsData =[
                 dex: 14
                 },      
                         desc: "Grants +1 additional Reaction per turn.", 
-                                limit: "stk" 
+                                limit: "prt" 
         },
         { 
                 id: 7,
@@ -112,7 +112,7 @@ export const featsData =[
                 str: 16
         },
                         desc: "Add +1d6 to damage vs objects (Applied BEFORE hardness).", 
-                        limit: ["nst", "cnd"] 
+                        limit: ["cnd"] 
         },
         {
                 id: 10,
@@ -122,7 +122,7 @@ export const featsData =[
                 level: 1 
         },
                         desc: "2/Day roll d100 for lost items/gold.", 
-                        limit: "stk" 
+                        limit: ["prd", "stk"] // +1 use per day per stack
         },
         {
                 id: 11,
@@ -134,7 +134,7 @@ export const featsData =[
                 slot4: 16
         },
                         desc: "Increases Save DC of mind-altering spells by the caster by +1d6.", 
-                        limit: "stk" 
+                        limit: "stk" //max 2
         },
         {
                 name: "Well of the Mind", desc: "Rank 1: +1 Lvl 1 slot/cantrip. Higher ranks add higher level slots.", limit: "Stackable" 
