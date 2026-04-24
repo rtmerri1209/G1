@@ -1,0 +1,34 @@
+// 1. Get the rules for the selected class (e.g., "Warrior" or "Mage")
+const rules = classRules[className];
+
+if (rules) {
+    let primary = "";
+    let secondary = "";
+
+    if (rules.primaryIsFixed) {
+        // --- WARRIOR / PALADIN / ROGUE Logic ---
+        primary = rules.fixedStat;
+        // Lookup secondary based on the chosen specialization
+        if (rules.options && rules.options[spec]) {
+            secondary = rules.options[spec].secondary;
+        }
+    } else {
+        // --- MAGE Logic ---
+        // For Mages, the 'spec' (like "logic" or "piety") IS the primary stat
+        primary = spec; 
+        // Then we find the secondary that 'comes with it' from the options
+        if (rules.options && rules.options[spec]) {
+            secondary = rules.options[spec].secondary;
+        }
+    }
+
+    // 2. APPLY THE VISUAL HIGHLIGHTS
+    if (primary) {
+        const pEl = document.getElementById(`ctrl-${primary}`);
+        if (pEl) pEl.classList.add('primary-stat');
+    }
+    if (secondary) {
+        const sEl = document.getElementById(`ctrl-${secondary}`);
+        if (sEl) sEl.classList.add('secondary-stat');
+    }
+}
