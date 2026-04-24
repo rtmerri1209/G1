@@ -143,13 +143,14 @@ function finalizeAndContinue() {
 
 // 4. DISPLAY ENGINE (CALCULATES RACE AFTER BUY)
 function update() {
+	const myCharacter = JSON.parse(localStorage.getItem('myCharacter'))
     const race = localStorage.getItem('race') || "human";
     const mods = RACE_MODS[race];
 
     for (let s in baseStats) {
         // Slot4 resolution to use
 	     let lookupKey = s;
-	     if (s === "slot4" &&
+	     if (s === "slot4" && myCharacter &&
 	     myCharacter.primaryStat) {
 	          lookupKey =	
 	     myCharacter.primaryStat;
@@ -167,16 +168,16 @@ function update() {
 	finalValue;
 			}
         // Display Modifier Indicator
-        const modEl = document.getElementById(`mod-${s}`);
+        const modE1 = document.getElementById(`mod-${s}`);
         if (modE1) {
 	if (m > 0) {
-            modEl.innerText = `(+${m} Race)`;
-            modEl.className = "race-mod-text pos";
+            modE1.innerText = `(+${m} Race)`;
+            modE1.className = "race-mod-text pos";
         } else if (m < 0) {
-            modEl.innerText = `(${m} Race)`;
-            modEl.className = "race-mod-text neg";
+            modE1.innerText = `(${m} Race)`;
+            modE1.className = "race-mod-text neg";
         } else {
-            modEl.innerText = "";
+            modE1.innerText = "";
         }
     }
     }
@@ -187,6 +188,10 @@ function update() {
     }
 function init() {
 	console.log("RPG One Engine Initialization");
+	const archetypeDropdown = document.getElementByID('archetype-select');
+	if (archetypeDropdown) {
+	const archetypeDropdown.addEventlistener('change', update);
+		}
 	update();	
 }
 
