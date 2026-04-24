@@ -3,9 +3,10 @@ export const feat_limits ={
         act: "Active",
         aur: "Aura",
         stk: "Stackable",
-        per: "Per Day",
+        prd: "Per Day",
         cnd: "Conditional",
-        nst: "Non-Stackable"
+        nst: "Non-Stackable",
+        prt: "Per Turn"
 }
                 
 export const featsData =[
@@ -15,7 +16,8 @@ export const featsData =[
         reqs: {
                 classes: ["Any"],
                 level: 1,
-                sur: 14
+                sur: 14,
+                arch: ["Any"]
                 },
                         desc: "Increases HP scaling and increases fatigue resistance", 
                         limit: "cst" 
@@ -31,7 +33,7 @@ export const featsData =[
                  dex: 16
                 },
                         desc: "Removes accuracy penalties for ranged weapons in melee range.", 
-                        limit: "cnd" 
+                        limit: ["cnd", "cst"] 
         },
         { 
                 id: 3,
@@ -65,7 +67,7 @@ export const featsData =[
                 sur: 16
                 },
                         desc: "Recover HP = Survivability Skill when below 25% Health.", 
-                        limit: "per" 
+                        limit: "prd" 
         },
         { 
                 id: 6,
@@ -88,10 +90,18 @@ export const featsData =[
                 },
                 
                         desc: "Increases base carry capacity by +50 lbs.", 
-                        limit: "Non-Stackable" 
+                        limit: ["nst", "cst"] 
         },
         {
-                name: "Fearless", desc: "Roll an additional d6 on checks against Fear/Frightened/Shaken.", limit: "Stackable" 
+                id: 8,
+                name: "Fearless", 
+        reqs: {
+                classes: ["Any"],
+                level: 1,
+                int: 13
+        },
+                        desc: "Roll an additional d6 on checks against Fear/Frightened/Shaken.", 
+                        limit: "stk" 
         },
         {
                 name: "Breacher", desc: "Add +1d6 to damage vs objects (Applied BEFORE hardness).", limit: "Non-Stackable" 
