@@ -141,68 +141,87 @@ function finalizeAndContinue() {
     window.location.href = "stats2.html";
 }
 
-// 4. DISPLAY ENGINE (CALCULATES RACE AFTER BUY)
+// 4. DISPLAY ENGINE (CALCULATES RACE & SPECIALIZATION AFTER BUY)
 function update() {
-	const myCharacter = JSON.parse(localStorage.getItem('myCharacter'))
+    // A. Retrieve Selections from UI
+    // Added optional chaining (?.) so it doesn't crash if an ID is missing
+    const classVal = document.getElementById('class-select')?.value;
+    const specVal = document.getElementById('spec-select')?.value;
     const race = localStorage.getItem('race') || "human";
     const mods = RACE_MODS[race];
 
+    // B. Map Specializations to Primary Stats (Matches your Warrior/Mage logic)
+    const specToStat = {
+        "Berserker": "Strength",
+        "Master of Arms": "Dexterity",
+        "Fire Mage": "Intelligence",
+        "Guardian": "Constitution",
+        "Healer": "Wisdom"
+    };
+
+    // C. Setup Character Object for Slot4 Resolution
+    // This defines what 'myCharacter' is so the loop doesn't hit 'null'
+    const myCharacter = {
+        class: classVal,
+        specialization: specVal,
+        primaryStat: specToStat[specVal] || "Strength" 
+    };
+    
+    localStorage.setItem('myCharacter', JSON.stringify(myCharacter));
+
+    // D. The Core Stat Loop
     for (let s in baseStats) {
-        // Slot4 resolution to use
-	     let lookupKey = s;
-	     if (s === "slot4" && myCharacter &&
-	     myCharacter.primaryStat) {
-	          lookupKey =	
-	     myCharacter.primaryStat;
-					}
-
-	const m = mods[lookupKey]
-
-	// MATH: Points + Racial Modifier
-        const finalValue = baseStats[s] + m;
-        
-        // Display Final Value (can go to 22 or drop to 0)
-        const valE1=
-	document.getElementById(`val-${s}`)
-        if (valE1) { valE1.innerText =
-	finalValue;
-			}
-        // Display Modifier Indicator
-        const modE1 = document.getElementById(`mod-${s}`);
-        if (modE1) {
-	if (m > 0) {
-            modE1.innerText = `(+${m} Race)`;
-            modE1.className = "race-mod-text pos";
-        } else if (m < 0) {
-            modE1.innerText = `(${m} Race)`;
-            modE1.className = "race-mod-text neg";
-        } else {
-            modE1.innerText = "";
+        let lookupKey = s;
+        // This is where the magic happens for Slot 4
+        if (s === "slot4" && myCharacter.primaryStat) {
+            lookupKey = myCharacter.primaryStat;
         }
+
+        const m = mods[lookupKey] || 0;
+        const finalValue = baseStats[s] + m;
+
+        // Display Final Value
+        const valEl = document.getElementById(`val-${s}`);
+        if (valEl) {
+            valEl.innerText = finalValue;
+        }
+
+        // Display Modifier Indicator
+        const modEl = document.getElementById(`mod-${s}`);
+        if (modEl) {
+            if (m > 0) {
+                modEl.innerText = `(+${m} Race)`;
+                modEl.className = "race-mod-text pos";
+            } else if (m < 0) {
+                modEl.innerText = `(${m} Race)`;
+                modEl.className = "race-mod-text neg";
+            } else {
+                modEl.innerText = "";
+            }
+        }
+    } 
+
+    // E. Update Point Counter
+    const pointsEl = document.getElementById('points-display');
+    if (pointsEl) {
+        pointsEl.innerText = points;
     }
-    }
-    const pointsE1 = document.getElementById('points-display');
-	if (pointsE1) {
-	pointsE1.innerText = points;
-  }
-    }
+}
+
+// 5. INITIALIZATION
 function init() {
     console.log("RPG One Engine Initialization");
 
     const classSelect = document.getElementById('class-select');
     const specSelect = document.getElementById('spec-select');
+    const raceSelect = document.getElementById('race-select');
 
-    // Watch the "Combat Archetype" (e.g., Warrior)
-    if (classSelect) {
-        classSelect.addEventListener('change', update);
-    }
-    // Watch the "Specialization" (e.g., Berserker)
-    if (specSelect) {
-        specSelect.addEventListener('change', update);
-    }
+    // These listeners bridge the gap between your HTML and this JS
+    if (classSelect) classSelect.addEventListener('change', update);
+    if (specSelect) specSelect.addEventListener('change', update);
+    if (raceSelect) raceSelect.addEventListener('change', update);
 
     update(); 
 }
-
 
 window.onload = init;
