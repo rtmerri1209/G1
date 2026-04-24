@@ -189,33 +189,6 @@ function update() {
 
 function init() {
     console.log("RPG One Engine Initialization");
-
-// 1. Get the current rules for the selected class
-const rules = classRules[className];
-
-if (rules) {
-    // 2. Determine Primary: If it's a fixed stat (like Warrior's "sur"), use that. 
-    // Otherwise, we'd need more logic for flexible primaries.
-    let primary = rules.fixedStat; 
-
-    // 3. Determine Secondary: Look into the 'options' using the saved spec
-    let secondary = "";
-    if (rules.options && rules.options[spec]) {
-        secondary = rules.options[spec].secondary;
-    }
-
-    // 4. NOW do the highlighting
-    if (primary) {
-        const pEl = document.getElementById(`ctrl-${primary}`);
-        if (pEl) pEl.classList.add('primary-stat');
-    }
-    if (secondary) {
-        const sEl = document.getElementById(`ctrl-${secondary}`);
-        if (sEl) sEl.classList.add('secondary-stat');
-    }
-}
-
-	
     const classSelect = document.getElementById('class-select');
     const specSelect = document.getElementById('spec-select');
     const raceSelect = document.getElementById('race-select');
@@ -236,7 +209,25 @@ if (rules) {
     document.getElementById('display-class').innerText = className;
     document.getElementById('display-race').innerText = race;
     document.getElementById('display-size').innerText = localStorage.getItem('size');
-    
+// 1. Get the current rules for the selected class
+const rules = classRules[className];
+
+if (rules) {
+    let primary = rules.fixedStat; 
+    let secondary = "";
+    if (rules.options && rules.options[spec]) {
+        secondary = rules.options[spec].secondary;
+    }
+    if (primary) {
+        const pEl = document.getElementById(`ctrl-${primary}`);
+        if (pEl) pEl.classList.add('primary-stat');
+    }
+    if (secondary) {
+        const sEl = document.getElementById(`ctrl-${secondary}`);
+        if (sEl) sEl.classList.add('secondary-stat');
+    }
+}
+  
     update(); 
 }
 
