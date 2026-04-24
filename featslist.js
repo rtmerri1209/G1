@@ -104,13 +104,36 @@ export const featsData =[
                         limit: "stk" 
         },
         {
-                name: "Breacher", desc: "Add +1d6 to damage vs objects (Applied BEFORE hardness).", limit: "Non-Stackable" 
+                id: 9,
+                name: "Breacher",
+        reqs: {
+                classes: ["Warrior", "Paladin"],
+                level: 1,
+                str: 16
+        },
+                        desc: "Add +1d6 to damage vs objects (Applied BEFORE hardness).", 
+                        limit: ["nst", "cnd"] 
         },
         {
-                name: "Scavenger", desc: "2/Day roll d100 for lost items/gold.", limit: "Stackable (+1 use per rank)" 
+                id: 10,
+                name: "Scavenger", 
+        reqs: {
+                classes: ["Any"],
+                level: 1 
+        },
+                        desc: "2/Day roll d100 for lost items/gold.", 
+                        limit: "Stackable (+1 use per rank)" 
         },
         {
-                name: "Will of Domination", desc: "Increases Save DC of mind-altering spells by +1d4.", limit: "Stackable" 
+                id: 11,
+                name: "Will of Domination", 
+        reqs:{
+                classes: ["Cleric", "Mage"],
+                arc: ["Spellslinger", "Zealot", "Witchdoctor"],
+                level: 4
+        },
+                        desc: "Increases Save DC of mind-altering spells by +1d4.", 
+                        limit: "Stackable" 
         },
         {
                 name: "Well of the Mind", desc: "Rank 1: +1 Lvl 1 slot/cantrip. Higher ranks add higher level slots.", limit: "Stackable" 
