@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="classrules.js"
+    defer></script>
+
     <meta charset="UTF-8">
     <title>Character Creation</title>
     <style>
@@ -82,7 +85,7 @@
 <body>
 
 <div class="selection-panel">
-    <h2>Characterr Creation</h2>
+    <h2>Character Creation</h2>
     
     <div class="form-group">
         <label>Character Name </label>
@@ -108,11 +111,12 @@
             <option value="Paladin">Paladin</option>
             <option value="Cleric">Cleric</option>
 	    <option value="Rogue">Rogue</option>
+	    <option value="Ranger">Ranger</option>
         </select>
     </div>
     <div class="form-group">
         <label id="spec-label">Specialization Options</label>
-        <select id="spec-select" disabled>
+        <select id="spec-select">
             <option value="">-- No Selection Required --</option>
         </select>
     </div>
@@ -168,8 +172,7 @@
         localStorage.setItem('race', race);
         localStorage.setItem('class', className);
         localStorage.setItem('size', size);
-        localStorage.setItem('specialization', spec); // This is the key "Choice" data
-
+        localStorage.setItem('specialization', spec); 
         window.location.href = 'stats_module.html';
     }
 
