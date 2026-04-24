@@ -67,28 +67,6 @@ let primary = "";
 let secondary = "";
 let buyCap;
 
-// 2. INITIALIZE PAGE
-function init() {
-    const race = localStorage.getItem('race') || "human";
-    const className = localStorage.getItem('class') || "Warrior";
-    const spec = localStorage.getItem('specialization');
-
-    // BUDGET: 35 for Humans, 30 for others
-    points = (race === "human") ? 30 : 25;
-
-    // VISUAL HIGHLIGHTS
-    document.getElementById(`ctrl-${primary}`).classList.add('primary-stat');
-    document.getElementById(`ctrl-${secondary}`).classList.add('secondary-stat');
-
-    // HEADER INFO
-    document.getElementById('display-name').innerText = localStorage.getItem('charName') || "OPERATIVE";
-    document.getElementById('display-class').innerText = className;
-    document.getElementById('display-race').innerText = race;
-    document.getElementById('display-size').innerText = localStorage.getItem('size') || "Medium";
-
-    update();
-}
-
 // 3. STAT BUTTON LOGIC
 function changeStat(s, d) {
 	const race = localStorage.getItem('race')
@@ -149,6 +127,7 @@ function update() {
     const specVal = document.getElementById('spec-select')?.value;
     const race = localStorage.getItem('race') || "human";
     const mods = RACE_MODS[race];
+    localStorage.setItem('remainingPoints', points);
 
     // B. Map Specializations to Primary Stats (Matches your Warrior/Mage logic)
     const specToStat = {
@@ -208,7 +187,6 @@ function update() {
     }
 }
 
-// 5. INITIALIZATION
 function init() {
     console.log("RPG One Engine Initialization");
 
@@ -216,11 +194,23 @@ function init() {
     const specSelect = document.getElementById('spec-select');
     const raceSelect = document.getElementById('race-select');
 
-    // These listeners bridge the gap between your HTML and this JS
     if (classSelect) classSelect.addEventListener('change', update);
     if (specSelect) specSelect.addEventListener('change', update);
     if (raceSelect) raceSelect.addEventListener('change', update);
+        const race = localStorage.getItem('race');
+    const className = localStorage.getItem('class');
+    const spec = localStorage.getItem('specialization');
 
+    points = (race === "human") ? 30 : 25;
+
+    document.getElementById(`ctrl-${primary}`).classList.add('primary-stat');
+    document.getElementById(`ctrl-${secondary}`).classList.add('secondary-stat');
+
+    document.getElementById('display-name').innerText = localStorage.getItem('charName');
+    document.getElementById('display-class').innerText = className;
+    document.getElementById('display-race').innerText = race;
+    document.getElementById('display-size').innerText = localStorage.getItem('size');
+    
     update(); 
 }
 
