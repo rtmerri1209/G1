@@ -249,20 +249,42 @@
 </div>
 
 <script>
-window.onload = function(){
-const savedName = localStorage.getItem('charName');
-const savedRace = localStorage.getItem('race');
-const savedClass = localStorage.getItem('class');
-const savedSize = localStorage.getItem('size');
-const savedSpec = localStorage.getItem('specialization')
+    function syncCharacterDisplay() {
+        // 1. Pull data using exact keys from Application tab
+        const n = localStorage.getItem('charName');
+        const r = localStorage.getItem('race');
+        const c = localStorage.getItem('class');
+        const s = localStorage.getItem('specialization');
+        const z = localStorage.getItem('size');
 
+        // 2. Inject into IDs confirmed by your console test
+        const nameEl = document.getElementById('display-name');
+        const raceEl = document.getElementById('display-race');
+        const classEl = document.getElementById('display-class');
+        const sizeEl = document.getElementById('display-size');
 
-if (savedName) document.getElementById('display-name').textContent = savedName;
-if (savedRace) document.getElementById('display-race').textContent = savedRace;
-if (savedSpec && savedClass) document.getElementById('display-class').textContent = savedClass + " " + savedSpec;
-if (savedSize) document.getElementById('display-size').textContent = savedSize;
-}
+        if (nameEl && n) nameEl.textContent = n;
+        if (raceEl && r) raceEl.textContent = r;
+        if (sizeEl && z) sizeEl.textContent = "Size: " + z;
+        
+        if (classEl && c) {
+            classEl.textContent = (s ? s + " " : "") + c;
+        }
+
+        // If the name is no longer "---", we can stop the loop
+        if (nameEl && nameEl.textContent !== "---") {
+            clearInterval(syncTimer);
+            console.log("RPG Sync: Success.");
+        }
+    }
+
+    // Run it once immediately
+    syncCharacterDisplay();
+
+    // Run it every 100ms until it works (in case the background/other scripts are slow)
+    const syncTimer = setInterval(syncCharacterDisplay, 100);
 </script>
+
 
 </body>
 </html>
