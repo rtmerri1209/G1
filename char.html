@@ -121,34 +121,37 @@
 </div>
 
 <script>
-    function toggleSpecialization() {
-        const selectedClass = document.getElementById('class-select').value;
-        const specSelect = document.getElementById('spec-select');
-        const specLabel = document.getElementById('spec-label');
+  function toggleSpecialization() {
+    const classSelect = document.getElementById('class-select');
+    const specSelect = document.getElementById('spec-select');
+    const selectedClass = classSelect.value;
 
-        // Reset the dropdown
-        specSelect.innerHTML = "";
-        specSelect.disabled = true;
-        specLabel.innerText = "SPECIALIZATION OPTIONS";
+    // 1. Clear existing options
+    specSelect.innerHTML = '';
 
-        if (selectedClass === "Warrior") {
-            specSelect.disabled = false;
-            specLabel.innerText = "WARRIOR: SELECT SECONDARY STAT";
-            specSelect.innerHTML = `
-                <option value="str">Strength (Two-Hand)</option>
-                <option value="dex">Dexterity (Dual Wield)</option>
-            `;
-        } 
-        else if (selectedClass === "Mage") {
-            specSelect.disabled = false;
-            specLabel.innerText = "MAGE: SELECT PRIMARY FOCUS";
-            specSelect.innerHTML = `
-                <option value="logic">Logic (Secondary: Dex)</option>
-                <option value="piety">Piety (Secondary: Sur)</option>
-            `;
+    // 2. Get rules for the selected class
+    const rules = classRules[selectedClass];
+
+    if (rules && rules.options) {
+        // 3. Loop through the options in your classRules object
+        for (const key in rules.options) {
+            const optionData = rules.options[key];
+            const newOption = document.createElement('option');
+            
+            // Set the value (e.g., "str") and the text (e.g., "Berserker")
+            newOption.value = key;
+            newOption.textContent = optionData.archetypeName;
+            
+            specSelect.appendChild(newOption);
         }
+    } else {
+        // Fallback if no options exist for a class
+        const defaultOpt = document.createElement('option');
+        defaultOpt.value = "";
+        defaultOpt.textContent = "-- No Selection Required --";
+        specSelect.appendChild(defaultOpt);
     }
-
+}
     function saveAndStart() {
         const name = document.getElementById('char-name').value;
         const race = document.getElementById('race-select').value;
