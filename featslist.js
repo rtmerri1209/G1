@@ -122,7 +122,7 @@ export const featsData =[
                 level: 1 
         },
                         desc: "2/Day roll d100 for lost items/gold.", 
-                        limit: "Stackable (+1 use per rank)" 
+                        limit: "stk" 
         },
         {
                 id: 11,
@@ -130,10 +130,11 @@ export const featsData =[
         reqs:{
                 classes: ["Cleric", "Mage"],
                 arc: ["Spellslinger", "Zealot", "Witchdoctor"],
-                level: 4
+                level: 4,
+                slot4: 16
         },
-                        desc: "Increases Save DC of mind-altering spells by +1d4.", 
-                        limit: "Stackable" 
+                        desc: "Increases Save DC of mind-altering spells by the caster by +1d6.", 
+                        limit: "stk" 
         },
         {
                 name: "Well of the Mind", desc: "Rank 1: +1 Lvl 1 slot/cantrip. Higher ranks add higher level slots.", limit: "Stackable" 
