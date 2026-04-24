@@ -81,6 +81,12 @@ export const featsData =[
         { 
                 id: 7,
                 name: "Pack Mule", 
+        reqs: {
+                classes: ["Any"],
+                level: 1,
+                str: 12
+                },
+                
                         desc: "Increases base carry capacity by +50 lbs.", 
                         limit: "Non-Stackable" 
         },
