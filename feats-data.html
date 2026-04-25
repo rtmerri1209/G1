@@ -40,7 +40,7 @@
         // 3. REQUIREMENT VALIDATION
         function validateFeat(feat) {
             const r = feat.reqs;
-            const s = myCharacter.baseStats || {};
+            const s = JSON.parse(localStorage.getItem('finalCalculatedStats')) || {};
             const levelOk = (myCharacter.level || 1) >= r.level;
             const classOk = r.classes.includes("Any") || 
                             r.classes.some(c => c.toLowerCase() === activeClass.toLowerCase());
@@ -121,4 +121,3 @@
     </script>
 </body>
 </html>
-
