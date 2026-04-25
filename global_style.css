@@ -75,6 +75,12 @@ body {
     margin-right: 15px;    /* Pushes the text to the right */
     margin-top: 5px;       /* Centers it slightly with the first line of text */
 }
+.feat-item.locked {
+    border: 1px solid var(--border-color);
+    color: var(--text-dim);
+    opacity: 0.5;
+}
+
 /* This turns the orange glow green when selected */
 .feat-item.selected {
     border-color: var(--accent-success);
