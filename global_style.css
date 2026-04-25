@@ -77,13 +77,13 @@ body {
 }
 /* This turns the orange glow green when selected */
 .feat-item.selected {
-    border-color: var(--accent-success);
-    box-shadow: 0 0 15px var(--accent-success);
+    border-color: var(--accent-success) !important;
+    box-shadow: 0 0 15px var(--accent-success) !important;
 }
 
 /* Also turn the checkbox green to match */
 .feat-item.selected.checkbox {
-    background-color: var(--accent-success);
-    border-color: var(--accent-success);
+    background-color: var(--accent-success) !important;
+    border-color: var(--accent-success) !important;
 }
 
