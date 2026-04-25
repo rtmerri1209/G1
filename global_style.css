@@ -70,3 +70,20 @@ body {
     color: var(--text-dim);
     opacity: 0.5;
 }
+.feat-item {
+    display: flex;          /* The magic alignment tool */
+    flex-direction: row;    /* Puts items in a line */
+    align-items: flex-start; /* Aligns them at the top */
+    background: var(--panel-bg-color);
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.checkbox {
+    flex-shrink: 0;        /* Stops the box from squishing */
+    margin-right: 15px;    /* Pushes the text to the right */
+    margin-top: 5px;       /* Centers it slightly with the first line of text */
+}
