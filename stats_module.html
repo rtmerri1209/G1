@@ -238,7 +238,7 @@
         <div id="points-display">0</div>
 	<button class="btn-group'    
 		style="margin-top: 25px;
-	wiidth: auto; padding: 10px 40px;
+	width: auto; padding: 10px 40px;
 	font-size: 1rem;"
 
 
@@ -260,13 +260,14 @@
         const z = localStorage.getItem('size');
 
         const nameEl = document.getElementById('display-name');
+
         const raceEl = document.getElementById('display-race');
         const classEl = document.getElementById('display-class');
         const sizeEl = document.getElementById('display-size');
 
         if (nameEl && n) nameEl.textContent = n;
         if (raceEl && r) raceEl.textContent = r;
-        if (sizeEl && z) sizeEl.textContent = "Size: " + z;
+        if (sizeEl && z) sizeEl.textContent = z;
         
         if (classEl && c) {
             classEl.textContent = (s ? s + " " : "") + c;
@@ -281,6 +282,38 @@
 
     // 3. Start the interval and assign it to the variable we made at the top
     syncTimer = setInterval(syncCharacterDisplay, 100);
+
+function finalizeAndContinue() {
+    
+    const myCharacter = JSON.parse(localStorage.getItem('myCharacter'))
+    // Optional: Prevent proceeding if they still have points left
+    if (points > 0) {
+        const confirmSpend = confirm(`You still have ${points} points left! Are you sure you want to proceed?`);
+        if (!confirmSpend) return;
+    }
+
+    // Save the final calculated stats (including race mods) so stats2.html can use them
+    const race = localStorage.getItem('race') || "human";
+    const mods = RACE_MODS[race];
+    
+    let finalStats = {};
+    for (let s in baseStats) {
+		let lookupKey = (s === "slot4" &&
+	myCharacter.primaryStat)
+		? myCharacter.primaryStat
+		: s;
+		finalStats[s] = baseStats[s] + (mods[lookupKey] || 0);
+
+    }
+
+    // Store the object as a string in localStorage
+    localStorage.setItem('finalCalculatedStats', JSON.stringify(finalStats));
+
+    // Move to the next page
+    window.location.href = "feats_data.html";
+}
+
+
 </script>
 
 </body>
