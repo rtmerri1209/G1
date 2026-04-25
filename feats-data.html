@@ -1,1 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Character Feats Configuration</title>
+    <link rel="stylesheet" href="global_style.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="config-panel">
+            <h1 class="panel-title">Character Feats Configuration</h1>
+            
+            <div id="ui-header">
+                <div id="slots-remaining">Slots Remaining: --</div>
+            </div>
+
+            <div id="featsData">
+                </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { feat_limits, featsData } from './featslist.js';
+
+        // 1. DATA PULL
+        const myCharacter = JSON.parse(localStorage.getItem('myCharacter')) || {};
+        const activeRace = localStorage.getItem('race') || "";
+        const activeClass = localStorage.getItem('class') || "";
+
+        // 2. POOL CALCULATION
+        function calculatePool() {
+            let pool = 0;
+            if (activeRace.toLowerCase() === "human") pool += 1;
+            const normalizedClass = activeClass.toLowerCase();
+            if (normalizedClass === "warrior" || normalizedClass === "rogue") pool += 1;
+            return pool;
+        }
+
+        // 3. REQUIREMENT VALIDATION
+        function validateFeat(feat) {
+            const r = feat.reqs;
+            const s = myCharacter.baseStats || {};
+            const levelOk = (myCharacter.level || 1) >= r.level;
+            const classOk = r.classes.includes("Any") || 
+                            r.classes.some(c => c.toLowerCase() === activeClass.toLowerCase());
+            const archOk = r.arch.includes("Any") || 
+                           r.arch.includes(myCharacter.archetype);
+
+            const statKeys = ['sur', 'dex', 'str', 'pie', 'int', 'pre'];
+            let statsOk = true;
+            statKeys.forEach(key => {
+                if (r[key] && (s[key] || 0) < r[key]) statsOk = false;
+            });
+            return levelOk && classOk && archOk && statsOk;
+        }
+
+        // 4. INTERACTION (Select/Deselect)
+        function toggleFeat(featId) {
+            const pool = calculatePool();
+            if (!myCharacter.selectedFeats) myCharacter.selectedFeats = [];
+            const index = myCharacter.selectedFeats.indexOf(featId);
+            
+            if (index > -1) {
+                myCharacter.selectedFeats.splice(index, 1);
+            } else {
+                if (myCharacter.selectedFeats.length < pool) {
+                    myCharacter.selectedFeats.push(featId);
+                } else {
+                    alert("No slots remaining!");
+                    return;
+                }
+            }
+            localStorage.setItem('myCharacter', JSON.stringify(myCharacter));
+            renderUI();
+        }
+
+        // 5. RENDER UI (The Visual Generator)
+        const container = document.getElementById('featsData');
+        
+        function renderUI() {
+            const totalAllowed = calculatePool();
+            const currentSelected = (myCharacter.selectedFeats || []).length;
+            document.getElementById('slots-remaining').textContent = `Slots Remaining: ${totalAllowed - currentSelected}`;
+
+            container.innerHTML = '';
+
+            featsData.forEach(feat => {
+                const isAvailable = validateFeat(feat);
+                const isSelected = (myCharacter.selectedFeats || []).includes(feat.id);
+                
+                // Create the element using the global CSS classes
+                const el = document.createElement('div');
+                el.className = `feat-item ${isAvailable ? 'available' : 'locked'} ${isSelected ? 'selected' : ''}`;
+
+                const limitTag = Array.isArray(feat.limit) 
+                    ? feat.limit.map(k => feat_limits[k]).join(', ') 
+                    : feat_limits[feat.limit];
+
+                el.innerHTML = `
+                    <div class="checkbox"></div>
+                    <div class="feat-details">
+                        <div class="feat-header">
+                            <span class="feat-name">${feat.name}</span>
+                            <span class="feat-type">${limitTag}</span>
+                        </div>
+                        <p class="feat-desc">${feat.desc}</p>
+                        ${!isAvailable ? '<span class="lock-hint">Requirements Not Met</span>' : ''}
+                    </div>
+                `;
+
+                if (isAvailable) {
+                    el.onclick = () => toggleFeat(feat.id);
+                }
+                
+                container.appendChild(el);
+            });
+        }
+
+        renderUI();
+    </script>
+</body>
+</html>
 
