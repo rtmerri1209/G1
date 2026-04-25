@@ -2,223 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Feat Selection Module</title>
-    <style>
-  
-        /* START DEBUG BUTTON STYLE - DELETE LATER */
-.debug-btn {
-    position: fixed;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
-    z-index: 10000;
-    padding: 15px;
-    background-color: #ff3300; /* Bright red to stand out */
-    color: white;
-    text-decoration: none;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    border: 3px solid white;
-    border-radius: 8px;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
-    cursor: pointer;
-}
-.debug-btn:hover {
-    background-color: #cc2900;
-}
-/* END DEBUG BUTTON STYLE - DELETE LATER */
-    
-    .debug-btn:hover {
-        background-color: #e6b800;
-    }   
-
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a1a; color: #e0e0e0; padding: 20px; }
-        .container { max-width: 800px; margin: auto; background: #2d2d2d; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        h1 { border-bottom: 2px solid #444; padding-bottom: 10px; color: #ff9800; }
-        .feat-item { display: flex; align-items: flex-start; padding: 10px; border-bottom: 1px solid #444; transition: background 0.2s; }
-        .feat-item:hover { background: #383838; }
-        .feat-item input { margin-top: 5px; cursor: pointer; }
-        .feat-details { margin-left: 15px; }
-        .feat-name { font-weight: bold; color: #4caf50; display: block; }
-        .feat-desc { font-size: 0.9em; color: #bbb; }
-        .feat-limit { font-size: 0.8em; color: #ff5722; font-style: italic; }
-        #counter { position: fixed; top: 20px; right: 20px; background: #ff9800; color: #000; padding: 10px 20px; border-radius: 5px; font-weight: bold; }
-        .gap { height: 50px; border: 2px dashed #444; margin-top: 20px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #666; }
-
-
-	</style>
+    <title>Feats Logic Controller</title>
 </head>
 <body>
-/* test page button */ 
-<a href="test.html"
-id="temp-debug-link">Data Integrity</a>
-/* end test button*/
 
-<div id="counter">Slots Remaining: <span id="slots-left">0</span></div>
-
-<div class="container">
-    <h1>Character Feats Configuration</h1>
-    <div id="feat-list">
+    <div id="ui-header">
+        <h1>Character Feats Configuration</h1>
+        <div id="slots-remaining" style="font-weight:bold; font-size: 1.2rem; color: #f57c00;">
+            Slots Remaining: --
         </div>
+    </div>
 
-    <div class="gap">ADD CUSTOM FEAT SLOT 1 (Edit HTML)</div>
-    <div class="gap">ADD CUSTOM FEAT SLOT 2 (Edit HTML)</div>
-</div>
+    <div id="featsData"></div>
 
-	<div style="position: fixed; bottom: 30px; left: 0; width: 100%; display: flex; justify-content: center; z-index: 9999;">
-  
-  <a href="stats3.html" style="
-    display: inline-block;
-    text-decoration: none;
-    background-color: transparent;
-    color: #ffcc66;
-    border: 2px solid #ffcc66;
-    padding: 15px 40px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-family: sans-serif;
-    border-radius: 4px; 
-  " 
-  onmouseover="this.style.backgroundColor='#ffcc66'; this.style.color='#000';" 
-  onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ffcc66';">
-    Next
-  </a>
+    <script type="module">
+        import { feat_limits, featsData } from './featslist.js';
 
-</div>
+        // 1. DATA RETRIEVAL
+        // Pulling the character object and the specific race/class strings
+        const myCharacter = JSON.parse(localStorage.getItem('myCharacter')) || {};
+        const activeRace = localStorage.getItem('race') || "";
+        const activeClass = localStorage.getItem('class') || "";
 
-<script>
-    // --- CONFIG
-    // --- DYNAMIC FEAT SLOT CALCULATION ---
+        // 2. POOL CALCULATION (+1 Human, +1 Warrior/Rogue)
+        function calculatePool() {
+            let pool = 0;
+            if (activeRace.toLowerCase() === "human") pool += 1;
 
-// These would ideally be linked to your Race/Class selection inputs
-let selectedRace = localStorage.getItem('race');   // e.g., document.getElementById('race-select').value
-let selectedClass = localStorage.getItem('class');  // e.g., document.getElementById('class-select').value
-
-function calculateStartingFeats(race, className) {
-    let total = 0; // Everyone starts at 0
-
-    // Add 1 if Human
-    if (selectedRace === "human") {
-        total += 1;
-    }
-
-    // Add 1 if Rogue
-    if (selectedClass === "Rogue") {
-        total += 1;
-    }
-
-    // Add 1 if Warrior
-    if (selectedClass === "Warrior") {
-        total += 1;
-    }
-
-    // Note: Mages or any other class not listed above 
-    // will stay at 0 (or 1 if they are a Human Mage).
-    
-    return total;
-}
-
-// Initialize the MAX_FEATS variable
-let MAX_FEATS = calculateStartingFeats(selectedRace, selectedClass);
-
-    const featsData = [
-        { name: "Rugged Body", desc: "Increases HP scaling and grants knockback resistance.", limit: "Constant" },
-        { name: "Sawed-Off", desc: "Removes accuracy penalties for ranged weapons in melee range.", limit: "Constant" },
-        { name: "Iron Lung", desc: "Increases Sprint move speed by an additional 10 ft.", limit: "Active" },
-        { name: "Shield Wall", desc: "Stacking armor bonus for every ally within 5ft.", limit: "Aura" },
-        { name: "Second Wind", desc: "Recover HP = Survivability Skill when below 25% Health.", limit: "1/Day per Rank (Stackable)" },
-        { name: "Cat-Like Reflexes", desc: "Grants +1 additional Reaction per turn.", limit: "Stackable" },
-        { name: "Pack Mule", desc: "Increases base carry capacity by +50 lbs.", limit: "Non-Stackable" },
-        { name: "Fearless", desc: "Roll an additional d6 on checks against Fear/Frightened/Shaken.", limit: "Stackable" },
-        { name: "Breacher", desc: "Add +1d6 to damage vs objects (Applied BEFORE hardness).", limit: "Non-Stackable" },
-        { name: "Scavenger", desc: "2/Day roll d100 for lost items/gold.", limit: "Stackable (+1 use per rank)" },
-        { name: "Will of Domination", desc: "Increases Save DC of mind-altering spells by +1d4.", limit: "Stackable" },
-        { name: "Well of the Mind", desc: "Rank 1: +1 Lvl 1 slot/cantrip. Higher ranks add higher level slots.", limit: "Stackable" },
-        { name: "Quiet Casting", desc: "Roll d20 vs Target Perception to cast unnoticed.", limit: "Non-Stackable" },
-        { name: "Blood Magic", desc: "Once per day, cast using HP (1d10 per spell level) instead of slot.", limit: "Stackable (+2 uses per rank)" },
-        { name: "Spell Sniper", desc: "Increases effective range of projectile spells by 25%.", limit: "Non-Stackable" },
-        { name: "Battle Medic", desc: "Cast healing spells as a Reaction when ally within 10ft takes damage.", limit: "Non-Stackable" },
-        { name: "Blanket", desc: "Defensive buff spells target one additional party member.", limit: "Stackable (Cap: 3)" },
-        { name: "Bolster", desc: "Defensive spells on Heavy Armor allies grant them +1 Reaction.", limit: "Non-Stackable" },
-        { name: "Divine Burden", desc: "Piety/Divine debuffs roll 2d20 and keep highest.", limit: "Non-Stackable" },
-        { name: "Divine Echo", desc: "Heals trigger secondary effect: 1/3 value heals ally or damages enemy.", limit: "Non-Stackable" }
-    ];
-// Sort the feats alphabetically by name
-featsData.sort((a, b) => a.name.localeCompare(b.name));
-
-    const listContainer = document.getElementById('feat-list');
-    const slotsDisplay = document.getElementById('slots-left');
-    let selectedCount = 0;
-
-    function updateCounter() {
-        slotsDisplay.innerText = MAX_FEATS - selectedCount;
-    }
-
-    function renderFeats() {
-        featsData.forEach((feat, index) => {
-            const featDiv = document.createElement('div');
-            featDiv.className = 'feat-item';
-            featDiv.innerHTML = `
-                <input type="checkbox" id="feat-${index}" value="${feat.name}" onchange="handleSelection(this)">
-                <div class="feat-details">
-                    <label for="feat-${index}" class="feat-name">${feat.name}</label>
-                    <span class="feat-desc">${feat.desc}</span><br>
-                    <span class="feat-limit">${feat.limit}</span>
-                </div>
-            `;
-            listContainer.appendChild(featDiv);
-        });
-        updateCounter();
-    }
-
-    function handleSelection(checkbox) {
-        if (checkbox.checked) {
-            if (selectedCount >= MAX_FEATS) {
-                checkbox.checked = false;
-                alert("Maximum feat slots reached!");
-            } else {
-                selectedCount++;
+            const normalizedClass = activeClass.toLowerCase();
+            if (normalizedClass === "warrior" || normalizedClass === "rogue") {
+                pool += 1;
             }
-        } else {
-            selectedCount--;
+            return pool;
         }
-        updateCounter();
-	saveSelectedFeats();
-    }
 
-    renderFeats();
-    
-    function saveSelectedFeats() {
-    // 1. Find all checkboxes in your feat list
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    let selectedFeats = [];
+        // 3. REQUIREMENT CHECK
+        function validateFeat(feat) {
+            const r = feat.reqs;
+            const s = myCharacter.baseStats || {};
 
-    // 2. Loop through and find the ones that are checked
-    checkboxes.forEach((box) => {
-        if (box.checked) {
-            // We use the ID or a label name to identify the feat
-            selectedFeats.push(box.value || box.id); 
+            const levelOk = (myCharacter.level || 1) >= r.level;
+            
+            // Case-insensitive class check against the requirements array
+            const classOk = r.classes.includes("Any") || 
+                            r.classes.some(c => c.toLowerCase() === activeClass.toLowerCase());
+            
+            const archOk = r.arch.includes("Any") || 
+                           r.arch.includes(myCharacter.archetype);
+
+            const statKeys = ['sur', 'dex', 'str', 'pie', 'int', 'pre'];
+            let statsOk = true;
+            statKeys.forEach(key => {
+                if (r[key] && (s[key] || 0) < r[key]) statsOk = false;
+            });
+
+            return levelOk && classOk && archOk && statsOk;
         }
-    });
 
-    // 3. Save the list as a string to LocalStorage
-    localStorage.setItem('selectedFeats', JSON.stringify(selectedFeats));
-    
-    console.log("Feats saved:", selectedFeats);
-}
+        // 4. INTERACTION LOGIC
+        function toggleFeat(featId) {
+            const pool = calculatePool();
+            if (!myCharacter.selectedFeats) myCharacter.selectedFeats = [];
+            
+            const index = myCharacter.selectedFeats.indexOf(featId);
+            
+            if (index > -1) {
+                myCharacter.selectedFeats.splice(index, 1);
+            } else {
+                if (myCharacter.selectedFeats.length < pool) {
+                    myCharacter.selectedFeats.push(featId);
+                } else {
+                    alert("No slots remaining!");
+                    return;
+                }
+            }
 
-// 4. Attach this function to every checkbox click
-document.addEventListener('change', function(e) {
-    if (e.target.type === 'checkbox') {
-        saveSelectedFeats();
-    }
-});
+            // Save the updated character back to localStorage
+            localStorage.setItem('myCharacter', JSON.stringify(myCharacter));
+            renderUI();
+        }
 
-</script>
+        // 5. RENDER UI
+        // Targeting the ID: featsData
+        const container = document.getElementById('featsData');
+        
+        function renderUI() {
+            const totalAllowed = calculatePool();
+            const currentSelected = (myCharacter.selectedFeats || []).length;
+            document.getElementById('slots-remaining').textContent = `Slots Remaining: ${totalAllowed - currentSelected}`;
 
+            container.innerHTML = '';
+            
+            // Loop through the data imported from featslist.js
+            featsData.forEach(feat => {
+                const isAvailable = validateFeat(feat);
+                const isSelected = (myCharacter.selectedFeats || []).includes(feat.id);
+                
+                const el = document.createElement('div');
+                el.style.padding = "12px";
+                el.style.borderBottom = "1px solid #444";
+                el.style.cursor = isAvailable ? "pointer" : "not-allowed";
+                el.style.opacity = isAvailable ? "1" : "0.5";
+                
+                if (isSelected) el.style.backgroundColor = "rgba(76, 175, 80, 0.15)";
+
+                const limitTag = Array.isArray(feat.limit) 
+                    ? feat.limit.map(k => feat_limits[k]).join(', ') 
+                    : feat_limits[feat.limit];
+
+                el.innerHTML = `
+                    <div style="display:flex; align-items:center;">
+                        <div style="width:18px; height:18px; border:1px solid #777; margin-right:15px; background:${isSelected ? '#4caf50' : 'transparent'}"></div>
+                        <div>
+                            <strong style="color:${isSelected ? '#4caf50' : '#fff'}">${feat.name}</strong> 
+                            <span style="font-size:0.8rem; color:#f57c00; margin-left:10px;">${limitTag}</span><br>
+                            <small style="color:#aaa">${feat.desc}</small>
+                            ${!isAvailable ? '<br><span style="color:#ff5252; font-size:0.75rem; font-weight:bold;">LOCKED</span>' : ''}
+                        </div>
+                    </div>
+                `;
+
+                if (isAvailable) {
+                    el.onclick = () => toggleFeat(feat.id);
+                }
+                
+                container.appendChild(el);
+            });
+        }
+
+        // Initialize the page
+        renderUI();
+    </script>
 </body>
 </html>
