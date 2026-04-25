@@ -87,3 +87,14 @@ body {
     margin-right: 15px;    /* Pushes the text to the right */
     margin-top: 5px;       /* Centers it slightly with the first line of text */
 }
+/* This turns the orange glow green when selected */
+.feat-item.selected {
+    border-color: var(--accent-success);
+    box-shadow: 0 0 15px var(--accent-success);
+}
+
+/* Also turn the checkbox green to match */
+.feat-item.selected .checkbox {
+    background-color: var(--accent-success);
+    border-color: var(--accent-success);
+}
