@@ -1,0 +1,38 @@
+/* --- GLOBAL RPG THEME --- */
+:root {
+    --bg-main: #121212;
+    --panel-bg: rgba(28, 28, 28, 0.9); /* Made slightly transparent to see background */
+    --accent: #f57c00;
+    --success: #4caf50;
+    --error: #ff5252;
+    --text: #e0e0e0;
+    --text-dim: #a0a0a0;
+    --border: #333;
+}
+
+body {
+    /* Set the background image */
+    background-image: url('Dope.jpg'); 
+    background-size: cover;           /* Makes the image cover the whole screen */
+    background-position: center;      /* Centers the image */
+    background-attachment: fixed;     /* Keeps the background from scrolling */
+    background-color: var(--bg-main); /* Fallback color if image doesn't load */
+    
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* --- THE MAIN BOXES --- */
+.config-panel {
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 4px;
+    margin: 20px;
+    /* Optional: adds a slight blur effect to the background behind the panel */
+    backdrop-filter: blur(5px); 
+}
+
+/* Rest of your styles... */
