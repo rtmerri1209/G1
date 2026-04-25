@@ -1,4 +1,4 @@
-c// --- EXISTING CLASS RULES ---  
+// --- EXISTING CLASS RULES ---  
 const classRules = {
   Warrior: { 
     fixedStat: "sur", 
