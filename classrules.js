@@ -1,3 +1,4 @@
+c// --- EXISTING CLASS RULES ---  
 const classRules = {
   Warrior: { 
     fixedStat: "sur", 
@@ -49,7 +50,9 @@ const classRules = {
   }
 };
 
+// --- EXISTING RACE RULES ---
 
+// 1. THE DATA BASELINE
 const RACE_MODS = {
     "human": { str: 0, dex: 0, sur: 0, slot4: 0, int: 0, pre: 0 },
     "elf": { str: -2, dex: 2, sur: -1, slot4: 0, int: 1, pre: 0 },
@@ -86,46 +89,27 @@ function changeStat(s, d) {
     }
     update();
 }
-function finalizeAndContinue() {
-    
-	
-    // Error if unspent points available
-    if (points > 0) {
-        const confirmSpend = confirm(`You still have ${points} points left! Are you sure you want to proceed?`);
-        if (!confirmSpend) return;
-    }
-
-    // Save 
-    const race = localStorage.getItem('race') || "human";
-    const mods = RACE_MODS[race];
-    
-    let finalStats = {};
-    for (let s in baseStats) {
-		let lookupKey = (s === "slot4" &&
-	myCharacter.primaryStat)
-		? myCharacter.primaryStat
-		: s;
-		finalStats[s] = baseStats[s] + (mods[lookupKey] || 0);
-
-    }
-
-    // Store the string in localStorage
-    localStorage.setItem('finalCalculatedStats', JSON.stringify(finalStats));
-
-    // Move to the next page
-    window.location.href = "stats2.html";
-}
 
 // 4. DISPLAY ENGINE (CALCULATES RACE & SPECIALIZATION AFTER BUY)
 function update() {
+    // A. Retrieve Selections from UI
+    // Added optional chaining (?.) so it doesn't crash if an ID is missing
     const classVal = document.getElementById('class-select')?.value;
     const specVal = document.getElementById('spec-select')?.value;
     const race = localStorage.getItem('race') || "human";
     const mods = RACE_MODS[race];
     localStorage.setItem('remainingPoints', points);
 
+    // B. Map Specializations to Primary Stats (Matches your Warrior/Mage logic)
+    const specToStat = {
+        "Berserker": "Strength",
+        "Master of Arms": "Dexterity",
+        "Fire Mage": "Intelligence",
+        "Guardian": "Constitution",
+        "Healer": "Wisdom"
     };
 
+    // C. Setup Character Object for Slot4 Resolution
     // This defines what 'myCharacter' is so the loop doesn't hit 'null'
     const myCharacter = {
         class: classVal,
@@ -138,6 +122,7 @@ function update() {
     // D. The Core Stat Loop
     for (let s in baseStats) {
         let lookupKey = s;
+        // This is where the magic happens for Slot 4
         if (s === "slot4" && myCharacter.primaryStat) {
             lookupKey = myCharacter.primaryStat;
         }
@@ -208,7 +193,7 @@ if (rules) {
     }
 }
 
-// 2. Map "pie" to "slot4"
+// 2. THE FAT TRIMMER: Map "pie" to "slot4"
 const pKey = (primary === "pie" || primary === "piety") ? "slot4" : primary;
 const sKey = (secondary === "pie" || secondary === "piety") ? "slot4" : secondary;
 
