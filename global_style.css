@@ -52,3 +52,22 @@ body {
     border-color: #00ff00;
 }
 
+/* The 'Locked' Feat look */
+.feat-item.locked {
+    opacity: 0.4;            /* Dims the whole entry */
+    filter: grayscale(1);    /* Removes color */
+    pointer-events: none;    /* Makes it unclickable! */
+    cursor: not-allowed;
+    border-color: #444;      /* Darker border */
+}
+
+/* Hide the checkbox specifically for locked feats */
+.feat-item.locked .checkbox {
+    display: none; 
+}
+
+/* Optional: Add a 'Locked' icon or text if you want */
+.feat-item.locked .feat-name::after {
+    content: " 🔒";
+    font-size: 0.8em;
+}
