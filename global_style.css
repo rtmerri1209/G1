@@ -51,25 +51,6 @@ body {
     background-color: rgba(0, 255, 0, 0.3); /* Green tint on hover */
     border-color: #00ff00;
 }
-
-.feat-item.available {
-    background: var(--panel-bg-color); 
-    border: 1px solid var(--accent); /* Using your #f57c00 variable */
-    box-shadow: 0 0 10px var(--accent); /* Pulls that orange glow */
-    color: var(--text-color);
-}
-
-.checkbox {
-    border: 2px solid var(--accent);
-    background: transparent;
-}
-
-/* For the 'Locked' feats, use your dimmed variables */
-.feat-item.locked {
-    border: 1px solid var(--border-color);
-    color: var(--text-dim);
-    opacity: 0.5;
-}
 .feat-item {
     display: flex;          /* The magic alignment tool */
     flex-direction: row;    /* Puts items in a line */
@@ -82,7 +63,14 @@ body {
     border-radius: 4px;
 }
 
+.feat-item.available {
+    box-shadow: 0 0 10px var(--accent); /* Pulls that orange glow */
+    color: var(--text-color);
+}
+
 .checkbox {
+    border: 2px solid var(--accent);
+    background: transparent;
     flex-shrink: 0;        /* Stops the box from squishing */
     margin-right: 15px;    /* Pushes the text to the right */
     margin-top: 5px;       /* Centers it slightly with the first line of text */
@@ -94,7 +82,8 @@ body {
 }
 
 /* Also turn the checkbox green to match */
-.feat-item.selected .checkbox {
+.feat-item.selected.checkbox {
     background-color: var(--accent-success);
     border-color: var(--accent-success);
 }
+
