@@ -28,7 +28,8 @@ export const featsData =[
                 id: 2,
                 name: "Sawed-Off", 
         reqs: {
-                classes: ["Ranger, Warrior, Rogue"],
+                classes: ["Ranger, Warrior, Rogue"], 
+                arc: ["Hunter", "Beastmaster", "Master at Arms", "Assassin", "Pickpocket"],
                 level: 1, 
                  dex: 16
                 },
@@ -39,7 +40,8 @@ export const featsData =[
                 id: 3,
                 name: "Iron Lung", 
          reqs: {
-                classes: ["Any"],
+                classes: ["Any"], 
+                arc: ["Any"],
                 level: 1,
                 sur: 12
                 },        
@@ -51,7 +53,8 @@ export const featsData =[
                 id: 4,
                 name: "Phalanx", 
         reqs: {
-                classes: ["Warrior, Paladin"],
+                classes: ["Warrior, Paladin"], 
+                arc: ["Master at Arms", "Bastion", "Templar"],
                 level: 4,
                 str: 14
                 },
@@ -63,6 +66,7 @@ export const featsData =[
                 name: "Second Wind", 
         reqs: {
                 classes: ["Any"],
+                arc: ["Any"],
                 level: 3,
                 sur: 16
                 },
@@ -73,7 +77,8 @@ export const featsData =[
                 id: 6,
                 name: "Cat-Like Reflexes", 
         reqs: {  
-                classes: ["Any"],
+                classes: ["Rogur", "Warrior", "Paladin"], 
+                arc: ["Any"],
                 level: 1,
                 dex: 14
                 },      
@@ -97,6 +102,7 @@ export const featsData =[
                 name: "Fearless", 
         reqs: {
                 classes: ["Any"],
+                arc: ["Any"], 
                 level: 1,
                 int: 13
         },
@@ -108,6 +114,7 @@ export const featsData =[
                 name: "Breacher",
         reqs: {
                 classes: ["Warrior", "Paladin"],
+                arc: ["Any"],
                 level: 1,
                 str: 16
         },
@@ -118,8 +125,10 @@ export const featsData =[
                 id: 10,
                 name: "Scavenger", 
         reqs: {
-                classes: ["Any"],
-                level: 1 
+                classes: ["Any"], 
+                arc: ["Any"],
+                level: 1, 
+                ins: 10
         },
                         desc: "2/Day roll d100 for lost items/gold.", 
                         limit: ["prd", "stk"] // +1 use per day per stack
@@ -140,32 +149,108 @@ export const featsData =[
                 id: 12,
                 name: "Well of the Mind", 
          reqs:{
-                 classes: ["Mage"],
+                 classes: ["Mage", "Cleric"],
+                 arc: ["Spellslinger","Zealot","Witchdoctor","Prophet"],
+                 level: 1,
+                 slot4: 16
+                         },
                         desc: "Rank 1: +1 Lvl 1 slot/cantrip. Higher ranks add higher level slots.", 
-                        limit: "Stackable" 
+                        limit: ["stk", "cst"]  // stacks after 1 give the next level of spells 
         },
         {
-                name: "Quiet Casting", desc: "Roll d20 vs Target Perception to cast unnoticed.", limit: "Non-Stackable" 
+                id: 13,
+                name: "Quiet Casting", 
+        reqs:{
+                classes: ["Mage","Cleric"],
+                arc: ["Spellslinger","Zealot"],
+                level: 4,
+                slot4: 16
+        },
+                        desc: "Roll d20 vs Perception to cast unnoticed.", 
+                        limit: ["nst","cnd"]
         },
         { 
-                name: "Blood Magic", desc: "Once per day, cast using HP (1d10 per spell level) instead of slot.", limit: "Stackable (+2 uses per rank)" 
+                id: 14,
+                name: "Blood Magic",
+        reqs:{
+                classes: ["Mage","Cleric"],
+                arc: ["All"],
+                level: 2,
+                sur: 14 
+                        },
+                        desc: "Once per day, cast using HP (1d10 per spell level) instead of slot.", 
+                        limit: "Stackable (+2 uses per rank)" 
         },
         { 
-                name: "Spell Sniper", desc: "Increases effective range of projectile spells by 25%.", limit: "Non-Stackable" 
+                id: 15,
+                name: "Spell Sniper", 
+        reqs:{
+                classes: ["Mage","Cleric"],
+                arc: ["Zealot", "Spellslinger", "Witchdoctor"],
+                level: 1,
+                slot4: 14
+                        },
+                        desc: "Increases effective range of projectile spells by 25%.", 
+                        limit: "nst" 
         },
         { 
-                name: "Battle Medic", desc: "Cast healing spells as a Reaction when ally within 10ft takes damage.", limit: "Non-Stackable" 
+                id: 16,
+                name: "Battle Medic", 
+         reqs:{
+                classes: ["Cleric", "Paladin"],
+                arc: ["Prophet", "Bastion"],
+                level: 4,
+                slot4: 14
+                        },
+                        desc: "Cast healing spells as a Reaction when ally within 10ft takes damage.", 
+                        limit: "nst" 
         },
         { 
-                name: "Blanket", desc: "Defensive buff spells target one additional party member.", limit: "Stackable (Cap: 3)" 
+                id: 17,
+                name: "Blanket",  
+         reqs:{
+                classes: ["Cleric", "Mage"],
+                arc: ["Prophet", "Spellslinger"],
+                level: 2,
+                slot4: 14
+                        },
+                        desc: "Defensive buff spells target one additional party member.", 
+                        limit: "stk" 
         },
         { 
-                name: "Bolster", desc: "Defensive spells on Heavy Armor allies grant them +1 Reaction.", limit: "Non-Stackable" 
+                id: 18,
+                name: "Bolster",
+         reqs:{
+                classes: ["Cleric", "Mage"],
+                arc: ["Any"],
+                level: 3,
+                slot4: 16
+                        },
+                        desc: "Defensive spells on Heavy Armor allies grant them +1 Reaction.", 
+                        limit: "nst" 
         },
         { 
-                name: "Divine Burden", desc: "Piety/Divine debuffs roll 2d20 and keep highest.", limit: "Non-Stackable" 
+                id: 19,
+                name: "Divine Burden", 
+         reqs:{
+                classes: ["Paladin", "Cleric", "Mage"],
+                arc: ["Zealot", "Prophet", "Witchdoctor", "Bastion", "Templar"],
+                level: 4,
+                slot4: 14
+                        },
+                        desc: "Divine status effects roll advantage to hit.", 
+                        limit: "nst" 
         },
         { 
-                name: "Divine Echo", desc: "Heals trigger secondary effect: 1/3 value heals ally or damages enemy.", limit: "Non-Stackable" 
+                id: 20,
+                name: "Divine Echo", 
+         reqs:{
+                classes: ["Paladin", "Cleric"],
+                arc: ["Prophet", "Bastion"],
+                level: 5,
+                slot4: 14
+                        },
+                desc: "Heals trigger secondary effect: 1/3 value heals ally or damages enemy.", 
+                limit: "nst" 
         }
     ];
