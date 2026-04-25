@@ -35,4 +35,20 @@ body {
     backdrop-filter: blur(5px); 
 }
 
-/* Rest of your styles... */
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff; /* Makes a white square outline */
+    border-radius: 4px;     /* Optional: rounds the corners a bit */
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 10px;
+    background-color: rgba(255, 255, 255, 0.1); /* Slight tint */
+}
+
+/* This makes it change color when you hover over it */
+.checkbox:hover {
+    background-color: rgba(0, 255, 0, 0.3); /* Green tint on hover */
+    border-color: #00ff00;
+}
+
