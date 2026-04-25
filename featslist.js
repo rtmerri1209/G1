@@ -137,7 +137,12 @@ export const featsData =[
                         limit: "stk" //max 2
         },
         {
-                name: "Well of the Mind", desc: "Rank 1: +1 Lvl 1 slot/cantrip. Higher ranks add higher level slots.", limit: "Stackable" 
+                id: 12,
+                name: "Well of the Mind", 
+         reqs:{
+                 classes: ["Mage"],
+                        desc: "Rank 1: +1 Lvl 1 slot/cantrip. Higher ranks add higher level slots.", 
+                        limit: "Stackable" 
         },
         {
                 name: "Quiet Casting", desc: "Roll d20 vs Target Perception to cast unnoticed.", limit: "Non-Stackable" 
