@@ -17,7 +17,7 @@ export const featsData =[
                 classes: ["Any"],
                 level: 1,
                 sur: 14,
-                arch: ["Any"]
+                arc: ["Any"]
                 },
                         desc: "Increases HP scaling and increases fatigue resistance", 
                         limit: "cst" 

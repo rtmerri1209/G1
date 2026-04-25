@@ -47,8 +47,8 @@
             const classOk = r.classes.includes("Any") || 
                             r.classes.some(c => c.toLowerCase() === activeClass.toLowerCase());
             
-            const archOk = r.arch.includes("Any") || 
-                           r.arch.includes(myCharacter.archetype);
+            const archOk = r.arc.includes("Any") || 
+                           r.arc.includes(myCharacter.archetype);
 
             const statKeys = ['sur', 'dex', 'str', 'pie', 'int', 'pre'];
             let statsOk = true;
