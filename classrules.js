@@ -160,38 +160,31 @@ function update() {
 
 function init() {
     console.log("RPG One Engine Initialization");
-    const classSelect = document.getElementById('class-select');
-    const specSelect = document.getElementById('spec-select');
-    const raceSelect = document.getElementById('race-select');
+    const displayNameEl = document.getElementById('display-name');
 
-    if (classSelect) classSelect.addEventListener('change', update);
-    if (specSelect) specSelect.addEventListener('change', update);
-    if (raceSelect) raceSelect.addEventListener('change', update);
-        const race = localStorage.getItem('race');
-    const className = localStorage.getItem('class');
-    const spec = localStorage.getItem('specialization');
-
-    points = (race === "human") ? 30 : 25;
-
-    document.getElementById('display-name').innerText = localStorage.getItem('charName');
+if (displayNameEl) {
+    // 1. Update the Display Texts
+    displayNameEl.innerText = localStorage.getItem('charName');
     document.getElementById('display-class').innerText = className;
     document.getElementById('display-race').innerText = race;
     document.getElementById('display-size').innerText = localStorage.getItem('size');
-     
-   // 1. Get Rules & Define Primary/Secondary
-const rules = classRules[className];
-let primary = "";
-let secondary = "";
 
-if (rules) {
-    if (rules.primaryIsFixed) {
-        primary = rules.fixedStat;
-        secondary = rules.options[spec]?.secondary || "";
-    } else {
-        primary = spec; // For Mages, spec is the primary
-        secondary = rules.options[spec]?.secondary || "";
+    // 2. Get Rules & Define Primary/Secondary
+    const rules = classRules[className];
+    let primary = "";
+    let secondary = "";
+
+    if (rules) {
+        if (rules.primaryIsFixed) {
+            primary = rules.fixedStat;
+            secondary = rules.options[spec]?.secondary || "";
+        } else {
+            primary = spec; // For Mages, spec is the primary
+            secondary = rules.options[spec]?.secondary || "";
+        }
     }
 }
+
 
 // 2. THE FAT TRIMMER: Map "pie" to "slot4"
 const pKey = (primary === "pie" || primary === "piety") ? "slot4" : primary;
