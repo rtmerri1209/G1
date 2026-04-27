@@ -47,7 +47,7 @@
             const arcOk = (r.arc || []).includes("Any") || 
                            (r.arc || []).includes(myCharacter.archetype);
 
-            const statKeys = ['sur', 'dex', 'str', 'pie', 'int', 'pre'];
+            const statKeys = ['sur', 'dex', 'str', 'slot4', 'int', 'pre'];
             let statsOk = true;
             statKeys.forEach(key => {
                 if (r[key] && (s[key] || 0) < r[key]) statsOk = false;
