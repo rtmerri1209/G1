@@ -3,6 +3,7 @@
     --bg-main: #121212;
     --panel-bg: rgba(28, 28, 28, 0.9); /* Made slightly transparent to see background */
     --accent: #f57c00;
+    --brand: #
     --success: #4caf50;
     --error: #ff5252;
     --text: #e0e0e0;
@@ -31,7 +32,6 @@ body {
     padding: 20px;
     border-radius: 4px;
     margin: 20px;
-    /* Optional: adds a slight blur effect to the background behind the panel */
     backdrop-filter: blur(5px); 
 }
 
@@ -92,4 +92,11 @@ body {
     background-color: var(--accent-success);
     border-color: var(--accent-success);
 }
+
+        .selection-panel {
+            background: rgba(30, 30, 30, 0.95);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+        }
 
