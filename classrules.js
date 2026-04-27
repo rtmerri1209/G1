@@ -183,6 +183,10 @@ if (displayNameEl) {
             secondary = rules.options[spec]?.secondary || "";
         }
     }
+	if (document.getElementById('class-select'))
+	{
+         toggleSpecialization();
+	}
 }
 
 
