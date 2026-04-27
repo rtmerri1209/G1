@@ -114,45 +114,14 @@
     <div class="form-group">
         <label id="spec-label">Specialization Options</label>
         <select id="spec-select">
-            <option value="">-- No Selection Required --</option>
         </select>
     </div>
 </div>
     <button class="start-btn" onclick="saveAndStart()">Initialize Stats</button>
 
 <script>
-  function toggleSpecialization() {
-    const classSelect = document.getElementById('class-select');
-    const specSelect = document.getElementById('spec-select');
-    const selectedClass = classSelect.value;
-
-    // 1. Clear existing options
-    specSelect.innerHTML = '';
-
-    // 2. Get rules for the selected class
-    const rules = classRules[selectedClass];
-
-    if (rules && rules.options) {
-        // 3. Loop through the options in your classRules object
-        for (const key in rules.options) {
-            const optionData = rules.options[key];
-            const newOption = document.createElement('option');
-            
-            // Set the value (e.g., "str") and the text (e.g., "Berserker")
-            newOption.value = key;
-            newOption.textContent = optionData.archetypeName;
-            
-            specSelect.appendChild(newOption);
-        }
-    } else {
-        // Fallback if no options exist for a class
-        const defaultOpt = document.createElement('option');
-        defaultOpt.value = "";
-        defaultOpt.textContent = "-- No Selection Required --";
-        specSelect.appendChild(defaultOpt);
-    }
-}
-    function saveAndStart() {
+	
+	function saveAndStart() {
         const name = document.getElementById('char-name').value;
         const race = document.getElementById('race-select').value;
         const className = document.getElementById('class-select').value;
