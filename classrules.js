@@ -210,11 +210,8 @@ if (displayNameEl) {
             secondary = rules.options[spec]?.secondary || "";
         }
     }
-	if (document.getElementById('class-select'))
-	{
-         toggleSpecialization();
-	}
-}
+	
+
 
 
 // 2. THE FAT TRIMMER: Map "pie" to "slot4"
@@ -229,9 +226,13 @@ if (sKey) document.getElementById(`ctrl-${sKey}`)?.classList.add('secondary-stat
 const slot4Label = document.getElementById('label-slot4');
 if (slot4Label) {
     slot4Label.innerText = (pKey === "slot4" || sKey === "slot4") ? "PIETY" : "LOGIC";
+		}
 }
+	if (document.getElementById('class-select'))
+	{
+         toggleSpecialization();
+	}
 
    update(); 
 }
-
 window.onload = init;
