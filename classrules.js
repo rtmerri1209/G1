@@ -90,7 +90,34 @@ function changeStat(s, d) {
     update();
 }
 
-// 4. DISPLAY ENGINE (CALCULATES RACE & SPECIALIZATION AFTER BUY)
+ function toggleSpecialization() {
+    const classSelect = document.getElementById('class-select');
+    const specSelect = document.getElementById('spec-select');
+    const selectedClass = classSelect.value;
+
+	 if (!classSelect || !specSelect)
+		 return;
+    // 1. Clear existing options
+    specSelect.innerHTML = '';
+
+    // 2. Get rules for the selected class
+    const rules = classRules[selectedClass];
+
+    if (rules && rules.options) {
+        // 3. Loop through the options in your classRules object
+        for (const key in rules.options) {
+            const optionData = rules.options[key];
+            const newOption = document.createElement('option');
+            
+            // Set the value (e.g., "str") and the text (e.g., "Berserker")
+            newOption.value = key;
+            newOption.textContent = optionData.archetypeName;
+            
+            specSelect.appendChild(newOption);
+        }
+}
+
+	 // 4. DISPLAY ENGINE (CALCULATES RACE & SPECIALIZATION AFTER BUY)
 function update() {
     // A. Retrieve Selections from UI
     // Added optional chaining (?.) so it doesn't crash if an ID is missing
