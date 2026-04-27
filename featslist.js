@@ -128,7 +128,7 @@ export const featsData =[
                 classes: ["Any"], 
                 arc: ["Any"],
                 level: 1, 
-                ins: 10
+                int: 10
         },
                         desc: "2/Day roll d100 for lost items/gold.", 
                         limit: ["prd", "stk"] // +1 use per day per stack
