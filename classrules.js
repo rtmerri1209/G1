@@ -3,48 +3,48 @@ const classRules = {
   Warrior: { 
     fixedStat: "sur", 
     options: { 
-      berserker: { archetypeName: "Berserker", display: "Strength (Two-hand)", secondary: "str" }, 
-      maa: { archetypeName: "Master at Arms", display: "Dexterity (Dual-Wield)", secondary: "dex" } 
+      berserker: { specName: "Berserker", display: "Strength (Two-hand)", secondary: "str" }, 
+      maa: { specName: "Master at Arms", display: "Dexterity (Dual-Wield)", secondary: "dex" } 
     }, 
     primaryIsFixed: true 
   },
   Mage: { 
     fixedStat: null, 
     options: { 
-      spellslinger: { archetypeName: "Spellslinger", display: "Logic", secondary: "dex" }, 
-      witchdoctor: { archetypeName: "Witchdoctor", display: "Piety", secondary: "sur" } 
+      spellslinger: { specName: "Spellslinger", display: "Logic", secondary: "dex" }, 
+      witchdoctor: { specName: "Witchdoctor", display: "Piety", secondary: "sur" } 
     }, 
     primaryIsFixed: false 
   },
   Paladin: { 
     fixedStat: "pie", 
     options: { 
-      templar: { archetypeName: "Templar", display: "Strength", secondary: "str" },
-      bastion: { archetypeName: "Bastion", display: "Survivability", secondary: "sur"} 
+      templar: { specName: "Templar", display: "Strength", secondary: "str" },
+      bastion: { specName: "Bastion", display: "Survivability", secondary: "sur"} 
     }, 
     primaryIsFixed: true 
   },
   Ranger: { 
     fixedStat: "sur", 
     options: { 
-      beastmaster: { archetypeName: "Beastmaster", display: "Beastmaster", secondary: "pre" }, 
-      hunter: { archetypeName: "Hunter", display: "Hunter", secondary: "dex" } 
+      beastmaster: { specName: "Beastmaster", display: "Beastmaster", secondary: "pre" }, 
+      hunter: { specName: "Hunter", display: "Hunter", secondary: "dex" } 
     }, 
     primaryIsFixed: true 
   },
   Rogue: {
     fixedStat: "dex",
     options: {
-      assassin: { archetypeName: "Assassin", display: "Assassin", secondary: "sur" },
-      pickpocket: { archetypeName: "Pickpocket", display: "Pickpocket", secondary: "pre" }
+      assassin: { specName: "Assassin", display: "Assassin", secondary: "sur" },
+      pickpocket: { specName: "Pickpocket", display: "Pickpocket", secondary: "pre" }
     },
     primaryIsFixed: true
   },
   Cleric: {
     fixedStat: "pie",
     options: {
-      prophet: { archetypeName: "Prophet", display: "Prophet", secondary: "int" }, // Intuition
-      zealot: { archetypeName: "Zealot", display: "Zealot", secondary: "sur" }
+      prophet: { specName: "Prophet", display: "Prophet", secondary: "int" }, // Intuition
+      zealot: { specName: "Zealot", display: "Zealot", secondary: "sur" }
     },
     primaryIsFixed: true
   }
@@ -90,14 +90,14 @@ function changeStat(s, d) {
 
  function toggleSpecialization() {
     const classSelect = document.getElementById('class-select');
-    const archetype = document.getElementById('spec-select');
-    if (!classSelect || !archetype)
+    const spec = document.getElementById('spec-select');
+    if (!classSelect || !spec)
 		 return;
     const selectedClass = classSelect.value;
    
    
     // 1. Clear existing options
-    archetype.innerHTML = '';
+    spec.innerHTML = '';
 
     // 2. Get rules for the selected class
     const rules = classRules[selectedClass];
@@ -110,9 +110,9 @@ function changeStat(s, d) {
             
             // Set the value (e.g., "str") and the text (e.g., "Berserker")
             newOption.value = key;
-            newOption.textContent = optionData.archetypeName;
+            newOption.textContent = optionData.specName;
             
-            archetype.appendChild(newOption);
+            spec.appendChild(newOption);
                                         }
                                 }
                                 }
@@ -121,7 +121,7 @@ function update() {
     // A. Retrieve Selections from UI
     // Added optional chaining (?.) so it doesn't crash if an ID is missing
     const className = document.getElementById('class-select')?.value;
-    const archetype = document.getElementById('spec-select')?.value;
+    const spec = document.getElementById('spec-select')?.value;
     const race = localStorage.getItem('race') || "human";
     const mods = RACE_MODS[race];
     localStorage.setItem('remainingPoints', points);

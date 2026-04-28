@@ -45,7 +45,7 @@
             const classOk = (r.classes || []).includes("Any") || 
                             (r.classes || []).some(c => c.toLowerCase() === activeClass.toLowerCase());
             const arcOk = (r.arc || []).includes("Any") || 
-                           (r.arc || []).includes(myCharacter.archetype);
+                           (r.arc || []).includes(myCharacter.spec);
 
             const statKeys = ['sur', 'dex', 'str', 'slot4', 'int', 'pre'];
             let statsOk = true;

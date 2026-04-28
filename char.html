@@ -69,7 +69,7 @@
         const cname = document.getElementById('char-name').value;
         const race = document.getElementById('race-select').value;
         const className = document.getElementById('class-select').value;
-        const archetype = document.getElementById('spec-select').value;
+        const spec = document.getElementById('spec-select').value;
         const lvl = document.getElementById('level-select').value;
         if (!cname) { alert("Identify yourself!"); return; }
 
@@ -84,10 +84,10 @@
     if (rules) {
         if (rules.primaryIsFixed) {
             primary = rules.fixedStat;
-            secondary = rules.options[archetype]?.secondary || "";
+            secondary = rules.options[spec]?.secondary || "";
         } else {
-            primary = archetype; // For Mages, spec is the primary
-            secondary = rules.options[archetype]?.secondary || "";
+            primary = spec; // For Mages, spec is the primary
+            secondary = rules.options[spec]?.secondary || "";
         }
     }
 	
@@ -97,9 +97,9 @@
             race: race, 
             size: size,
             class: className,
-            spec: archetype,
+            spec: spec,
             lvl: lvl,
-            primaryStat: specToStat[archetype] || "Strength"
+            primaryStat: specToStat[spec] || "Strength"
          
     }
 
