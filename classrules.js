@@ -140,7 +140,7 @@ function update() {
     // C. Setup Character Object for Slot4 Resolution
     // This defines what 'myCharacter' is so the loop doesn't hit 'null'
     const myCharacter = {
-        class: class,
+        class: className,
         specialization: spec,
         primaryStat: specToStat[spec] || "Strength" 
     }
