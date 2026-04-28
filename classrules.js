@@ -3,32 +3,32 @@ const classRules = {
   Warrior: { 
     fixedStat: "sur", 
     options: { 
-      str: { archetypeName: "Berserker", display: "Strength (Two-hand)", secondary: "str" }, 
-      dex: { archetypeName: "Master at Arms", display: "Dexterity (Dual-Wield)", secondary: "dex" } 
+      berserker: { archetypeName: "Berserker", display: "Strength (Two-hand)", secondary: "str" }, 
+      maa: { archetypeName: "Master at Arms", display: "Dexterity (Dual-Wield)", secondary: "dex" } 
     }, 
     primaryIsFixed: true 
   },
   Mage: { 
     fixedStat: null, 
     options: { 
-      logic: { archetypeName: "Spellslinger", display: "Logic", secondary: "dex" }, 
-      piety: { archetypeName: "Witchdoctor", display: "Piety", secondary: "sur" } 
+      spellslinger: { archetypeName: "Spellslinger", display: "Logic", secondary: "dex" }, 
+      witchdoctor: { archetypeName: "Witchdoctor", display: "Piety", secondary: "sur" } 
     }, 
     primaryIsFixed: false 
   },
   Paladin: { 
     fixedStat: "pie", 
     options: { 
-      str: { archetypeName: "Templar", display: "Strength", secondary: "str" },
-      sur: { archetypeName: "Bastion", display: "Survivability", secondary: "sur"} 
+      templar: { archetypeName: "Templar", display: "Strength", secondary: "str" },
+      bastion: { archetypeName: "Bastion", display: "Survivability", secondary: "sur"} 
     }, 
     primaryIsFixed: true 
   },
   Ranger: { 
     fixedStat: "sur", 
     options: { 
-      str: { archetypeName: "Beastmaster", display: "Beastmaster", secondary: "pre" }, 
-      dex: { archetypeName: "Hunter", display: "Hunter", secondary: "dex" } 
+      beastmaster: { archetypeName: "Beastmaster", display: "Beastmaster", secondary: "pre" }, 
+      hunter: { archetypeName: "Hunter", display: "Hunter", secondary: "dex" } 
     }, 
     primaryIsFixed: true 
   },
@@ -91,15 +91,15 @@ function changeStat(s, d) {
 }
 
  function toggleSpecialization() {
-    const classSelect = document.getElementById('class-select');
-    const specSelect = document.getElementById('spec-select');
-    if (!classSelect || !specSelect)
+    const classSelect = document.getElementById('class');
+    const archetype = document.getElementById('archetype');
+    if (!classSelect || !archetype)
 		 return;
     const selectedClass = classSelect.value;
    
    
     // 1. Clear existing options
-    specSelect.innerHTML = '';
+    archetype.innerHTML = '';
 
     // 2. Get rules for the selected class
     const rules = classRules[selectedClass];
@@ -114,7 +114,7 @@ function changeStat(s, d) {
             newOption.value = key;
             newOption.textContent = optionData.archetypeName;
             
-            specSelect.appendChild(newOption);
+            archetype.appendChild(newOption);
                                         }
                                 }
                                 }
@@ -130,11 +130,16 @@ function update() {
 
     // B. Map Specializations to Primary Stats (Matches your Warrior/Mage logic)
     const specToStat = {
-        "Berserker": "Strength",
-        "Master of Arms": "Dexterity",
-        "Fire Mage": "Intelligence",
-        "Guardian": "Constitution",
-        "Healer": "Wisdom"
+        "Berserker": "sur",
+        "Master of Arms": "sur",
+        "Spellslinger": "log",
+        "Assassin": "dex",
+        "Pickpocket": "dex",
+        "Bastion": "pie",
+        "Witchdoctor": "pie",
+        "Templar": "pie",
+        "Prophet": "pie",
+        "Zealot": "pie"
     };
 
     // C. Setup Character Object for Slot4 Resolution

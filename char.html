@@ -122,10 +122,10 @@
 <script>
 	
 	function saveAndStart() {
-        const name = document.getElementById('char-name').value;
+        const cname = document.getElementById('char-name').value;
         const race = document.getElementById('race-select').value;
         const className = document.getElementById('class-select').value;
-        const specialization = document.getElementById('spec-select').value;
+        const archetype = document.getElementById('spec-select').value;
         const lvl = document.getElementById('level-select').value;
         if (!name) { alert("Identify yourself!"); return; }
 
@@ -133,11 +133,11 @@
         let size = (race === "gnome" || race === "halfling") ? "Small" : "Medium";
 
         // Save to LocalStorage
-        localStorage.setItem('cname', name);
+        localStorage.setItem('cname', cname);
         localStorage.setItem('race', race);
         localStorage.setItem('class', className);
         localStorage.setItem('size', size);
-        localStorage.setItem('specialization', specialization); 
+        localStorage.setItem('archetype', archetype); 
 		localStorage.setItem('lvl', lvl)
         window.location.href = 'stats_module.html';
     }
