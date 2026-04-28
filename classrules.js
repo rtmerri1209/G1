@@ -28,7 +28,7 @@ const classRules = {
     fixedStat: "sur", 
     options: { 
       str: { archetypeName: "Beastmaster", display: "Beastmaster", secondary: "pre" }, 
-      dex: { archetypeName: "Hunter", display: "Ranged", secondary: "dex" } 
+      dex: { archetypeName: "Hunter", display: "Hunter", secondary: "dex" } 
     }, 
     primaryIsFixed: true 
   },
