@@ -116,7 +116,7 @@ function changeStat(s, d) {
             specSelect.appendChild(newOption);
         }
 }
-
+ }
 	 // 4. DISPLAY ENGINE (CALCULATES RACE & SPECIALIZATION AFTER BUY)
 function update() {
     // A. Retrieve Selections from UI
@@ -227,11 +227,11 @@ const slot4Label = document.getElementById('label-slot4');
 if (slot4Label) {
     slot4Label.innerText = (pKey === "slot4" || sKey === "slot4") ? "PIETY" : "LOGIC";
 		}
-}
+    }
 	if (document.getElementById('class-select'))
 	{
          toggleSpecialization();
-	}
+    }
 
    update(); 
 }
