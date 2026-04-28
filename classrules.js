@@ -123,7 +123,7 @@ function update() {
     // A. Retrieve Selections from UI
     // Added optional chaining (?.) so it doesn't crash if an ID is missing
     const className = document.getElementById('class-select')?.value;
-    const spec = document.getElementById('spec-select')?.value;
+    const specialization = document.getElementById('spec-select')?.value;
     const race = localStorage.getItem('race') || "human";
     const mods = RACE_MODS[race];
     localStorage.setItem('remainingPoints', points);
