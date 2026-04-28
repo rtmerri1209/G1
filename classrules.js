@@ -201,7 +201,7 @@ if (displayNameEl) {
     document.getElementById('display-size').innerText = localStorage.getItem('size');
 
     // 2. Get Rules & Define Primary/Secondary
-    const selectedClass = localStorage.GetItem('className');
+    const selectedClass = localStorage.GetItem('display-class');
     const rules = classRules[selectedClass];
     let primary = "";
     let secondary = "";
