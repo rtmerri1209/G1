@@ -93,7 +93,7 @@
                 const opt = 
                 document.createElement('option');
                 opt.value = s;
-                opt.textContent = specNames[s] (s.charAt(0).toUpperCase() + s.slice(1));
+                opt.textContent = specNames[s] || (s.charAt(0).toUpperCase() + s.slice(1));
                 specDrop.appendChild(opt);
 
             });
