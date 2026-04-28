@@ -140,9 +140,9 @@ function update() {
     // C. Setup Character Object for Slot4 Resolution
     // This defines what 'myCharacter' is so the loop doesn't hit 'null'
     const myCharacter = {
-        class: classVal,
-        specialization: specVal,
-        primaryStat: specToStat[specVal] || "Strength" 
+        class: class,
+        specialization: spec,
+        primaryStat: specToStat[spec] || "Strength" 
     }
     
     localStorage.setItem('myCharacter', JSON.stringify(myCharacter));
