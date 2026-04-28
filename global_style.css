@@ -133,6 +133,7 @@ input:focus, select:focus { border-color: var(--accent); }
         .start-btn {
             width: 300px;
             margin: 40px auto;
+            display: block;
             background: transparent;
             color: var(--accent);
             border: 2px solid var(--accent);
