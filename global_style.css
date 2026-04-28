@@ -1,12 +1,11 @@
-/* --- GLOBAL RPG THEME --- */
- .root {
+
+ :root {
     --bg-main: #121212;
     --panel-bg: rgba(28, 28, 28, 0.9); /* Made slightly transparent to see background */
     --accent: #f08214;
-    --brand: #;
     --success: #4caf50;
     --error: #fc0d0d;
-    --text: #e0e0e0;
+    --text: #000000;
     --text-dim: #a0a0a0;
     --border: #333;
 }
@@ -51,11 +50,12 @@ body {
     background-color: var(--accent); /* Green tint on hover */
     border-color: var(--success);
 }
+
 .feat-item {
     display: flex;          /* The magic alignment tool */
     flex-direction: row;    /* Puts items in a line */
     align-items: flex-start; /* Aligns them at the top */
-    background: var(--panel-bg-color);
+    background: var(--panel-bg);
     border: 1px solid var(--accent);
     box-shadow: 0 0 10px var(--accent);
     padding: 15px;
@@ -65,7 +65,7 @@ body {
 
 .feat-item.available {
     box-shadow: 0 0 10px var(--accent); /* Pulls that orange glow */
-    color: var(--text-color);
+    color: var(--text);
 }
 
 .checkbox {
@@ -75,8 +75,9 @@ body {
     margin-right: 15px;    /* Pushes the text to the right */
     margin-top: 5px;       /* Centers it slightly with the first line of text */
 }
+
 .feat-item.locked {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border);
     color: var(--text-dim);
     opacity: 0.5;
 }
@@ -99,4 +100,3 @@ body {
             border-radius: 8px;
             box-shadow: 0 0 40px rgba(0,0,0,0.9);
         }
-
