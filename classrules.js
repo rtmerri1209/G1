@@ -146,7 +146,7 @@ function update() {
     // This defines what 'myCharacter' is so the loop doesn't hit 'null'
     const myCharacter = {
         class: className,
-        spec: specialization,
+        spec: archetype,
         primaryStat: specToStat[archetype] || "Strength" 
     }
     
