@@ -68,7 +68,21 @@
         "Rogue": ["assassin", "pickpocket"],
         "Cleric": ["prophet", "zealot"]
     };
-	
+	const specNames = {
+        "maa": "Master at Arms",
+        "berserker": "Berserker",
+        "spellslinger": "Spellslinger",
+        "witchdoctor": "Witchdoctor",
+        "templar": "Templar",
+        "bastion": "Bastion",
+        "beastmaster": "Beastmaster",
+        "hunter": "Hunter",
+        "assassin": "Assassin",
+        "pickpocket": "Pickpocket",
+        "prophet": "Prophet",
+        "zealot": "Zealot"
+    }
+
 	function toggleSpecialization() {
         const classDrop= document.getElementById('class-select');
         const specDrop= document.getElementById('spec-select');
@@ -79,7 +93,7 @@
                 const opt = 
                 document.createElement('option');
                 opt.value = s;
-                opt.textContent = s.charAt(0).toUpperCase() + s.slice(1);
+                opt.textContent = specNames[s] (s.charAt(0).toUpperCase() + s.slice(1));
                 specDrop.appendChild(opt);
 
             });
