@@ -93,10 +93,11 @@ function changeStat(s, d) {
  function toggleSpecialization() {
     const classSelect = document.getElementById('class-select');
     const specSelect = document.getElementById('spec-select');
-    const selectedClass = classSelect.value;
-
-	 if (!classSelect || !specSelect)
+    if (!classSelect || !specSelect)
 		 return;
+    const selectedClass = classSelect.value;
+   
+   
     // 1. Clear existing options
     specSelect.innerHTML = '';
 
@@ -114,9 +115,9 @@ function changeStat(s, d) {
             newOption.textContent = optionData.archetypeName;
             
             specSelect.appendChild(newOption);
-        }
-}
- }
+                                        }
+                                }
+                                }
 	 // 4. DISPLAY ENGINE (CALCULATES RACE & SPECIALIZATION AFTER BUY)
 function update() {
     // A. Retrieve Selections from UI
@@ -142,7 +143,7 @@ function update() {
         class: classVal,
         specialization: specVal,
         primaryStat: specToStat[specVal] || "Strength" 
-    };
+    }
     
     localStorage.setItem('myCharacter', JSON.stringify(myCharacter));
 
