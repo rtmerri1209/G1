@@ -126,6 +126,7 @@ function update() {
     const specialization = document.getElementById('spec-select')?.value;
     const race = localStorage.getItem('race') || "human";
     const mods = RACE_MODS[race];
+    const archetype = document.getElementById('archetype')?.value;
     localStorage.setItem('remainingPoints', points);
 
     // B. Map Specializations to Primary Stats (Matches your Warrior/Mage logic)
@@ -147,7 +148,7 @@ function update() {
     const myCharacter = {
         class: className,
         spec: specialization,
-        primaryStat: specToStat[spec] || "Strength" 
+        primaryStat: specToStat[archetype] || "Strength" 
     }
     
     localStorage.setItem('myCharacter', JSON.stringify(myCharacter));
