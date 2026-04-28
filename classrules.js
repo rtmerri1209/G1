@@ -50,8 +50,6 @@ const classRules = {
   }
 };
 
-// --- EXISTING RACE RULES ---
-
 // 1. THE DATA BASELINE
 const RACE_MODS = {
     "human": { str: 0, dex: 0, sur: 0, slot4: 0, int: 0, pre: 0 },
@@ -69,7 +67,7 @@ let buyCap;
 
 // 3. STAT BUTTON LOGIC
 function changeStat(s, d) {
-	const race = localStorage.getItem('race')
+	const race = document.getElementById.('race-select');
 	let buyCap;
 	if (race === 'human') // Hard limit on point-spending
     {
