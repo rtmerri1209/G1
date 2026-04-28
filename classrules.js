@@ -67,7 +67,7 @@ let buyCap;
 
 // 3. STAT BUTTON LOGIC
 function changeStat(s, d) {
-	const race = document.getElementById.('race-select');
+	const race = document.getElementById('race-select');
 	let buyCap;
 	if (race === 'human') // Hard limit on point-spending
     {
