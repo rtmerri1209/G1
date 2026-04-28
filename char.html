@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="classrules.js"></script>
     <link rel="stylesheet" href="global_style.css">
     <meta charset="UTF-8">
     <title>Character Creation</title>
@@ -61,11 +60,31 @@
     <button class="start-btn" onclick="saveAndStart()">Initialize Stats</button>
 
 <script>
+    const specMap = {
+        "Warrior": ["berserker", "maa"],
+        "Mage": ["spellslinger", "witchdoctor"],
+        "Paladin": ["templar", "bastion"],
+        "Ranger": ["beastmaster", "hunter"],
+        "Rogue": ["assassin", "pickpocket"],
+        "Cleric": ["prophet", "zealot"]
+    };
+	
+	function toggleSpecialization() {
+        const classDrop= document.getElementById('class-select');
+        const specDrop= document.getElementById('spec-select');
+        const selectedClass = classDrop.value;
+        const options = specMap[selectedClass] || [];
+            specDrop.innerHTML = "";
+            options.forEach(s => {
+                const opt = 
+                document.createElement('option');
+                opt.value = s;
+                opt.textContent = s.charAt(0).toUpperCase() + s.slice(1);
+                specDrop.appendChild(opt);
 
-	
-	
+            });
+        }
     function saveAndStart() {
-
         const cname = document.getElementById('char-name').value;
         const race = document.getElementById('race-select').value;
         const className = document.getElementById('class-select').value;

@@ -43,7 +43,7 @@ const classRules = {
   Cleric: {
     fixedStat: "pie",
     options: {
-      prophet: { specName: "Prophet", display: "Prophet", secondary: "int" }, // Intuition
+      prophet: { specName: "Prophet", display: "Prophet", secondary: "itn" }, // Intuition
       zealot: { specName: "Zealot", display: "Zealot", secondary: "sur" }
     },
     primaryIsFixed: true
@@ -52,14 +52,14 @@ const classRules = {
 
 // 1. THE DATA BASELINE
 const RACE_MODS = {
-    "human": { str: 0, dex: 0, sur: 0, slot4: 0, int: 0, pre: 0 },
-    "elf": { str: -2, dex: 2, sur: -1, slot4: 0, int: 1, pre: 0 },
-    "dwarf": { str: 2, dex: -2, sur: 2, slot4: 0, int: 0, pre: -1 },
-    "gnome": { str: -3, dex: 1, sur: 0, slot4: 0, int: 2, pre: 0 },
-    "halfling": { str: -2, dex: 3, sur: 0, slot4: 0, int: -1, pre: 1 }
+    "human": { str: 0, dex: 0, sur: 0, slot4: 0, itn: 0, pre: 0 },
+    "elf": { str: -2, dex: 2, sur: -1, slot4: 0, itn: 1, pre: 0 },
+    "dwarf": { str: 2, dex: -2, sur: 2, slot4: 0, itn: 0, pre: -1 },
+    "gnome": { str: -3, dex: 1, sur: 0, slot4: 0, itn: 2, pre: 0 },
+    "halfling": { str: -2, dex: 3, sur: 0, slot4: 0, itn: -1, pre: 1 }
 };
 
-let baseStats = { str: 10, dex: 10, sur: 10, slot4: 10, int: 10, pre: 10 };
+let baseStats = { str: 10, dex: 10, sur: 10, slot4: 10, itn: 10, pre: 10 };
 let points = 0;
 let primary = "";
 let secondary = "";

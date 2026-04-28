@@ -104,7 +104,7 @@ export const featsData =[
                 classes: ["Any"],
                 arc: ["Any"], 
                 level: 1,
-                int: 13
+                itn: 13
         },
                         desc: "Roll an additional d6 on checks against Fear/Frightened/Shaken.", 
                         limit: "stk" 
@@ -128,7 +128,7 @@ export const featsData =[
                 classes: ["Any"], 
                 arc: ["Any"],
                 level: 1, 
-                int: 10
+                itn: 10
         },
                         desc: "2/Day roll d100 for lost items/gold.", 
                         limit: ["prd", "stk"] // +1 use per day per stack
