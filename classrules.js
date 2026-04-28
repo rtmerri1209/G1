@@ -198,21 +198,21 @@ function init() {
 if (displayNameEl) {
     // 1. Update the Display Texts
     displayNameEl.innerText = localStorage.getItem('cname');
-    document.getElementById('display-class').innerText = className;
-    document.getElementById('display-race').innerText = race;
+    document.getElementById('display-class').innerText = localStorage.getItem ('class');
+    document.getElementById('display-race').innerText = localStorage.getItem ('race');
     document.getElementById('display-size').innerText = localStorage.getItem('size');
 
     // 2. Get Rules & Define Primary/Secondary
-    const rules = classRules[className];
+    const rules = classRules[class];
     let primary = "";
     let secondary = "";
 
     if (rules) {
         if (rules.primaryIsFixed) {
             primary = rules.fixedStat;
-            secondary = rules.options[spec]?.secondary || "";
+            secondary = rules.options[archetype]?.secondary || "";
         } else {
-            primary = spec; // For Mages, spec is the primary
+            primary = archetype; // For Mages, spec is the primary
             secondary = rules.options[spec]?.secondary || "";
         }
     }
