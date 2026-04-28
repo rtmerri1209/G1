@@ -192,7 +192,7 @@ function init() {
 
 if (displayNameEl) {
     // 1. Update the Display Texts
-    displayNameEl.innerText = localStorage.getItem('charName');
+    displayNameEl.innerText = localStorage.getItem('char-name');
     document.getElementById('display-class').innerText = className;
     document.getElementById('display-race').innerText = race;
     document.getElementById('display-size').innerText = localStorage.getItem('size');
