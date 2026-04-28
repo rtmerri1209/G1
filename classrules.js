@@ -194,7 +194,20 @@ if (displayNameEl) {
     document.getElementById('display-size').innerText = localStorage.getItem('size');
 
     // 2. Get Rules & Define Primary/Secondary
-    
+        const selectedClass = className;
+        const rules = classRules[selectedClass];
+        let primary = "";
+        let secondary = "";
+
+    if (rules) {
+        if (rules.primaryIsFixed) {
+            primary = rules.fixedStat;
+            secondary = rules.options[spec]?.secondary || "";
+        } else {
+            primary = spec; // For Mages, spec is the primary
+            secondary = rules.options[spec]?.secondary || "";
+        }
+    } 
 
 
 

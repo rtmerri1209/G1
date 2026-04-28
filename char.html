@@ -109,22 +109,6 @@
         // Size Logic
         let size = (race === "gnome" || race === "halfling") ? "Small" : "Medium";
         
-        const selectedClass = className;
-        const rules = classRules[selectedClass];
-        let primary = "";
-        let secondary = "";
-
-    if (rules) {
-        if (rules.primaryIsFixed) {
-            primary = rules.fixedStat;
-            secondary = rules.options[spec]?.secondary || "";
-        } else {
-            primary = spec; // For Mages, spec is the primary
-            secondary = rules.options[spec]?.secondary || "";
-        }
-    }
-	
-    
         const myCharacter = {
             name: cname,
             race: race, 
