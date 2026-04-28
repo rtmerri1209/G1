@@ -2,10 +2,10 @@
 .root {
     --bg-main: #121212;
     --panel-bg: rgba(28, 28, 28, 0.9); /* Made slightly transparent to see background */
-    --accent: #f57c00;
+    --accent: #f08214;
     --brand: #;
     --success: #4caf50;
-    --error: #ff5252;
+    --error: #fc0d0d;
     --text: #e0e0e0;
     --text-dim: #a0a0a0;
     --border: #333;
