@@ -122,8 +122,8 @@ function changeStat(s, d) {
 function update() {
     // A. Retrieve Selections from UI
     // Added optional chaining (?.) so it doesn't crash if an ID is missing
-    const classVal = document.getElementById('class-select')?.value;
-    const specVal = document.getElementById('spec-select')?.value;
+    const className = document.getElementById('class-select')?.value;
+    const spec = document.getElementById('spec-select')?.value;
     const race = localStorage.getItem('race') || "human";
     const mods = RACE_MODS[race];
     localStorage.setItem('remainingPoints', points);
@@ -192,7 +192,7 @@ function init() {
 
 if (displayNameEl) {
     // 1. Update the Display Texts
-    displayNameEl.innerText = localStorage.getItem('char-name');
+    displayNameEl.innerText = localStorage.getItem('charName');
     document.getElementById('display-class').innerText = className;
     document.getElementById('display-race').innerText = race;
     document.getElementById('display-size').innerText = localStorage.getItem('size');
