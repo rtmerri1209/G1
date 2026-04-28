@@ -142,14 +142,7 @@ function update() {
 
     // C. Setup Character Object for Slot4 Resolution
     // This defines what 'myCharacter' is so the loop doesn't hit 'null'
-    const myCharacter = {
-        class: className,
-        spec: archetype,
-        primaryStat: specToStat[archetype] || "Strength" 
-    }
     
-    localStorage.setItem('myCharacter', JSON.stringify(myCharacter));
-
     // D. The Core Stat Loop
     for (let s in baseStats) {
         let lookupKey = s;
@@ -201,21 +194,7 @@ if (displayNameEl) {
     document.getElementById('display-size').innerText = localStorage.getItem('size');
 
     // 2. Get Rules & Define Primary/Secondary
-    const selectedClass = localStorage.GetItem('display-class');
-    const rules = classRules[selectedClass];
-    let primary = "";
-    let secondary = "";
-
-    if (rules) {
-        if (rules.primaryIsFixed) {
-            primary = rules.fixedStat;
-            secondary = rules.options[archetype]?.secondary || "";
-        } else {
-            primary = archetype; // For Mages, spec is the primary
-            secondary = rules.options[spec]?.secondary || "";
-        }
-    }
-	
+    
 
 
 
