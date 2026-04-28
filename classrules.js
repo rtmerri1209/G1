@@ -91,8 +91,8 @@ function changeStat(s, d) {
 }
 
  function toggleSpecialization() {
-    const classSelect = document.getElementById('className');
-    const archetype = document.getElementById('archetype');
+    const classSelect = document.getElementById('class-select');
+    const archetype = document.getElementById('spec-select');
     if (!classSelect || !archetype)
 		 return;
     const selectedClass = classSelect.value;
