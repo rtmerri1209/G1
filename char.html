@@ -122,12 +122,13 @@
 <script>
 	
 	function saveAndStart() {
+
         const cname = document.getElementById('char-name').value;
         const race = document.getElementById('race-select').value;
         const className = document.getElementById('class-select').value;
         const archetype = document.getElementById('spec-select').value;
         const lvl = document.getElementById('level-select').value;
-        if (!name) { alert("Identify yourself!"); return; }
+        if (!cname) { alert("Identify yourself!"); return; }
 
         // Size Logic
         let size = (race === "gnome" || race === "halfling") ? "Small" : "Medium";
