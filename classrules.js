@@ -91,7 +91,7 @@ function changeStat(s, d) {
 }
 
  function toggleSpecialization() {
-    const classSelect = document.getElementById('class');
+    const classSelect = document.getElementById('className');
     const archetype = document.getElementById('archetype');
     if (!classSelect || !archetype)
 		 return;
@@ -198,12 +198,12 @@ function init() {
 if (displayNameEl) {
     // 1. Update the Display Texts
     displayNameEl.innerText = localStorage.getItem('cname');
-    document.getElementById('display-class').innerText = localStorage.getItem ('class');
+    document.getElementById('display-class').innerText = localStorage.getItem ('className');
     document.getElementById('display-race').innerText = localStorage.getItem ('race');
     document.getElementById('display-size').innerText = localStorage.getItem('size');
 
     // 2. Get Rules & Define Primary/Secondary
-    const rules = classRules[class];
+    const rules = classRules[className];
     let primary = "";
     let secondary = "";
 
@@ -234,7 +234,7 @@ if (slot4Label) {
     slot4Label.innerText = (pKey === "slot4" || sKey === "slot4") ? "PIETY" : "LOGIC";
 		}
     }
-	if (document.getElementById('class-select'))
+	if (document.getElementById('className'))
 	{
          toggleSpecialization();
     }
