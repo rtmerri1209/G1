@@ -1,3 +1,20 @@
+const characterData = JSON.parse(localStorage.getItem('myCharacter'));
+
+if (characterData) {
+  console.log("Character Loaded:", characterData.name);
+} else {
+  console.error("No character data found! Redirecting...");
+  window.location.href = 'char.html';
+  throw new Error("Execution stopped: No character data.");
+}
+
+const charName = characterData.name;
+const charRace = characterData.race;
+const charClass = characterData.class;
+const charSpec = characterData.spec;
+const charLvl = characterData.lvl;
+const charSize = characterData.size;
+
 // --- EXISTING CLASS RULES ---  
 const classRules = {
   Warrior: { 
@@ -67,15 +84,14 @@ let buyCap;
 
 // 3. STAT BUTTON LOGIC
 function changeStat(s, d) {
-	const race = document.getElementById('race-select');
-	let buyCap;
-	if (race === 'human') // Hard limit on point-spending
+	const floor = 3;
+	
+  if (charRace === 'human') // Hard limit on point-spending
     {
 	buyCap = 22;
     } else {
 	buyCap = 20;
     }
-    const floor = 3;  // Hard limit on down-tuning
 
     if (d > 0 && points > 0 && baseStats[s] < buyCap) { 
         baseStats[s]++; 
@@ -89,18 +105,17 @@ function changeStat(s, d) {
 }
 
  function toggleSpecialization() {
-    const classSelect = document.getElementById('class-select');
-    const spec = document.getElementById('spec-select');
-    if (!classSelect || !spec)
+  
+    if (!charClass || !charSpec)
 		 return;
     const selectedClass = classSelect.value;
    
    
     // 1. Clear existing options
-    spec.innerHTML = '';
+    charSpec.innerHTML = '';
 
     // 2. Get rules for the selected class
-    const rules = classRules[selectedClass];
+    const rules = classRules[charClass];
 
     if (rules && rules.options) {
         // 3. Loop through the options in your classRules object
@@ -140,8 +155,6 @@ function update() {
         "Zealot": "pie"
     };
 
-    // C. Setup Character Object for Slot4 Resolution
-    // This defines what 'myCharacter' is so the loop doesn't hit 'null'
     
     // D. The Core Stat Loop
     for (let s in baseStats) {
@@ -209,7 +222,25 @@ if (displayNameEl) {
         }
     } 
 
+function processFinalStats(currentBaseStats, currentPoints){
+  if (points > 0) {
+        const confirmSpend = confirm(`You still have ${points} points left! Are you sure you want to proceed?`);
+        if (!confirmSpend) return;
+    }
 
+    // Save the final calculated stats (including race mods) so stats2.html can use them
+    const race = localStorage.getItem('charRace');
+    
+    let finalStats = {};
+    for (let s in currentBaseStats) {
+		let lookupKey = (s === "slot4" &&
+	characterData.primaryStat)
+		? characterData.primaryStat
+		: s;
+		finalStats[s] = currentBaseStats[s] + (mods[lookupKey] || 0);
+
+    }
+}
 
 // 2. THE FAT TRIMMER: Map "pie" to "slot4"
 const pKey = (primary === "pie" || primary === "piety") ? "slot4" : primary;

@@ -283,31 +283,12 @@
     syncTimer = setInterval(syncCharacterDisplay, 100);
 
 function finalizeAndContinue() {
-    
-    const myCharacter = JSON.parse(localStorage.getItem('myCharacter'))
-    // Optional: Prevent proceeding if they still have points left
-    if (points > 0) {
-        const confirmSpend = confirm(`You still have ${points} points left! Are you sure you want to proceed?`);
-        if (!confirmSpend) return;
-    }
+    const finishedStats = processFinalStats(baseStats, points);
 
-    // Save the final calculated stats (including race mods) so stats2.html can use them
-    const race = localStorage.getItem('race') || "human";
-    const mods = RACE_MODS[race];
-    
-    let finalStats = {};
-    for (let s in baseStats) {
-		let lookupKey = (s === "slot4" &&
-	myCharacter.primaryStat)
-		? myCharacter.primaryStat
-		: s;
-		finalStats[s] = baseStats[s] + (mods[lookupKey] || 0);
-
-    }
-
-    // Store the object as a string in localStorage
-    localStorage.setItem('finalCalculatedStats', JSON.stringify(finalStats));
-
+        if (finishedStats) {
+            localStorage.setItem('finalCalculatedStats', json.stringify(finishedStats));
+        }
+        
     // Move to the next page
     window.location.href = "feats_data.html";
 }
