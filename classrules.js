@@ -188,7 +188,7 @@ if (displayNameEl) {
     document.getElementById('display-race').innerText = characterData.race;
     document.getElementById('display-size').innerText = characterData.size;
     document.getElementById('display-spec').innerText = characterData.spec;
-    document.getElementById('display-level').innerText = characterData.lvl;
+    document.getElementById('display-lvl').innerText = characterData.lvl;
     // 2. Get Rules & Define Primary/Secondary
         const selectedClass = charClass;
         const spec = characterData.spec;
