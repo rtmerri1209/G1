@@ -260,7 +260,7 @@ if (slot4Label) {
 	{
          toggleSpecialization();
     }
-
+// force refresh 1.0
    update(); 
 }
 window.onload = init;
