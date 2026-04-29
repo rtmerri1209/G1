@@ -182,13 +182,14 @@ function init() {
 
 if (displayNameEl) {
     // 1. Update the Display Texts
-    displayNameEl.innerText = localStorage.getItem('cname');
-    document.getElementById('display-class').innerText = localStorage.getItem ('className');
-    document.getElementById('display-race').innerText = localStorage.getItem ('race');
-    document.getElementById('display-size').innerText = localStorage.getItem('size');
+    displayNameEl.innerText = characterData.name;
+    document.getElementById('display-class').innerText = characterData.class;
+    document.getElementById('display-race').innerText = characterData.race;
+    document.getElementById('display-size').innerText = characterData.size;
 
     // 2. Get Rules & Define Primary/Secondary
         const selectedClass = charClass;
+        const spec = characterData.spec;
         const rules = classRules[selectedClass];
         let primary = "";
         let secondary = "";
