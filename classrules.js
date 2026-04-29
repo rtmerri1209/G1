@@ -183,10 +183,12 @@ function init() {
 if (displayNameEl) {
     // 1. Update the Display Texts
     displayNameEl.innerText = characterData.name;
+    document.getElementById('display-name').innerText = characterData.name;
     document.getElementById('display-class').innerText = characterData.class;
     document.getElementById('display-race').innerText = characterData.race;
     document.getElementById('display-size').innerText = characterData.size;
-
+    document.getElementById('display-spec').innerText = characterData.spec;
+    document.getElementById('display-level').innerText = characterData.lvl;
     // 2. Get Rules & Define Primary/Secondary
         const selectedClass = charClass;
         const spec = characterData.spec;
