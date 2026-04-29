@@ -248,47 +248,14 @@
 </div>
 
 <script>
-    // 1. Move the timer definition to the TOP
-    let syncTimer; 
-
-    function syncCharacterDisplay() {
-        const n = localStorage.getItem('cname');
-        const r = localStorage.getItem('race');
-        const c = localStorage.getItem('class');
-        const s = localStorage.getItem('specialization');
-        const z = localStorage.getItem('size');
-
-        const nameEl = document.getElementById('display-name');
-
-        const raceEl = document.getElementById('display-race');
-        const classEl = document.getElementById('display-class');
-        const sizeEl = document.getElementById('display-size');
-
-        if (nameEl && n) nameEl.textContent = n;
-        if (raceEl && r) raceEl.textContent = r;
-        if (sizeEl && z) sizeEl.textContent = z;
-        
-        if (classEl && c) {
-            classEl.textContent = (s ? s + " " : "") + c;
-        }
-
-        // 2. Now the function knows what syncTimer is and can clear it
-        if (nameEl && nameEl.textContent !== "---") {
-            clearInterval(syncTimer);
-            console.log("RPG Sync: Success and Timer Cleared.");
-        }
-    }
-
-    // 3. Start the interval and assign it to the variable we made at the top
-    syncTimer = setInterval(syncCharacterDisplay, 100);
-
+    
 function finalizeAndContinue() {
     const finishedStats = processFinalStats(baseStats, points);
 
         if (finishedStats) {
             localStorage.setItem('finalCalculatedStats', json.stringify(finishedStats));
         }
-        
+
     // Move to the next page
     window.location.href = "feats_data.html";
 }
