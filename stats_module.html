@@ -46,9 +46,9 @@
 .primary-stat::after {
     content: 'Primary';
     position: absolute;
-    right: 50%; /* This puts it in the middle gap */
+    left: 50%; /* This puts it in the middle gap */
     top: 50%;
-    transform: translate(50%, -50%);
+    transform: translate(-50%, -50%);
     color: var(--brand-color); /* Uses your orange-ish brand color */
     font-weight: bold;
     font-size: 1.2rem;
@@ -60,9 +60,9 @@
 .secondary-stat::after {
     content: 'Secondary';
     position: absolute;
-    right: 50%;
+    left: 50%;
     top: 50%;
-    transform: translate(50%, -50%);
+    transform: translate(-50%, -50%);
     color: var(--secondary-color); /* Uses your blue secondary color */
     font-weight: bold;
     font-size: 1.2rem;
