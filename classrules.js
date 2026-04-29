@@ -77,7 +77,7 @@ const RACE_MODS = {
 };
 
 let baseStats = { str: 10, dex: 10, sur: 10, slot4: 10, itn: 10, pre: 10 };
-let points = 0;
+let points = (charRace === 'human') ? 25 : 20;
 let primary = "";
 let secondary = "";
 let buyCap;
@@ -133,35 +133,16 @@ function changeStat(s, d) {
                                 }
 	 // 4. DISPLAY ENGINE (CALCULATES RACE & SPECIALIZATION AFTER BUY)
 function update() {
-    // A. Retrieve Selections from UI
-    // Added optional chaining (?.) so it doesn't crash if an ID is missing
-    const className = document.getElementById('class-select')?.value;
-    const spec = document.getElementById('spec-select')?.value;
-    const race = localStorage.getItem('race') || "human";
-    const mods = RACE_MODS[race];
+    const race = characterData.race || "human";
+    const mods = RACE_MODS[charRace] || "human";
     localStorage.setItem('remainingPoints', points);
 
-    // B. Map Specializations to Primary Stats (Matches your Warrior/Mage logic)
-    const specToStat = {
-        "Berserker": "sur",
-        "Master of Arms": "sur",
-        "Spellslinger": "log",
-        "Assassin": "dex",
-        "Pickpocket": "dex",
-        "Bastion": "pie",
-        "Witchdoctor": "pie",
-        "Templar": "pie",
-        "Prophet": "pie",
-        "Zealot": "pie"
-    };
-
-    
     // D. The Core Stat Loop
     for (let s in baseStats) {
         let lookupKey = s;
         // This is where the magic happens for Slot 4
-        if (s === "slot4" && myCharacter.primaryStat) {
-            lookupKey = myCharacter.primaryStat;
+        if (s === "slot4" && characterData.primaryStat) {
+            lookupKey = characterData.primaryStat;
         }
 
         const m = mods[lookupKey] || 0;
