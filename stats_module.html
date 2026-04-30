@@ -256,7 +256,7 @@ function finalizeAndContinue() {
     const finishedStats = processFinalStats(baseStats, points);
 
         if (finishedStats) {
-            localStorage.setItem('finalCalculatedStats', json.stringify(finishedStats));
+            localStorage.setItem('finalCalculatedStats', JSON.stringify(finishedStats));
         }
 
     // Move to the next page
