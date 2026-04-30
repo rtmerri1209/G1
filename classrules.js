@@ -205,27 +205,6 @@ if (displayNameEl) {
             secondary = rules.options[spec]?.secondary || "";
         }
     } 
-
-function processFinalStats(currentBaseStats, currentPoints){
-  if (points > 0) {
-        const confirmSpend = confirm(`You still have ${points} points left! Are you sure you want to proceed?`);
-        if (!confirmSpend) return;
-    }
-
-    // Save the final calculated stats (including race mods) so stats2.html can use them
-    const race = localStorage.getItem('charRace');
-    
-    let finalStats = {};
-    for (let s in currentBaseStats) {
-		let lookupKey = (s === "slot4" &&
-	characterData.primaryStat)
-		? characterData.primaryStat
-		: s;
-		finalStats[s] = currentBaseStats[s] + (mods[lookupKey] || 0);
-
-    }
-}
-
 // 2. THE FAT TRIMMER: Map "pie" to "slot4"
 const pKey = (["pie", "piety" , "log", "logic"].includes(primary)) ? "slot4" : primary;
 const sKey = (["pie", "piety" , "log", "logic"].includes(secondary)) ? "slot4" : secondary;
@@ -246,5 +225,25 @@ if (slot4Label) {
     }
 // force refresh 1.0
    update(); 
+}
+
+function processFinalStats(currentBaseStats, currentPoints){
+  if (points > 0) {
+        const confirmSpend = confirm(`You still have ${points} points left! Are you sure you want to proceed?`);
+        if (!confirmSpend) return;
+    }
+
+    // Save the final calculated stats (including race mods) so stats2.html can use them
+    const race = localStorage.getItem('charRace');
+    
+    let finalStats = {};
+    for (let s in currentBaseStats) {
+		let lookupKey = (s === "slot4" &&
+	characterData.primaryStat)
+		? characterData.primaryStat
+		: s;
+		finalStats[s] = currentBaseStats[s] + (mods[lookupKey] || 0);
+
+    }
 }
 window.onload = init;
