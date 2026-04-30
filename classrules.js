@@ -133,7 +133,7 @@ function changeStat(s, d) {
                                 }
 	 // 4. DISPLAY ENGINE (CALCULATES RACE & SPECIALIZATION AFTER BUY)
 function update() {
-    const race = characterData.race || "human";
+    const race = charRace || "human";
     const mods = RACE_MODS[charRace] || "human";
     localStorage.setItem('remainingPoints', points);
 
@@ -228,6 +228,8 @@ if (slot4Label) {
 }
 
 function processFinalStats(currentBaseStats, currentPoints){
+  const mods = RACE_MODS[charRace] || {};
+  
   if (points > 0) {
         const confirmSpend = confirm(`You still have ${points} points left! Are you sure you want to proceed?`);
         if (!confirmSpend) return;
