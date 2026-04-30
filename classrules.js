@@ -77,7 +77,7 @@ const RACE_MODS = {
 };
 
 let baseStats = { str: 10, dex: 10, sur: 10, slot4: 10, itn: 10, pre: 10 };
-let points = (charRace === 'human') ? 25 : 20;
+let points = (charRace === 'human') ? 30 : 25;
 let primary = "";
 let secondary = "";
 let buyCap;
