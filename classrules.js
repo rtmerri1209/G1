@@ -191,7 +191,7 @@ if (displayNameEl) {
     document.getElementById('display-lvl').innerText = characterData.lvl;
     // 2. Get Rules & Define Primary/Secondary
         const selectedClass = charClass;
-        const spec = characterData.spec;
+        const spec = charSpec;
         const rules = classRules[selectedClass];
         let primary = "";
         let secondary = "";
