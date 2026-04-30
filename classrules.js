@@ -201,7 +201,7 @@ if (displayNameEl) {
             primary = rules.fixedStat;
             secondary = rules.options[spec]?.secondary || "";
         } else {
-            primary = spec; // For Mages, spec is the primary
+            primary = rules.options[spec]?.primary || ""; // For Mages, spec is the primary
             secondary = rules.options[spec]?.secondary || "";
         }
     } 
@@ -227,8 +227,8 @@ function processFinalStats(currentBaseStats, currentPoints){
 }
 
 // 2. THE FAT TRIMMER: Map "pie" to "slot4"
-const pKey = (primary === "pie" || primary === "piety") ? "slot4" : primary;
-const sKey = (secondary === "pie" || secondary === "piety") ? "slot4" : secondary;
+const pKey = (["pie", "piety" , "log", "logic"].includes(primary)) ? "slot4" : primary;
+const sKey = (["pie", "piety" , "log", "logic"].includes(secondary)) ? "slot4" : secondary;
 
 // 3. Apply Highlights & Label
 if (pKey) document.getElementById(`ctrl-${pKey}`)?.classList.add('primary-stat');
