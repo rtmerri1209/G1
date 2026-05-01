@@ -28,8 +28,8 @@ const classRules = {
   Mage: { 
     fixedStat: null, 
     options: { 
-      spellslinger: { specName: "Spellslinger", display: "Logic", secondary: "dex" }, 
-      witchdoctor: { specName: "Witchdoctor", display: "Piety", secondary: "sur" } 
+      spellslinger: { specName: "Spellslinger", display: "Logic", primary: "log", secondary: "dex" }, 
+      witchdoctor: { specName: "Witchdoctor", display: "Piety", primary: "pie", "secondary: "sur" } 
     }, 
     primaryIsFixed: false 
   },
@@ -229,7 +229,7 @@ if (slot4Label) {
 
 function processFinalStats(currentBaseStats, currentPoints){
   const mods = RACE_MODS[charRace] || {};
-  
+
   if (points > 0) {
         const confirmSpend = confirm(`You still have ${points} points left! Are you sure you want to proceed?`);
         if (!confirmSpend) return;
