@@ -29,7 +29,7 @@ const classRules = {
     fixedStat: null, 
     options: { 
       spellslinger: { specName: "Spellslinger", display: "Logic", primary: "log", secondary: "dex" }, 
-      witchdoctor: { specName: "Witchdoctor", display: "Piety", primary: "pie", "secondary: "sur" } 
+      witchdoctor: { specName: "Witchdoctor", display: "Piety", primary: "pie", secondary: "sur" } 
     }, 
     primaryIsFixed: false 
   },
