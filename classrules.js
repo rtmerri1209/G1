@@ -247,5 +247,6 @@ function processFinalStats(currentBaseStats, currentPoints){
 		finalStats[s] = currentBaseStats[s] + (mods[lookupKey] || 0);
 
     }
+    return finalStats;
 }
 window.onload = init;
