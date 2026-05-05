@@ -52,7 +52,7 @@
             const arcOk = r.arc.includes("Any") || 
                            r.arc.includes(myCharacter.spec);
 
-            const statKeys = ['sur', 'dex', 'str', 'pie', 'itn', 'pre'];
+            const statKeys = ['sur', 'dex', 'str', 'slot4', 'itn', 'pre'];
             let statsOk = true;
             statKeys.forEach(key => {
                 if (r[key] && (s[key] || 0) < r[key]) statsOk = false;
