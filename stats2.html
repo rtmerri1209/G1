@@ -23,8 +23,8 @@
         // 1. DATA RETRIEVAL
         // Pulling the character object and the specific race/class strings
         const myCharacter = JSON.parse(localStorage.getItem('myCharacter')) || {};
-        const activeRace = localStorage.getItem('race') || "";
-        const activeClass = localStorage.getItem('class') || "";
+        const activeRace = characterData.name || "";
+        const activeClass = characterData.class || "";
 
         // 2. POOL CALCULATION (+1 Human, +1 Warrior/Rogue)
         function calculatePool() {
