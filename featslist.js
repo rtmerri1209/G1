@@ -179,7 +179,7 @@ export const featsData =[
                 sur: 14 
                         },
                         desc: "Once per day, cast using HP (1d10 per spell level) instead of slot.", 
-                        limit: "Stackable (+2 uses per rank)" 
+                        limit: "nst" 
         },
         { 
                 id: 15,
